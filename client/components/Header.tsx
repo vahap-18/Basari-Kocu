@@ -1,10 +1,8 @@
 import React from "react";
-import { useTheme } from "@/components/ThemeProvider";
+import { useTheme, type ThemeKey } from "@/components/ThemeProvider";
 import { Palette } from "lucide-react";
 
-const themes: { key: Parameters<typeof useTheme>[0] extends never ? any : never } = {} as any; // type helper no-op
-
-const themeOptions = [
+const themeOptions: { key: ThemeKey; label: string }[] = [
   { key: "acik", label: "Açık" },
   { key: "koyu", label: "Koyu" },
   { key: "cesur", label: "Cesur" },
@@ -14,7 +12,7 @@ const themeOptions = [
   { key: "lider", label: "Lider" },
   { key: "korkusuz", label: "Korkusuz" },
   { key: "bilge", label: "Bilge" },
-] as const;
+];
 
 export const Header: React.FC = () => {
   const { theme, setTheme } = useTheme();
