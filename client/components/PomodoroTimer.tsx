@@ -78,6 +78,10 @@ export const PomodoroTimer: React.FC = () => {
       if (mode === "work") {
         const nextCycles = cycles + 1;
         setCycles(nextCycles);
+        try {
+          const v = Number(localStorage.getItem("pomodoro-sessions") || "0");
+          localStorage.setItem("pomodoro-sessions", String(v + 1));
+        } catch {}
         const isLong = nextCycles % DEFAULTS.cyclesBeforeLong === 0;
         switchMode(isLong ? "long" : "short");
       } else {
