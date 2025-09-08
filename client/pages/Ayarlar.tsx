@@ -17,8 +17,40 @@ const themes: { key: ThemeKey; label: string; preview: string[] }[] = [
 export default function AyarlarPage() {
   const { theme, setTheme } = useTheme();
 
+  const [profile, setProfile] = React.useState<any>(() => {
+    try {
+      const v = localStorage.getItem("personality-profile");
+      return v ? JSON.parse(v) : null;
+    } catch {
+      return null;
+    }
+  });
+
   return (
     <MobileLayout>
+      <section className="mb-4">
+        <h2 className="text-lg font-bold mb-3">Kişilik Profili</h2>
+        {profile ? (
+          <div className="p-3 rounded-2xl border bg-gradient-to-br from-accent/10 to-card">
+            <div className="mb-2">
+              <div className="text-sm text-muted-foreground">Tamamlanma</div>
+              <div className="font-semibold">{new Date(profile.createdAt).toLocaleString("tr-TR")}</div>
+            </div>
+            <div className="mb-2">
+              <div className="text-sm text-muted-foreground">Öne çıkan özellik</div>
+              <div className="font-semibold capitalize">{profile.dominant}</div>
+            </div>
+            <div className="mb-2 text-sm text-muted-foreground">{profile.summary}</div>
+            <div className="mt-2">
+              <div className="text-sm text-muted-foreground">Önerilen Pomodoro</div>
+              <div className="font-medium">{profile.recommendedPomodoro.work} dk odak • {profile.recommendedPomodoro.short} dk kısa mola</div>
+            </div>
+          </div>
+        ) : (
+          <div className="p-3 rounded-2xl border text-sm text-muted-foreground">Kişilik testini tamamlamadınız. Ana sayfada testi başlatabilirsiniz.</div>
+        )}
+      </section>
+
       <section>
         <h2 className="text-lg font-bold mb-3">Tema</h2>
         <div className="grid grid-cols-2 gap-3">
