@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { MobileLayout } from "@/components/MobileLayout";
+import { AICoach } from "@/components/AICoach";
 
 const QUOTES = [
   "Bugün küçük bir adım, yarın büyük bir fark.",
