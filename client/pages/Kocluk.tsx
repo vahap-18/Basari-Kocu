@@ -34,18 +34,23 @@ export default function KoclukPage() {
   }, []);
 
   useEffect(() => {
-    setSize(inhale ? 84 : 48);
+    setSize(inhale ? 96 : 56);
   }, [inhale]);
 
   return (
     <MobileLayout>
       <div className="space-y-6">
-        <section className="p-4 rounded-2xl border bg-gradient-to-br from-accent to-card">
-          <p className="text-sm text-muted-foreground">Günün sözü</p>
-          <p className="text-lg font-semibold mt-1">{quote}</p>
+        <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/10 to-card">
+          <div className="flex items-start gap-3">
+            <div className="flex-1">
+              <p className="text-sm text-muted-foreground">Günün sözü</p>
+              <p className="text-lg font-semibold mt-1">{quote}</p>
+            </div>
+            <div className="text-xs text-muted-foreground">Hareket et, başla.</div>
+          </div>
         </section>
 
-        <section className="p-4 rounded-2xl border">
+        <section className="p-4 rounded-2xl border bg-gradient-to-br from-accent/10 to-card">
           <h3 className="font-semibold mb-2">Nefes Egzersizi 4-4</h3>
           <p className="text-sm text-muted-foreground mb-3">4 sn al, 4 sn ver. Zihnini sakinleştir.</p>
           <div className="flex items-center justify-center py-6">
@@ -56,9 +61,19 @@ export default function KoclukPage() {
           </div>
         </section>
 
-        <section className="p-4 rounded-2xl border">
+        <section className="p-4 rounded-2xl border bg-gradient-to-br from-card to-muted">
           <h3 className="font-semibold mb-2">Günlük Hedef</h3>
           <DailyGoals />
+        </section>
+
+        <section className="p-4 rounded-2xl border">
+          <h3 className="font-semibold mb-2">Kısa Motivasyon ve İpuçları</h3>
+          <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+            <li>20–25 dk boyunca tek bir konuya odaklan.</li>
+            <li>Kendini küçük parçalara ayır (örn. 2 soru, 1 kavram).</li>
+            <li>Öğrendiklerini başkasına anlat (Feynman yöntemi).</li>
+            <li>Öğrenme sonrası kısa not çıkar, sonra tekrar et.</li>
+          </ul>
         </section>
       </div>
     </MobileLayout>
