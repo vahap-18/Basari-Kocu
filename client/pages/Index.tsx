@@ -38,8 +38,11 @@ export default function Index() {
     return { days, hours, minutes, seconds, total: diff };
   }, [now, targetTs]);
 
+  const [showTest, setShowTest] = React.useState(() => localStorage.getItem("personality-completed") !== "1");
+
   return (
     <MobileLayout>
+      {showTest && <PersonalityTest onComplete={() => setShowTest(false)} onClose={() => setShowTest(false)} />}
       <div className="space-y-4">
         <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/10 to-card">
           <div className="flex items-start justify-between gap-3">
