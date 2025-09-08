@@ -268,6 +268,11 @@ export const PomodoroTimer: React.FC<{ focusMusic?: boolean }> = ({ focusMusic =
               <span className="text-sm">Ekranı sadeleştir</span>
               <input type="checkbox" checked={screenDim} onChange={(e) => setScreenDim(e.target.checked)} />
             </label>
+
+            <label className="flex items-center justify-between py-2 px-3 border rounded-xl">
+              <span className="text-sm">Odak sesi (düşük)</span>
+              <input type="checkbox" checked={musicOn || focusMusic} onChange={(e) => setMusicOn(e.target.checked)} />
+            </label>
           </div>
         </div>
       </div>
