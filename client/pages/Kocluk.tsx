@@ -3,7 +3,7 @@ import { MobileLayout } from "@/components/MobileLayout";
 import { AICoach } from "@/components/AICoach";
 
 const QUOTES = [
-  "Bugün küçük bir adım, yarın büyük bir fark.",
+  "Bugün küç��k bir adım, yarın büyük bir fark.",
   "Disiplin, özgürlüğün en kısa yoludur.",
   "Zor olan başlamak, gerisi gelir.",
   "Tek rakibin dünkü halin.",
@@ -72,10 +72,15 @@ export default function KoclukPage() {
           <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
             <li>20–25 dk boyunca tek bir konuya odaklan.</li>
             <li>Kendini küçük parçalara ayır (örn. 2 soru, 1 kavram).</li>
-            <li>Öğrendiklerini başkasına anlat (Feynman yöntemi).</li>
+            <li>Ö��rendiklerini başkasına anlat (Feynman yöntemi).</li>
             <li>Öğrenme sonrası kısa not çıkar, sonra tekrar et.</li>
           </ul>
         </section>
+
+        <section className="p-4 rounded-2xl border">
+          <AICoach />
+        </section>
+
       </div>
     </MobileLayout>
   );
