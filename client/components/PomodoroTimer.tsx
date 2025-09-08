@@ -39,8 +39,58 @@ function beep() {
   } catch {}
 }
 
-export const PomodoroTimer: React.FC = () => {
+export const PomodoroTimer: React.FC<{ focusMusic?: boolean }> = ({ focusMusic = false }) => {
   const [mode, setMode] = useState<Mode>("work");
+  const [musicOn, setMusicOn] = useState<boolean>(false);
+  const audioRef = React.useRef<AudioBufferSourceNode | null>(null);
+  const audioCtxRef = React.useRef<AudioContext | null>(null);
+
+  React.useEffect(() => {
+    if (focusMusic || musicOn) {
+      startNoise();
+    } else {
+      stopNoise();
+    }
+    return () => stopNoise();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusMusic, musicOn]);
+
+  function startNoise() {
+    try {
+      if (audioCtxRef.current) return;
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const bufferSize = ctx.sampleRate * 2;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * 0.02; // gentle white noise
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buffer;
+      src.loop = true;
+      const gain = ctx.createGain();
+      gain.gain.value = 0.15;
+      src.connect(gain);
+      gain.connect(ctx.destination);
+      src.start(0);
+      audioCtxRef.current = ctx;
+      audioRef.current = src;
+    } catch (e) {}
+  }
+
+  function stopNoise() {
+    try {
+      if (audioRef.current) {
+        audioRef.current.stop();
+        audioRef.current.disconnect();
+        audioRef.current = null;
+      }
+      if (audioCtxRef.current) {
+        audioCtxRef.current.close();
+        audioCtxRef.current = null;
+      }
+    } catch (e) {}
+  }
   const [minutes, setMinutes] = useState(DEFAULTS.work);
   const [seconds, setSeconds] = useState(0);
   const [running, setRunning] = useState(false);
