@@ -4,13 +4,98 @@ import { Link } from "react-router-dom";
 
 export default function Index() {
   const today = useMemo(() => new Date().toLocaleDateString("tr-TR", { weekday: "long" }), []);
+  const [examName, setExamName] = React.useState<string>(() => localStorage.getItem("exam-name") || "");
+  const [examDateRaw, setExamDateRaw] = React.useState<string>(() => localStorage.getItem("exam-date") || "");
+  const [now, setNow] = React.useState(() => Date.now());
+
+  React.useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem("exam-name", examName);
+  }, [examName]);
+  React.useEffect(() => {
+    localStorage.setItem("exam-date", examDateRaw);
+  }, [examDateRaw]);
+
+  const targetTs = React.useMemo(() => {
+    if (!examDateRaw) return null;
+    const d = new Date(examDateRaw);
+    return isNaN(d.getTime()) ? null : d.getTime();
+  }, [examDateRaw]);
+
+  const remaining = React.useMemo(() => {
+    if (!targetTs) return null;
+    const diff = Math.max(0, Math.floor((targetTs - now) / 1000));
+    const days = Math.floor(diff / 86400);
+    const hours = Math.floor((diff % 86400) / 3600);
+    const minutes = Math.floor((diff % 3600) / 60);
+    const seconds = diff % 60;
+    return { days, hours, minutes, seconds, total: diff };
+  }, [now, targetTs]);
 
   return (
     <MobileLayout>
       <div className="space-y-4">
-        <section className="p-4 rounded-2xl border bg-gradient-to-br from-accent to-card">
-          <h2 className="text-lg font-bold">Merhaba! 📚</h2>
-          <p className="text-sm text-muted-foreground">Bugün {today}. Hedeflerine küçük adımlarla yaklaş.</p>
+        <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/10 to-card">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-bold">Sınav Geri Sayımı</h2>
+              <p className="text-sm text-muted-foreground">Sınavını ekle ve kalan zamanı takip et.</p>
+            </div>
+            <div className="text-xs text-muted-foreground">{today}</div>
+          </div>
+
+          <div className="mt-4 grid grid-cols-1 gap-3">
+            <input
+              value={examName}
+              onChange={(e) => setExamName(e.target.value)}
+              placeholder="Sınav adı (örn. YKS, Matematik Final)"
+              className="w-full px-3 py-2 rounded-xl border bg-background"
+            />
+            <input
+              type="datetime-local"
+              value={examDateRaw}
+              onChange={(e) => setExamDateRaw(e.target.value)}
+              className="w-full px-3 py-2 rounded-xl border bg-background"
+            />
+
+            {remaining ? (
+              <div className="p-3 rounded-xl bg-gradient-to-r from-primary/20 to-accent/10 border flex items-center justify-between">
+                <div>
+                  <div className="text-xs text-muted-foreground">{examName || "Planlanan sınav"}</div>
+                  <div className="text-2xl font-bold tabular-nums">
+                    {remaining.days}g {String(remaining.hours).padStart(2, "0")}:{String(remaining.minutes).padStart(2, "0")}:{String(remaining.seconds).padStart(2, "0")}
+                  </div>
+                </div>
+                <div className="text-sm text-muted-foreground">{remaining.total === 0 ? "Süre doldu" : "Kalan süre"}</div>
+              </div>
+            ) : (
+              <div className="text-sm text-muted-foreground">Sınav tarihi girilmedi.</div>
+            )}
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  setExamName("");
+                  setExamDateRaw("");
+                }}
+                className="flex-1 py-2 rounded-xl border"
+              >
+                Temizle
+              </button>
+              <a href="/pomodoro" className="flex-1 py-2 rounded-xl bg-primary text-primary-foreground text-center">
+                Hemen Çalış
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="p-4 rounded-2xl border">
+          <h3 className="text-base font-semibold mb-2">Günün motivasyonu</h3>
+          <p className="text-sm text-muted-foreground">"Disiplin, özgürlüğün en kısa yoludur."</p>
         </section>
 
         <section className="grid grid-cols-2 gap-3">
