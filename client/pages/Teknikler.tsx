@@ -160,7 +160,7 @@ const TECHNIQUES = [
     emoji: "⏳",
     difficulty: "Kolay",
     time: "Zaman kutuları",
-    story: "Süre sınırı koyan öğrenci, aynı işi daha hızlı ve odaklı yaptı.",
+    story: "Süre sınırı koyan ö��renci, aynı işi daha hızlı ve odaklı yaptı.",
     what: "İş, kendisine verilen zamanı doldurma eğilimindedir; sınır koymak verimlidir.",
     how: ["Görevlere süre sınırı koy.", "Kısa hedeflerle çalış."],
     motivation: "Süre sınırlamaları seni daha üretken yapar — deneyin.",
@@ -169,7 +169,7 @@ const TECHNIQUES = [
   {
     id: "murphy",
     title: "Murphy Kanunu",
-    emoji: "���️",
+    emoji: "⚠️",
     difficulty: "Kolay",
     time: "Hazırlık planı",
     story:
@@ -188,7 +188,7 @@ const TECHNIQUES = [
     time: "Uzun vadeli hedefler",
     story:
       "Özerklik ve amaç bulan öğrenciler daha motive ve kalıcı öğrenme gösterdi.",
-    what: "Özerklik, yeterlilik ve bağlılık duyguları motivasyonu artırır.",
+    what: "Özerklik, yeterlilik ve bağlıl��k duyguları motivasyonu artırır.",
     how: [
       "Küçük hedefler belirle.",
       "İlerlemeni takip et ve özerk seçimler yap.",
