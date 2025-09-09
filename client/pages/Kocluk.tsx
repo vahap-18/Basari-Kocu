@@ -241,6 +241,8 @@ export default function KoclukPage() {
           </div>
         </section>
 
+        {profile && <ProfileCharts profile={profile} />}
+
         <section className="p-4 rounded-2xl border bg-card">
           <h3 className="font-semibold mb-2">Kişisel Tavsiye</h3>
           <div className="text-sm text-muted-foreground">
