@@ -28,6 +28,8 @@ export default function KoclukPage() {
   const [inhale, setInhale] = useState(true);
   const [size, setSize] = useState(72);
   const [profile, setProfile] = useState<any>(null);
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(() => localStorage.getItem('profile-photo'));
+  const [avatarEmoji, setAvatarEmoji] = useState<string>(() => '🙂');
 
   useEffect(() => {
     const id = setInterval(() => setInhale((v) => !v), 4000);
@@ -50,10 +52,47 @@ export default function KoclukPage() {
       }
     };
     window.addEventListener("personality-updated", onUpdate as EventListener);
-    return () => window.removeEventListener("personality-updated", onUpdate as EventListener);
+
+    const onTests = (e: Event) => {
+      // compute avatar based on tests
+      try {
+        const tests = JSON.parse(localStorage.getItem('scientific-tests') || '{}');
+        updateAvatarFromTests(tests);
+      } catch {}
+    };
+    window.addEventListener('tests-updated', onTests as EventListener);
+
+    return () => {
+      window.removeEventListener("personality-updated", onUpdate as EventListener);
+      window.removeEventListener('tests-updated', onTests as EventListener);
+    };
   }, []);
 
   const scores = profile?.scores ?? null;
+
+  function updateAvatarFromTests(tests:any){
+    try{
+      // simple heuristic: if procrastination high -> sleepy, if grit high -> strong, if eq high -> smile
+      const p = tests['procrast'];
+      const g = tests['grit'];
+      const e = tests['eqi'];
+      if(p && p.score >=4) setAvatarEmoji('😴');
+      else if(g && g.score >=4) setAvatarEmoji('💪');
+      else if(e && e.score >=4) setAvatarEmoji('😊');
+      else setAvatarEmoji('🙂');
+    }catch{ setAvatarEmoji('🙂'); }
+  }
+
+  function onPhotoChange(e: React.ChangeEvent<HTMLInputElement>){
+    const file = e.target.files?.[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const data = String(reader.result);
+      try{ localStorage.setItem('profile-photo', data); setProfilePhoto(data); }catch {}
+    };
+    reader.readAsDataURL(file);
+  }
 
   function triggerAdvice() {
     try {
