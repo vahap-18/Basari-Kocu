@@ -372,3 +372,20 @@
     animation: slideRight 380ms cubic-bezier(.2,.9,.2,1) both;
   }
 }
+
+/* Pomodoro fullscreen landscape fallback styles */
+.pomodoro-force-landscape .pomodoro-fullscreen-container {
+  /* rotate the content to mimic landscape on devices that don't support orientation lock */
+  transform: rotate(90deg);
+  transform-origin: center center;
+  width: 100vh;
+  height: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pomodoro-fullscreen-container {
+  /* Ensure the container fills the screen and centers content */
+  width: 100%;
+  height: 100%;
+}
