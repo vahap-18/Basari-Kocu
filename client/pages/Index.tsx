@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { MobileLayout } from "@/components/MobileLayout";
 import { Link } from "react-router-dom";
 import { PersonalityTest } from "@/components/PersonalityTest";
-import React from "react";
 
 export default function Index() {
   const today = useMemo(() => new Date().toLocaleDateString("tr-TR", { weekday: "long" }), []);
