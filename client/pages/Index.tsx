@@ -103,7 +103,7 @@ export default function Index() {
           <div>
             {/* Render MotivationCard component */}
             <div className="grid grid-cols-1 gap-3">
-              {/* Placeholder div; replaced below by component insertion via JSX */}
+              <MotivationCard />
             </div>
           </div>
         </section>
@@ -149,7 +149,7 @@ export default function Index() {
         </section>
 
         <section className="p-4 rounded-2xl border">
-          <h3 className="font-semibold mb-2">Bugünkü görevler</h3>
+          <h3 className="font-semibold mb-2">Bugünkü g��revler</h3>
           <QuickTasks />
         </section>
 
