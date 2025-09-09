@@ -154,7 +154,7 @@ export default function Index() {
         </section>
 
         <section className="p-4 rounded-2xl border">
-          <h3 className="font-semibold mb-2">Son ilerleme</h3>
+          <h3 className="font-semibold mb-2">📈 Son ilerleme</h3>
           <ProgressMini />
         </section>
       </div>
