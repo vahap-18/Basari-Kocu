@@ -33,6 +33,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return saved ?? DEFAULT_THEME;
   });
 
+  const [gender, setGender] = useState<Gender>(() => {
+    try {
+      const v = localStorage.getItem("app-gender");
+      return v === "female" || v === "male" || v === "other" ? (v as Gender) : null;
+    } catch { return null; }
+  });
+
   const isDark = useMemo(() => theme === "koyu", [theme]);
 
   useEffect(() => {
@@ -40,9 +47,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     root.dataset.theme = theme;
     root.classList.toggle("dark", isDark);
     localStorage.setItem("app-theme", theme);
-  }, [theme, isDark]);
+    try { localStorage.setItem("app-gender", gender ?? ""); } catch {}
+  }, [theme, isDark, gender]);
 
-  const value = useMemo(() => ({ theme, setTheme, isDark }), [theme, isDark]);
+  const value = useMemo(() => ({ theme, setTheme, isDark, gender, setGender }), [theme, isDark, gender]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };
