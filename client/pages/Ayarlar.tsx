@@ -103,10 +103,19 @@ export default function AyarlarPage() {
 
         {profile ? (
           <div className="p-3 rounded-2xl border bg-gradient-to-br from-accent/10 to-card">
-            <div className="mb-2">
-              <div className="text-sm text-muted-foreground">Tamamlanma</div>
-              <div className="font-semibold">{new Date(profile.createdAt).toLocaleString("tr-TR")}</div>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+                {(() => {
+                  try{ const p = localStorage.getItem('profile-photo'); if(p) return <img src={p} alt="avatar" className="w-full h-full object-cover" /> } catch{}
+                  return <div className="text-2xl">{getEmojiForDominant(profile.dominant)}</div>
+                })()}
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">Tamamlanma</div>
+                <div className="font-semibold">{new Date(profile.createdAt).toLocaleString("tr-TR")}</div>
+              </div>
             </div>
+
             <div className="mb-2">
               <div className="text-sm text-muted-foreground">Öne çıkan özellik</div>
               <div className="font-semibold capitalize">{profile.dominant} {getEmojiForDominant(profile.dominant)}</div>
