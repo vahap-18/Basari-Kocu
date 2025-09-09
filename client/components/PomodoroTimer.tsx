@@ -39,7 +39,7 @@ function beep() {
   } catch {}
 }
 
-export const PomodoroTimer: React.FC<{ focusMusic?: boolean }> = ({ focusMusic = false }) => {
+export const PomodoroTimer: React.FC<{ focusMusic?: boolean; goal?: string }> = ({ focusMusic = false, goal }) => {
   const [mode, setMode] = useState<Mode>("work");
   const [musicOn, setMusicOn] = useState<boolean>(false);
   const audioRef = React.useRef<AudioBufferSourceNode | null>(null);
@@ -98,6 +98,9 @@ export const PomodoroTimer: React.FC<{ focusMusic?: boolean }> = ({ focusMusic =
   const [focusGuard, setFocusGuard] = useState(true);
   const [screenDim, setScreenDim] = useState(true);
 
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [landscapeFallback, setLandscapeFallback] = useState(false);
+
   useEffect(() => {
     const saved = localStorage.getItem("pomodoro-settings");
     if (saved) {
@@ -152,6 +155,35 @@ export const PomodoroTimer: React.FC<{ focusMusic?: boolean }> = ({ focusMusic =
     setSeconds(s);
   }
 
+  async function attemptLockLandscape() {
+    try {
+      const nav: any = navigator;
+      if ((screen as any).orientation && (screen as any).orientation.lock) {
+        await (screen as any).orientation.lock("landscape");
+        setLandscapeFallback(false);
+        return;
+      }
+      // some mobile browsers expose screen.lockOrientation
+      if ((screen as any).lockOrientation) {
+        (screen as any).lockOrientation("landscape");
+        setLandscapeFallback(false);
+        return;
+      }
+    } catch (e) {
+      // fallback to CSS transform approach
+      setLandscapeFallback(true);
+    }
+  }
+
+  function unlockLandscapeFallback() {
+    try {
+      if ((screen as any).orientation && (screen as any).orientation.unlock) {
+        (screen as any).orientation.unlock();
+      }
+    } catch (e) {}
+    setLandscapeFallback(false);
+  }
+
   function start() {
     setRunning(true);
     if (focusGuard && document.fullscreenElement == null) {
@@ -165,6 +197,7 @@ export const PomodoroTimer: React.FC<{ focusMusic?: boolean }> = ({ focusMusic =
     setRunning(false);
     switchMode("work");
     setCycles(0);
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
   }
 
   useEffect(() => {
@@ -176,105 +209,156 @@ export const PomodoroTimer: React.FC<{ focusMusic?: boolean }> = ({ focusMusic =
     return () => window.removeEventListener("keydown", onKey, { capture: true } as any);
   }, [running]);
 
+  useEffect(() => {
+    const onFull = async () => {
+      const fs = !!document.fullscreenElement;
+      setIsFullscreen(fs);
+      if (fs && focusGuard && running) {
+        await attemptLockLandscape();
+        // if orientation lock not available, add a body class to apply CSS fallback
+        if (landscapeFallback) {
+          document.body.classList.add("pomodoro-force-landscape");
+        }
+      } else {
+        try {
+          unlockLandscapeFallback();
+        } catch {}
+        document.body.classList.remove("pomodoro-force-landscape");
+      }
+    };
+    document.addEventListener("fullscreenchange", onFull);
+    return () => document.removeEventListener("fullscreenchange", onFull);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusGuard, running, landscapeFallback]);
+
   const pct = useMemo(() => {
     const total =
       mode === "work" ? DEFAULTS.work * 60 : mode === "short" ? DEFAULTS.short * 60 : DEFAULTS.long * 60;
     return 100 - Math.floor((totalSeconds / total) * 100);
   }, [mode, totalSeconds]);
 
+  const minutesText = String(minutes).padStart(2, "0");
+  const secondsText = String(seconds).padStart(2, "0");
+
+  // Determine if we should render minimal focus UI: running + focusGuard + fullscreen active
+  const minimalFocus = running && focusGuard && isFullscreen;
+
   return (
     <div className="relative">
-      {screenDim && running && (
+      {screenDim && running && !minimalFocus && (
         <div className="fixed inset-0 z-10 bg-background/95" />
       )}
-      <div className={cn("relative z-20", screenDim && running ? "fixed inset-0 flex items-center justify-center" : "")}>
-        <div className="w-full max-w-sm mx-auto">
-          <div className="flex justify-center gap-2 mb-4">
+      <div className={cn("relative z-20", screenDim && running && !minimalFocus ? "fixed inset-0 flex items-center justify-center" : "")}> 
+        {/* Fullscreen minimal focus mode */}
+        {minimalFocus ? (
+          <div className="pomodoro-fullscreen-container fixed inset-0 z-[1000] flex items-center justify-center bg-background text-foreground">
             <button
-              onClick={() => switchMode("work")}
-              className={cn(
-                "px-3 py-1 rounded-full text-sm border",
-                mode === "work" ? "bg-primary text-primary-foreground" : "bg-secondary"
-              )}
+              aria-label="Çıkış"
+              onClick={() => {
+                // exit fullscreen but keep running
+                if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+                setIsFullscreen(false);
+              }}
+              className="absolute top-4 right-4 z-[1100] rounded-full bg-muted px-3 py-2"
             >
-              Odak
+              Çıkış
             </button>
-            <button
-              onClick={() => switchMode("short")}
-              className={cn(
-                "px-3 py-1 rounded-full text-sm border",
-                mode === "short" ? "bg-primary text-primary-foreground" : "bg-secondary"
-              )}
-            >
-              Kısa Mola
-            </button>
-            <button
-              onClick={() => switchMode("long")}
-              className={cn(
-                "px-3 py-1 rounded-full text-sm border",
-                mode === "long" ? "bg-primary text-primary-foreground" : "bg-secondary"
-              )}
-            >
-              Uzun Mola
-            </button>
-          </div>
 
-          <div className="aspect-square rounded-3xl border flex items-center justify-center bg-gradient-to-br from-card to-muted relative overflow-hidden">
-            <svg className="absolute inset-0 -rotate-90" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="46" className="stroke-muted" strokeWidth="6" fill="none" />
-              <circle
-                cx="50"
-                cy="50"
-                r="46"
-                className="stroke-primary"
-                strokeWidth="6"
-                fill="none"
-                strokeDasharray={`${Math.PI * 2 * 46}`}
-                strokeDashoffset={`${((100 - pct) / 100) * Math.PI * 2 * 46}`}
-                strokeLinecap="round"
-              />
-            </svg>
-            <div className="text-center">
-              <div className="text-5xl tabular-nums font-bold">
-                {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
-              </div>
-              <p className="text-sm text-muted-foreground capitalize mt-1">
-                {mode === "work" ? "Odaklan" : mode === "short" ? "Kısa mola" : "Uzun mola"}
-              </p>
+            <div className="text-center px-6">
+              <div className="text-[8vw] tabular-nums font-bold leading-none">{minutesText}:{secondsText}</div>
+              {goal && <p className="mt-4 text-lg text-muted-foreground">{goal}</p>}
             </div>
           </div>
-
-          <div className="grid grid-cols-3 gap-2 mt-4">
-            {!running ? (
-              <button onClick={start} className="col-span-2 py-3 rounded-xl bg-primary text-primary-foreground font-semibold">
-                Başlat
+        ) : (
+          <div className="w-full max-w-sm mx-auto">
+            <div className="flex justify-center gap-2 mb-4">
+              <button
+                onClick={() => switchMode("work")}
+                className={cn(
+                  "px-3 py-1 rounded-full text-sm border",
+                  mode === "work" ? "bg-primary text-primary-foreground" : "bg-secondary"
+                )}
+              >
+                Odak
               </button>
-            ) : (
-              <button onClick={pause} className="col-span-2 py-3 rounded-xl bg-secondary font-semibold">
-                Duraklat
+              <button
+                onClick={() => switchMode("short")}
+                className={cn(
+                  "px-3 py-1 rounded-full text-sm border",
+                  mode === "short" ? "bg-primary text-primary-foreground" : "bg-secondary"
+                )}
+              >
+                Kısa Mola
               </button>
-            )}
-            <button onClick={reset} className="py-3 rounded-xl border font-semibold">
-              Sıfırla
-            </button>
-          </div>
+              <button
+                onClick={() => switchMode("long")}
+                className={cn(
+                  "px-3 py-1 rounded-full text-sm border",
+                  mode === "long" ? "bg-primary text-primary-foreground" : "bg-secondary"
+                )}
+              >
+                Uzun Mola
+              </button>
+            </div>
 
-          <div className="mt-4 space-y-2">
-            <label className="flex items-center justify-between py-2 px-3 border rounded-xl">
-              <span className="text-sm">Dikkat kalkanı (tam ekran)</span>
-              <input type="checkbox" checked={focusGuard} onChange={(e) => setFocusGuard(e.target.checked)} />
-            </label>
-            <label className="flex items-center justify-between py-2 px-3 border rounded-xl">
-              <span className="text-sm">Ekranı sadeleştir</span>
-              <input type="checkbox" checked={screenDim} onChange={(e) => setScreenDim(e.target.checked)} />
-            </label>
+            <div className="aspect-square rounded-3xl border flex items-center justify-center bg-gradient-to-br from-card to-muted relative overflow-hidden">
+              <svg className="absolute inset-0 -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="46" className="stroke-muted" strokeWidth="6" fill="none" />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="46"
+                  className="stroke-primary"
+                  strokeWidth="6"
+                  fill="none"
+                  strokeDasharray={`${Math.PI * 2 * 46}`}
+                  strokeDashoffset={`${((100 - pct) / 100) * Math.PI * 2 * 46}`}
+                  strokeLinecap="round"
+                />
+              </svg>
+              <div className="text-center">
+                <div className="text-5xl tabular-nums font-bold">
+                  {minutesText}:{secondsText}
+                </div>
+                <p className="text-sm text-muted-foreground capitalize mt-1">
+                  {mode === "work" ? "Odaklan" : mode === "short" ? "Kısa mola" : "Uzun mola"}
+                </p>
+                {goal && <p className="mt-2 text-xs text-muted-foreground">Hedef: {goal}</p>}
+              </div>
+            </div>
 
-            <label className="flex items-center justify-between py-2 px-3 border rounded-xl">
-              <span className="text-sm">Odak sesi (düşük)</span>
-              <input type="checkbox" checked={musicOn || focusMusic} onChange={(e) => setMusicOn(e.target.checked)} />
-            </label>
+            <div className="grid grid-cols-3 gap-2 mt-4">
+              {!running ? (
+                <button onClick={start} className="col-span-2 py-3 rounded-xl bg-primary text-primary-foreground font-semibold">
+                  Başlat
+                </button>
+              ) : (
+                <button onClick={pause} className="col-span-2 py-3 rounded-xl bg-secondary font-semibold">
+                  Duraklat
+                </button>
+              )}
+              <button onClick={reset} className="py-3 rounded-xl border font-semibold">
+                Sıfırla
+              </button>
+            </div>
+
+            <div className="mt-4 space-y-2">
+              <label className="flex items-center justify-between py-2 px-3 border rounded-xl">
+                <span className="text-sm">Dikkat kalkanı (tam ekran)</span>
+                <input type="checkbox" checked={focusGuard} onChange={(e) => setFocusGuard(e.target.checked)} />
+              </label>
+              <label className="flex items-center justify-between py-2 px-3 border rounded-xl">
+                <span className="text-sm">Ekranı sadeleştir</span>
+                <input type="checkbox" checked={screenDim} onChange={(e) => setScreenDim(e.target.checked)} />
+              </label>
+
+              <label className="flex items-center justify-between py-2 px-3 border rounded-xl">
+                <span className="text-sm">Odak sesi (düşük)</span>
+                <input type="checkbox" checked={musicOn || focusMusic} onChange={(e) => setMusicOn(e.target.checked)} />
+              </label>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
