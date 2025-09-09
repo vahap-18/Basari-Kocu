@@ -43,7 +43,7 @@ export const PersonalityTest: React.FC<{
   onComplete?: (p: PersonalityProfile) => void;
   onClose?: () => void;
   examMode?: boolean;
-  onStepChange?: (step:number, total:number)=>void;
+  onStepChange?: (step: number, total: number) => void;
 }> = ({ onComplete, onClose, examMode = false, onStepChange }) => {
   const [answers, setAnswers] = useState<Record<string, number>>(() => ({}));
   const [step, setStep] = useState(0);
@@ -78,28 +78,30 @@ export const PersonalityTest: React.FC<{
   }
 
   // expose step changes
-  React.useEffect(()=>{
+  React.useEffect(() => {
     onStepChange?.(step, QUESTIONS.length);
-  },[step, onStepChange]);
+  }, [step, onStepChange]);
 
   // keep a ref for step to avoid re-registering keyboard listener on every render
   const stepRef = React.useRef(step);
-  React.useEffect(()=>{ stepRef.current = step; }, [step]);
+  React.useEffect(() => {
+    stepRef.current = step;
+  }, [step]);
 
   // keyboard navigation for exam mode (stable listener)
-  React.useEffect(()=>{
-    const onKey = (e: KeyboardEvent)=>{
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
       if (/^[1-5]$/.test(e.key)) {
         const v = Number(e.key);
         const q = QUESTIONS[stepRef.current];
-        if(q) setAnswer(q.id, v);
+        if (q) setAnswer(q.id, v);
       }
     };
-    window.addEventListener('keydown', onKey);
-    return ()=> window.removeEventListener('keydown', onKey);
-  },[]);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   function finish() {
     const scores: Record<string, number> = {};
@@ -174,20 +176,36 @@ export const PersonalityTest: React.FC<{
       >
         <div className="flex items-center justify-between mb-3">
           <div>
-            <h3 className="text-xl font-bold">{examMode ? `Sınav — ${step + 1}/${QUESTIONS.length}` : `Kişilik Testi — ${step + 1}/${QUESTIONS.length} ✨`}</h3>
+            <h3 className="text-xl font-bold">
+              {examMode
+                ? `Sınav — ${step + 1}/${QUESTIONS.length}`
+                : `Kişilik Testi — ${step + 1}/${QUESTIONS.length} ✨`}
+            </h3>
             {!examMode && (
               <p className="text-sm text-muted-foreground">
-                Her soru ayrı kartta — kısa ve animasyonlu. Tamamlandığında kişisel stratejin hazırlanır.
+                Her soru ayrı kartta — kısa ve animasyonlu. Tamamlandığında
+                kişisel stratejin hazırlanır.
               </p>
             )}
           </div>
-          <div className="text-sm text-muted-foreground">{new Array(step).fill(0).map((_, i) => "•")}</div>
+          <div className="text-sm text-muted-foreground">
+            {new Array(step).fill(0).map((_, i) => "•")}
+          </div>
         </div>
 
         <div className="mb-4">
-          <div className={"p-4 rounded-xl border " + (examMode ? 'bg-transparent' : 'bg-background')}>
+          <div
+            className={
+              "p-4 rounded-xl border " +
+              (examMode ? "bg-transparent" : "bg-background")
+            }
+          >
             <p className="font-medium text-lg text-center">{q.text}</p>
-            <div className={"flex gap-2 mt-3 text-sm " + (examMode ? 'justify-center' : '')}>
+            <div
+              className={
+                "flex gap-2 mt-3 text-sm " + (examMode ? "justify-center" : "")
+              }
+            >
               {[1, 2, 3, 4, 5].map((v) => (
                 <button
                   key={v}
@@ -238,7 +256,7 @@ export const PersonalityTest: React.FC<{
                   onClick={finish}
                   className="px-4 py-2 rounded-lg bg-primary text-primary-foreground"
                 >
-                  {examMode ? 'Tamamla' : 'Testi Tamamla ✅'}
+                  {examMode ? "Tamamla" : "Testi Tamamla ✅"}
                 </button>
               </>
             )}
