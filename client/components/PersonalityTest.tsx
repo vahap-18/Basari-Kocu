@@ -82,20 +82,24 @@ export const PersonalityTest: React.FC<{
     onStepChange?.(step, QUESTIONS.length);
   },[step, onStepChange]);
 
-  // keyboard navigation for exam mode
+  // keep a ref for step to avoid re-registering keyboard listener on every render
+  const stepRef = React.useRef(step);
+  React.useEffect(()=>{ stepRef.current = step; }, [step]);
+
+  // keyboard navigation for exam mode (stable listener)
   React.useEffect(()=>{
     const onKey = (e: KeyboardEvent)=>{
       if (e.key === 'ArrowLeft') prev();
       if (e.key === 'ArrowRight') next();
       if (/^[1-5]$/.test(e.key)) {
         const v = Number(e.key);
-        const q = QUESTIONS[step];
-        setAnswer(q.id, v);
+        const q = QUESTIONS[stepRef.current];
+        if(q) setAnswer(q.id, v);
       }
     };
     window.addEventListener('keydown', onKey);
     return ()=> window.removeEventListener('keydown', onKey);
-  });
+  },[]);
 
   function finish() {
     const scores: Record<string, number> = {};
