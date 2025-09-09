@@ -133,6 +133,11 @@ export default function Index() {
           </div>
         </section>
 
+        <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
+          <SmallCalendarCard />
+          <TaskReminderCard />
+        </section>
+
         <section>
           {/* Motivation card from shared data */}
           <div>
