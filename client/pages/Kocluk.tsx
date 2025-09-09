@@ -647,7 +647,7 @@ function TestsSection() {
     (_, i) => `Duygusal zeka sorusu ${i + 1}.`,
   );
   const nbackQuestions = Array.from({ length: 10 }).map(
-    (_, i) => `İşlem belleği sorusu ${i + 1} (e��leşme var mı?).`,
+    (_, i) => `İşlem belleği sorusu ${i + 1} (eşleşme var mı?).`,
   );
   const stroopQuestions = Array.from({ length: 10 }).map(
     (_, i) => `Stroop testi maddesi ${i + 1} (renk/kelime uyumu).`,
@@ -725,7 +725,7 @@ function TestsSection() {
             answers.reduce((a, b) => a + b, 0) / answers.length,
           ),
           scoreText: `${Math.round(answers.reduce((a, b) => a + b, 0) / answers.length)}/5`,
-          interpretation: "Davranış eğilimleri gösterildi.",
+          interpretation: "Davran��ş eğilimleri gösterildi.",
         })}
       />
 
@@ -1031,7 +1031,7 @@ function TestGrit({ open, setOpen, saveTest }: any) {
         ? "Yüksek grit: hedef odaklı ve ısrarcı."
         : avg === 3
           ? "Orta seviye grit."
-          : "Daha fazla kararlılık çal��şması faydalı olabilir.";
+          : "Daha fazla kararlılık çalışması faydalı olabilir.";
     saveTest(key, {
       name: "Grit (Kısa)",
       score: avg,
@@ -1105,7 +1105,7 @@ function Test2Back({ open, setOpen, saveTest }: any) {
       correct >= 4
         ? "Çok iyi çalışma belleği performansı."
         : correct >= 2
-          ? "Orta seviye çalışma belleği."
+          ? "Orta seviye çalı��ma belleği."
           : "Çalışma belleğini güçlendirecek oyunlar faydalı.";
     saveTest(key, {
       name: "2-Back Kısa",
