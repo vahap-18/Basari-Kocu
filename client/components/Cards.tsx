@@ -77,7 +77,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
   return (
     <div className={"p-4 rounded-2xl border bg-card shadow-md transform transition-all hover:scale-[1.02] " + className}>
       <div className="flex items-start gap-3 mb-2">
-        <div className="text-2xl">✨</div>
+        <div className="w-10 h-10 rounded-md flex items-center justify-center text-xl font-semibold" style={{ background: 'hsl(var(--primary) / 0.12)', color: 'hsl(var(--primary))' }}>✨</div>
         <div className="flex-1">{children}</div>
       </div>
     </div>
