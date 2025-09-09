@@ -94,7 +94,7 @@ function Card({
   return (
     <div
       className={
-        "p-4 rounded-2xl border bg-card shadow-md transform transition-all hover:scale-[1.02] " +
+        "p-4 rounded-2xl border bg-card shadow-sm transition-colors " +
         className
       }
     >
