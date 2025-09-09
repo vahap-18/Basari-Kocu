@@ -17,26 +17,34 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <ThemeProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/pomodoro" element={<Pomodoro />} />
-            <Route path="/kocluk" element={<Kocluk />} />
-            <Route path="/teknikler" element={<Teknikler />} />
-            <Route path="/ayarlar" element={<Ayarlar />} />
-            <Route path="/test/personality" element={<PersonalityExam />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  React.useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <ThemeProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/pomodoro" element={<Pomodoro />} />
+              <Route path="/kocluk" element={<Kocluk />} />
+              <Route path="/teknikler" element={<Teknikler />} />
+              <Route path="/ayarlar" element={<Ayarlar />} />
+              <Route path="/test/personality" element={<PersonalityExam />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </ThemeProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 createRoot(document.getElementById("root")!).render(<App />);
