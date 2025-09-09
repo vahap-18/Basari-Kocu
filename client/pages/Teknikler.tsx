@@ -160,7 +160,7 @@ const TECHNIQUES = [
     emoji: "⏳",
     difficulty: "Kolay",
     time: "Zaman kutuları",
-    story: "Süre sınırı koyan ö��renci, aynı işi daha hızlı ve odaklı yaptı.",
+    story: "Süre sınırı koyan öğrenci, aynı işi daha hızlı ve odaklı yaptı.",
     what: "İş, kendisine verilen zamanı doldurma eğilimindedir; sınır koymak verimlidir.",
     how: ["Görevlere süre sınırı koy.", "Kısa hedeflerle çalış."],
     motivation: "Süre sınırlamaları seni daha üretken yapar — deneyin.",
