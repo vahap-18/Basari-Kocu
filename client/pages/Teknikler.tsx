@@ -169,7 +169,7 @@ const TECHNIQUES = [
   {
     id: "murphy",
     title: "Murphy Kanunu",
-    emoji: "⚠️",
+    emoji: "���️",
     difficulty: "Kolay",
     time: "Hazırlık planı",
     story:
@@ -357,7 +357,7 @@ const TECHNIQUES = [
     time: "Problem çözme",
     story: "Basit çözümü tercih eden öğrenci daha hızlı sonuca ulaştı.",
     what: "Gereksiz varsayımları eleyip en basit açıklamayı seçme ilkesi.",
-    how: ["Çöz��mü basitleştir.", "Önce temel nedenleri sorgula."],
+    how: ["Çözümü basitleştir.", "Önce temel nedenleri sorgula."],
     motivation: "Basitlik genelde en etkili yoldur.",
     visual: { icon: "🪒", color: "#111827", shape: "line" },
   },
