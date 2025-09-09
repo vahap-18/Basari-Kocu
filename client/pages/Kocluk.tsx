@@ -390,7 +390,14 @@ function TestsSection() {
                   {[1,2,3,4,5].map((n)=> (
                     <button
                       key={n}
-                      onClick={() => setAnswers((a)=>{ const na = [...a]; na[index]=n; return na; })}
+                      onClick={() => {
+                        setAnswers((a)=>{ const na = [...a]; na[index]=n; return na; });
+                        // auto-advance after brief delay
+                        if(index < questions.length - 1){
+                          window.clearTimeout((autoAdvanceRef as any).current);
+                          (autoAdvanceRef as any).current = window.setTimeout(() => setIndex(i => Math.min(questions.length -1, i+1)), 220);
+                        }
+                      }}
                       className={"py-4 rounded-xl text-lg font-semibold border transition-colors " + (answers[index]===n ? 'bg-primary text-primary-foreground' : 'bg-background')}
                     >
                       {n}
