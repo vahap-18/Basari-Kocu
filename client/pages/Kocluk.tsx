@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MobileLayout } from "@/components/MobileLayout";
 import { AICoach } from "@/components/AICoach";
+import { CoachOnboarding } from "@/components/CoachOnboarding";
 import { BarChart2, Sparkles, Star, Activity } from "lucide-react";
 
 const QUOTES = [
