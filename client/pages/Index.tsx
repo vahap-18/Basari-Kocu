@@ -115,7 +115,7 @@ export default function Index() {
           </Link>
           <Link to="/kocluk" className="p-4 rounded-2xl border hover:border-primary transition-colors">
             <p className="text-xs text-muted-foreground">Motivasyon</p>
-            <h3 className="text-lg font-semibold">Koçluk</h3>
+            <h3 className="text-lg font-semibold">💬 Koçluk</h3>
           </Link>
           <Link to="/teknikler" className="p-4 rounded-2xl border hover:border-primary transition-colors">
             <p className="text-xs text-muted-foreground">Yöntemler</p>
