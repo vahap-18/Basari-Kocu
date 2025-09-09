@@ -122,6 +122,39 @@ export default function Index() {
         </section>
 
         <section className="p-4 rounded-2xl border">
+          <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
+          <div className="grid grid-cols-1 gap-3">
+            <div>
+              <p className="text-sm text-muted-foreground">Etkili yöntemleri keşfedin ve çalışma rutininize uygulayın.</p>
+            </div>
+            <div className="grid grid-cols-1 gap-3">
+              <div className="flex flex-col gap-3">
+                <div className="grid grid-cols-1 gap-3">
+                  {/* Cards */}
+                  <div className="grid grid-cols-1 gap-3">
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-3 gap-3">
+                        <div className="col-span-3">
+                          {/* Use cards as compact blocks */}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 gap-3">
+            <div className="col-span-1">
+              {/* History/Uplift/Techniques cards will go here */}
+            </div>
+          </div>
+        </section>
+
+        <section className="p-4 rounded-2xl border">
           <h3 className="font-semibold mb-2">Bugünkü görevler</h3>
           <QuickTasks />
         </section>
