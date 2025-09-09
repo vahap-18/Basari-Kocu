@@ -51,6 +51,15 @@ export const PersonalityTest: React.FC<{
 
   function setAnswer(id: string, value: number) {
     setAnswers((s) => ({ ...s, [id]: value }));
+    // auto advance in exam mode
+    if (examMode) {
+      setAnimClass("animate-slide-left");
+      setTimeout(() => {
+        if (step < QUESTIONS.length - 1) setStep((s) => s + 1);
+        else finish();
+      }, 220);
+      setTimeout(() => setAnimClass(""), 500);
+    }
   }
 
   function next() {
@@ -67,6 +76,26 @@ export const PersonalityTest: React.FC<{
       setTimeout(() => setAnimClass(""), 500);
     }
   }
+
+  // expose step changes
+  React.useEffect(()=>{
+    onStepChange?.(step, QUESTIONS.length);
+  },[step, onStepChange]);
+
+  // keyboard navigation for exam mode
+  React.useEffect(()=>{
+    const onKey = (e: KeyboardEvent)=>{
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+      if (/^[1-5]$/.test(e.key)) {
+        const v = Number(e.key);
+        const q = QUESTIONS[step];
+        setAnswer(q.id, v);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return ()=> window.removeEventListener('keydown', onKey);
+  });
 
   function finish() {
     const scores: Record<string, number> = {};
