@@ -12,6 +12,7 @@ import Pomodoro from "./pages/Pomodoro";
 import Kocluk from "./pages/Kocluk";
 import Teknikler from "./pages/Teknikler";
 import Ayarlar from "./pages/Ayarlar";
+import PersonalityExam from "./pages/PersonalityExam";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const queryClient = new QueryClient();
