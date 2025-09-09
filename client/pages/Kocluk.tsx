@@ -202,7 +202,7 @@ export default function KoclukPage() {
               <h4 className="font-semibold mb-2">Kısa İpuçları</h4>
               <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                 <li>En zor konuları sabah saatlerine koyun.</li>
-                <li>Pomodoro sürelerini profilinize göre ayarlayın.</li>
+                <li>Pomodoro sürelerini profilinize göre ayarlay��n.</li>
                 <li>Günlük hedeflerinizi 2–3 maddede sınırlayın.</li>
                 <li>Nefes egzersizleriyle dikkat toplama süresini %20 artırabilirsiniz.</li>
               </ul>
@@ -337,6 +337,10 @@ function TestsSection() {
     }
 
     const unansweredCount = answers.filter((v) => v === 0).length;
+
+    React.useEffect(() => {
+      if (isOpen) setAnswers(Array(questions.length).fill(0));
+    }, [isOpen, questions.length]);
 
     return (
       <div className="p-3 rounded-2xl border bg-card">
