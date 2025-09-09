@@ -10,7 +10,7 @@ const TECHNIQUES = [
     difficulty: "Kolay",
     time: "İlk 24 saat kritik",
     story:
-      "Sınavdan sonra bir öğrenci notlarını g��zden geçirmeyince bir hafta içinde büyük kısmını unuttu.",
+      "Sınavdan sonra bir öğrenci notlarını gözden geçirmeyince bir hafta içinde büyük kısmını unuttu.",
     what: "Zamanla unutma hızını gösteren eğri; erken tekrarlar bilgiyi kurtarır.",
     how: [
       "İlk 24 saatte kısa tekrar yap.",
@@ -70,7 +70,7 @@ const TECHNIQUES = [
       "Kritik konuları oturum başı/sonuna yerleştir.",
       "Önemli notları tekrarında vurgula.",
     ],
-    motivation: "Doğru yerleştirme ile hatırlama şansını artırırsın.",
+    motivation: "Doğru yerleştirme ile hat��rlama şansını artırırsın.",
     visual: { icon: "🧾", color: "#F59E0B", shape: "bookmark" },
   },
   {
@@ -100,7 +100,7 @@ const TECHNIQUES = [
     what: "Duygu ile bağlantılı öğrenme, bilgiyi daha güçlü ve kalıcı kılar.",
     how: [
       "Konuya kişisel örnekler bağla.",
-      "Anlatırken duygusal çağrışımlar kullan.",
+      "Anlatırken duygusal çağrış��mlar kullan.",
     ],
     motivation: "Duyguyla bağlanınca öğrenme daha anlamlı olur.",
     visual: { icon: "❤️", color: "#EC4899", shape: "heart" },
