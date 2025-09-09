@@ -10,7 +10,7 @@ const TECHNIQUES = [
     difficulty: "Kolay",
     time: "İlk 24 saat kritik",
     story:
-      "Sınavdan sonra bir öğrenci notlarını gözden geçirmeyince bir hafta içinde büyük kısmını unuttu.",
+      "Sınavdan sonra bir öğrenci notlarını gözden geçirmeyince bir hafta içinde büyük kısmın�� unuttu.",
     what: "Zamanla unutma hızını gösteren eğri; erken tekrarlar bilgiyi kurtarır.",
     how: [
       "İlk 24 saatte kısa tekrar yap.",
@@ -200,7 +200,7 @@ const TECHNIQUES = [
   // 13-17 Study Techniques
   {
     id: "pomodoro",
-    title: "Pomodoro Tekniği",
+    title: "Pomodoro Tekni��i",
     emoji: "⏳",
     difficulty: "Kolay",
     time: "25/5 veya 50/10",
@@ -262,7 +262,7 @@ const TECHNIQUES = [
     difficulty: "Kolay",
     time: "Hedef takibi",
     story: "Hedefe yaklaştıkça bir öğrenci daha hızlı çalışmaya başladı.",
-    what: "Hedefe yaklaş��ldıkça motivasyon artma etkisi.",
+    what: "Hedefe yaklaşıldıkça motivasyon artma etkisi.",
     how: ["Hedefleri küçük aşamalara böl.", "İlerlemeni görünür kıl."],
     motivation: "İlerlemeni görmek hızlandırır — küçük kilometre taşları koy.",
     visual: { icon: "🏁", color: "#10B981", shape: "flag" },
@@ -422,7 +422,7 @@ const TECHNIQUES = [
     story:
       "Başlayan öğrenci kısa sürede hız kazandı ve düzenli çalışmaya geçti.",
     what: "Başlamak en zor, devam etmek momentum getirir.",
-    how: ["Küçük başlangıç hedefleri koy.", "Sürekli ayn�� saatte çalış."],
+    how: ["Küçük başlangıç hedefleri koy.", "Sürekli aynı saatte çalış."],
     motivation: "Başlamak, başarıya giden en büyük adımdır.",
     visual: { icon: "🚀", color: "#06B6D4", shape: "rocket" },
   },
