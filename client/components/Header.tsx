@@ -12,8 +12,8 @@ const themeOptions: { key: ThemeKey; label: string }[] = [
   { key: "lider", label: "Lider" },
   { key: "korkusuz", label: "Korkusuz" },
   { key: "bilge", label: "Bilge" },
-  { key: "kiz", label: "Pembe" },
-  { key: "erkek", label: "Mavi" },
+  { key: "kiz", label: "Aurora" },
+  { key: "erkek", label: "Sapphire" },
 ];
 
 export const Header: React.FC = () => {
