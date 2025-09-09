@@ -1,6 +1,7 @@
 import React from "react";
 import { Header } from "@/components/Header";
 import { BottomNav } from "@/components/BottomNav";
+import { InfoFab } from "@/components/InfoFab";
 
 export const MobileLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
