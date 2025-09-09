@@ -44,7 +44,6 @@ const LAWS = [
   { name: "Zeigarnik Etkisi", text: "Tamamlanmamış işler zihninizde daha çok yer edinir; küçük tamamlanabilir görevler yaratın ve bitirdikçe motivasyonunuz artar." },
 ];
 
-
 const HISTORY_MAP: Record<string, string[]> = {
   "01-01": ["1801: Richard Trevithick ilk buhar lokomotifini icat etti."],
   "03-14": ["1879: Albert Einstein doğdu (14 Mart)."],
@@ -74,7 +73,7 @@ export const StudyTechniquesCard: React.FC = () => {
       <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
       <p className="text-sm text-muted-foreground mb-3">Temel tekniklerin özetleri burada. Detaylı rehber için Teknikler sayfasına gidin.</p>
       <ul className="space-y-2 text-sm text-muted-foreground">
-        {STUDY_TECHNIQUES.slice(0,3).map((s) => (
+        {STUDY_TECHNIQUES.slice(0, 3).map((s) => (
           <li key={s.title}>
             <div className="font-medium">• {s.title}</div>
             <div className="text-sm text-muted-foreground">{s.desc}</div>
@@ -126,7 +125,10 @@ export const UpliftingCard: React.FC = () => {
         <h3 className="font-semibold mb-2">Kendini İyi Hisset</h3>
         <button onClick={randomize} className="text-xs px-2 py-1 rounded-md border">Değiştir</button>
       </div>
-      <p className="text-lg">“{UPLIFTINGS[idx]}”</p>
+      <div className="flex items-center gap-3">
+        <img src="https://media.giphy.com/media/l0HlJz2s5k0s7b9Wk/giphy.gif" alt="uplift" className="w-16 h-16 rounded-md" />
+        <p className="text-lg">“{UPLIFTINGS[idx]}”</p>
+      </div>
     </Card>
   );
 };
@@ -146,69 +148,10 @@ export const MotivationCard: React.FC = () => {
         <h3 className="font-semibold mb-2">Günün Motivasyonu</h3>
         <button onClick={randomize} className="text-xs px-2 py-1 rounded-md border">Değiştir</button>
       </div>
-      <p className="text-sm text-muted-foreground">{MOTIVATIONS[idx]}</p>
-    </Card>
-  );
-};
-
-export const HistoryTodayCard: React.FC = () => {
-  const events = getHistoryForToday();
-  return (
-    <Card className="animate-slide-up">
-      <h3 className="font-semibold mb-2">Tarihte Bugün</h3>
-      <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-        {events.map((e, i) => (
-          <li key={i}>{e}</li>
-        ))}
-      </ul>
-    </Card>
-  );
-};
-
-export const UpliftingCard: React.FC = () => {
-  const key = "uplifting-daily-index";
-  const [idx, setIdx] = useState(() => pickDailyIndex(UPLIFTINGS.length, key));
-  useEffect(() => {
-    // refresh if date changes
-    const id = setInterval(() => {
-      const current = pickDailyIndex(UPLIFTINGS.length, key);
-      setIdx(current);
-    }, 60_000);
-    return () => clearInterval(id);
-  }, []);
-
-  function randomize() {
-    const n = pickRandomAndStore(UPLIFTINGS.length, key);
-    setIdx(n);
-  }
-
-  return (
-    <Card className="animate-fade-in">
-      <div className="flex items-start justify-between">
-        <h3 className="font-semibold mb-2">Kendini İyi Hisset</h3>
-        <button onClick={randomize} className="text-xs px-2 py-1 rounded-md border">Değiştir</button>
+      <div className="flex items-center gap-3">
+        <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="sparkle" className="w-16 h-16 rounded-md" />
+        <p className="text-sm text-muted-foreground">{MOTIVATIONS[idx]} ✨</p>
       </div>
-      <p className="text-lg">“{UPLIFTINGS[idx]}”</p>
-    </Card>
-  );
-};
-
-export const MotivationCard: React.FC = () => {
-  const key = "motivation-daily-index";
-  const [idx, setIdx] = useState(() => pickDailyIndex(MOTIVATIONS.length, key));
-
-  function randomize() {
-    const n = pickRandomAndStore(MOTIVATIONS.length, key);
-    setIdx(n);
-  }
-
-  return (
-    <Card className="animate-pop">
-      <div className="flex items-start justify-between">
-        <h3 className="font-semibold mb-2">Günün Motivasyonu</h3>
-        <button onClick={randomize} className="text-xs px-2 py-1 rounded-md border">Değiştir</button>
-      </div>
-      <p className="text-sm text-muted-foreground">{MOTIVATIONS[idx]}</p>
     </Card>
   );
 };
