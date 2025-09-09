@@ -26,9 +26,9 @@ export default function PersonalityExamPage(){
     }
   },[secondsLeft]);
 
-  function onStepChange(step:number,total:number){
+  const onStepChange = React.useCallback((step:number,total:number)=>{
     setProgress({step: step+1, total});
-  }
+  }, [setProgress]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-card to-background flex flex-col">
