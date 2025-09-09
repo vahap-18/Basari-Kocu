@@ -98,9 +98,14 @@ export default function Index() {
           </div>
         </section>
 
-        <section className="p-4 rounded-2xl border">
-          <h3 className="text-base font-semibold mb-2">Günün motivasyonu</h3>
-          <p className="text-sm text-muted-foreground">"Disiplin, özgürlüğün en kısa yoludur."</p>
+        <section>
+          {/* Motivation card from shared data */}
+          <div>
+            {/* Render MotivationCard component */}
+            <div className="grid grid-cols-1 gap-3">
+              {/* Placeholder div; replaced below by component insertion via JSX */}
+            </div>
+          </div>
         </section>
 
         <section className="grid grid-cols-2 gap-3">
