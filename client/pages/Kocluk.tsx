@@ -357,11 +357,16 @@ function TestsSection() {
       try { window.dispatchEvent(new CustomEvent('tests-updated', { detail: { type: 'scientific-tests', data: JSON.parse(localStorage.getItem('scientific-tests') || '{}') } })); } catch {}
     }
 
+    const autoAdvanceRef = React.useRef<number | null>(null as any);
+
     React.useEffect(() => {
       if (isOpen) {
         setAnswers(Array(questions.length).fill(0));
         setIndex(0);
       }
+      return () => {
+        if ((autoAdvanceRef as any).current) window.clearTimeout((autoAdvanceRef as any).current);
+      };
     }, [isOpen, questions.length]);
 
     const answeredCount = answers.filter(Boolean).length;
