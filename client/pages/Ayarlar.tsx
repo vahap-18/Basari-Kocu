@@ -3,6 +3,30 @@ import { MobileLayout } from "@/components/MobileLayout";
 import { useTheme, type ThemeKey } from "@/components/ThemeProvider";
 import { PersonalityTest } from "@/components/PersonalityTest";
 
+function getEmojiForDominant(d: string) {
+  const map: Record<string,string> = {
+    focus: '🧠', procrastinate: '⏳', resilience: '💪', social: '🤝', structure: '📋', curiosity: '🔎', stress: '🌬️', leadership: '🌟'
+  };
+  return map[d] ?? '✨';
+}
+
+function getInterpretation(profile: any) {
+  if (!profile) return '';
+  const dominant = profile.dominant;
+  const lines: Record<string,string> = {
+    focus: 'Odak becerilerin güçlü; uzun çalışma bloklarını dene, ama aralarda kısa molalar eklemeyi unutma.',
+    procrastinate: 'Erteleme eğilimin var; küçük günlük hedefler ve zaman sınırlamaları oluştur. Pomodoro gibi teknikler yardımcı olur.',
+    resilience: 'Zorluklara karşı dayanıklısın; zor konularda ısrarla çalış ve hataları öğrenme fırsatı olarak gör.',
+    social: 'Tartışma ve çalışma grupları sana iyi gelir; konuları başkalarına anlatmak öğrenmeni hızlandırır.',
+    structure: 'Planlı ve disiplinlisin; haftalık plan ve kontrol listeleri ile verimini daha da arttırabilirsin.',
+    curiosity: 'Merakın güçlü; derinlemesine kaynak taramaları ve projeler seni motive eder.',
+    stress: 'Sınav kaygısı seni etkileyebilir; deneme sınavları ve gevşeme teknikleriyle kaygıyı yönet.',
+    leadership: 'Sorumluluk almayı seviyorsun; grup çalışmaları ve öğreten rollerde öne çıkabilirsin.'
+  };
+  const text = lines[dominant] ?? `Öne çıkan: ${dominant}.`;
+  return text + ' ' + (profile.summary ?? '');
+}
+
 const themes: { key: ThemeKey; label: string; preview: string[] }[] = [
   { key: "acik", label: "Açık", preview: ["#111827", "#3b82f6", "#e5e7eb"] },
   { key: "koyu", label: "Koyu", preview: ["#f9fafb", "#60a5fa", "#111827"] },
@@ -13,8 +37,8 @@ const themes: { key: ThemeKey; label: string; preview: string[] }[] = [
   { key: "lider", label: "Lider", preview: ["#0f172a", "#8b5cf6", "#dbeafe"] },
   { key: "korkusuz", label: "Korkusuz", preview: ["#0f172a", "#f43f5e", "#fee2e2"] },
   { key: "bilge", label: "Bilge", preview: ["#0f172a", "#10b981", "#a7f3d0"] },
-  { key: "kiz", label: "Kız Teması", preview: ["#fff1f2", "#f43f5e", "#fbcfe8"] },
-  { key: "erkek", label: "Erkek Teması", preview: ["#f0f9ff", "#2563eb", "#bfdbfe"] },
+  { key: "kiz", label: "Pembe", preview: ["#fff1f2", "#f43f5e", "#fbcfe8"] },
+    { key: "erkek", label: "Mavi", preview: ["#f0f9ff", "#2563eb", "#bfdbfe"] },
 ];
 
 export default function AyarlarPage() {
@@ -60,12 +84,16 @@ export default function AyarlarPage() {
             </div>
             <div className="mb-2">
               <div className="text-sm text-muted-foreground">Öne çıkan özellik</div>
-              <div className="font-semibold capitalize">{profile.dominant}</div>
+              <div className="font-semibold capitalize">{profile.dominant} {getEmojiForDominant(profile.dominant)}</div>
             </div>
             <div className="mb-2 text-sm text-muted-foreground">{profile.summary}</div>
             <div className="mt-2">
               <div className="text-sm text-muted-foreground">Önerilen Pomodoro</div>
               <div className="font-medium">{profile.recommendedPomodoro.work} dk odak • {profile.recommendedPomodoro.short} dk kısa mola</div>
+            </div>
+            <div className="mt-3 text-sm">
+              <h4 className="font-semibold mb-2">Yorum</h4>
+              <p className="text-muted-foreground">{getInterpretation(profile)}</p>
             </div>
           </div>
         ) : (
