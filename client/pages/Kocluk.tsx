@@ -113,6 +113,8 @@ export default function KoclukPage() {
   return (
     <MobileLayout>
       <div className="space-y-6">
+        { !showOnboard && <CoachOnboarding onComplete={(p)=>{ setProfile(p); setShowOnboard(true); try{ localStorage.setItem('coach-onboard','1'); }catch{} }} onClose={()=>{ setShowOnboard(true); try{ localStorage.setItem('coach-onboard','1'); }catch{} }} /> }
+
         {/* Top hero */}
         <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/6 to-card shadow-md">
           <div className="flex items-start gap-3">
