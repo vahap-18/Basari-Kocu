@@ -302,6 +302,17 @@ function TestsSection() {
     try { window.dispatchEvent(new CustomEvent('tests-updated', { detail: { type: 'scientific-tests', data: testsState } })); } catch {}
   }, [testsState]);
 
+  useEffect(() => {
+    const onOpen = (e: Event) => {
+      try {
+        const id = (e as CustomEvent).detail?.id;
+        if (id) setOpen((o) => ({ ...o, [id]: true }));
+      } catch {}
+    };
+    window.addEventListener('open-test', onOpen as EventListener);
+    return () => window.removeEventListener('open-test', onOpen as EventListener);
+  }, []);
+
   function saveTest(key: string, payload: any) {
     setTestsState((s) => ({ ...s, [key]: { ...payload, updatedAt: new Date().toISOString() } }));
   }
