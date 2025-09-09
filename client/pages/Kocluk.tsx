@@ -168,6 +168,10 @@ export default function KoclukPage() {
               <h4 className="font-semibold mb-2">Bilimsel Testler</h4>
               <p className="text-sm text-muted-foreground mb-2">Kısa, güvenilir psikometrik ve bilişsel testlerle profilinizi derinleştirin. Her testi açıp tamamlayabilirsiniz.</p>
 
+              <TestCatalog />
+
+              <div className="mt-3" />
+
               <TestsSection />
             </div>
           </div>
@@ -254,6 +258,54 @@ function TestsSection() {
       <TestGrit open={open} setOpen={setOpen} saveTest={saveTest} />
       <Test2Back open={open} setOpen={setOpen} saveTest={saveTest} />
       <TestProcrastination open={open} setOpen={setOpen} saveTest={saveTest} />
+    </div>
+  );
+}
+
+function TestCatalog() {
+  const tests = [
+    { id: 'mbti', title: 'MBTI', emoji: '🧭', desc: 'Myers-Briggs Type Indicator: 16 kişilik tipi sağlar. Karakterizi anlamaya yardımcı.' },
+    { id: 'bigfive', title: 'Big Five (OCEAN)', emoji: '🌐', desc: 'Beş faktör model: Dışadönüklük, Sorumluluk, Uyumluluk, Duygusal Denge, Deneyime Açıklık.' },
+    { id: 'enneagram', title: 'Enneagram', emoji: '🔷', desc: '9 kişilik tipi; motivasyon temelli bir model.' },
+    { id: 'disc', title: 'DISC Analizi', emoji: '🔶', desc: 'Dominance, Influence, Steadiness, Conscientiousness; davranış profilleri.' },
+    { id: 'eqi', title: 'EQ-i', emoji: '💖', desc: 'Duygusal zekâ envanteri.' },
+    { id: 'msceit', title: 'MSCEIT', emoji: '🧩', desc: 'Duyguları algılama, kullanma, anlama ve yönetme yeteneği testi.' },
+    { id: 'iq', title: 'IQ Testleri', emoji: '🧠', desc: 'Wechsler, Stanford-Binet gibi genel zekâ testleri.' },
+    { id: 'raven', title: "Raven's Matrices", emoji: '🔳', desc: 'Soyut akıl yürütme ve deseni tamamlama.' },
+    { id: 'nback', title: 'N-Back (Çalışma Belleği)', emoji: '🔁', desc: 'Çalışma belleği kapasitesi testleri.' },
+    { id: 'stroop', title: 'Stroop Testi', emoji: '🎨', desc: 'Dikkat ve bilişsel kontrol testi.' },
+    { id: 'wcst', title: 'WCST', emoji: '🃏', desc: 'Esneklik ve problem çözme yeteneği.' },
+    { id: 'vark', title: 'VARK', emoji: '👁️', desc: 'Görsel, İşitsel, Okuma/Yazma, Kinestetik öğrenme tercihleri.' },
+    { id: 'kolb', title: 'Kolb Öğrenme Stilleri', emoji: '🔄', desc: 'Deneyimsel öğrenme tipleri: Diverger, Assimilator, Converger, Accommodator.' },
+    { id: 'honey', title: 'Honey & Mumford', emoji: '📚', desc: 'Aktivist, Teorisyen, Pragmatist, Yansıtıcı öğrenme stilleri.' }
+  ];
+
+  function startTest(t:any){
+    // Save a placeholder result to scientific-tests
+    try{
+      const raw = localStorage.getItem('scientific-tests') || '{}';
+      const obj = JSON.parse(raw);
+      obj[t.id] = { name: t.title, scoreText: 'Hazırlık: Örnek', interpretation: t.desc, createdAt: new Date().toISOString() };
+      localStorage.setItem('scientific-tests', JSON.stringify(obj));
+      try{ window.dispatchEvent(new CustomEvent('tests-updated', { detail: { type: 'scientific-tests', data: obj } })); }catch{}
+      alert(t.title + ' sonucu kaydedildi (örnek). Ayarlar sayfasından görüntüleyin.');
+    }catch(e){console.error(e)}
+  }
+
+  return (
+    <div className="space-y-2 mt-2">
+      <h5 className="font-semibold">Test Kataloğu</h5>
+      {tests.map((t)=> (
+        <div key={t.id} className="p-3 rounded-xl border bg-background flex items-start justify-between">
+          <div>
+            <div className="font-medium">{t.emoji} {t.title}</div>
+            <div className="text-xs text-muted-foreground">{t.desc}</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <button onClick={()=> startTest(t)} className="px-3 py-1 rounded-md bg-primary text-primary-foreground">Beni Test Et</button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
