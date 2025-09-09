@@ -20,7 +20,7 @@ export const Header: React.FC = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/60">
+    <header className="sticky top-0 z-40 border-b bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/60" style={{background: 'linear-gradient(90deg, hsl(var(--primary) / 0.06), hsl(var(--accent) / 0.02))'}}>
       <div className="mx-auto max-w-md px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-primary to-accent">
