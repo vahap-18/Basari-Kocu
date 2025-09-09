@@ -17,24 +17,44 @@ const TECHNIQUES = [
     conflicts: "Aşırı tekrar tükenmeye yol açabilir; mola ve farklı tekniklerle dengeleyin."
   },
   {
-    id: "active_recall",
-    title: "Active Recall (Aktif Hatırlama)",
-    emoji: "🧠",
-    difficulty: "Kolay-Orta",
-    time: "Her çalışma oturumunda",
-    description: "Bilgiyi pasif okumak yerine aktif olarak hatırlamaya çalışın: kendi sorularınızı üretin ve cevaplayın.",
-    tips: ["Özet yerine sorular yazın.", "Yanlış cevapları analiz edip tekrar edin.", "Feynman ile birlikte kullanın."],
-    conflicts: "Sadece pasif tekrar ile eşleştirildiğinde etkisi azalır."
+    id: "ebbinghaus",
+    title: "Ebbinghaus’un Unutma Eğrisi",
+    emoji: "📉",
+    difficulty: "Kolay",
+    time: "Tekrarlamalar: ilk 24 saat kritik",
+    description: "Öğrenilen bilginin zamanla hızla unutulduğunu gösterir; erken tekrarlar bilgiyi kurtarmak için çok etkili.",
+    tips: ["İlk 24 saatte kısa tekrar yapın.", "İlk haftada birkaç tekrar planlayın.", "Süreleri giderek artırın."],
+    conflicts: "Tekrarlar zaman yönetimi gerektirir."
   },
   {
-    id: "interleaving",
-    title: "Interleaving (Karışık Çalışma)",
-    emoji: "🔀",
+    id: "testing_effect",
+    title: "Testing Effect (Test Etme Etkisi)",
+    emoji: "🧪",
+    difficulty: "Kolay-Orta",
+    time: "Her çalışma oturumunda kısa testler",
+    description: "Öğrendiklerinizi kendinize test ederek hatırlamak, sadece okumaktan daha kalıcıdır. Deneme sınavları ve kısa quizler kullanın.",
+    tips: ["Küçük quizler yapın.", "Yanlışları not edip tekrar edin."],
+    conflicts: "Sürekli test etme morali bozabilir; dengeli kullanın."
+  },
+  {
+    id: "flow",
+    title: "Flow (Akış) Teorisi",
+    emoji: "🌊",
     difficulty: "Zor",
-    time: "Haftalık oturumlarda karışık bloklar",
-    description: "Farklı konuları dönüşümlü çalışmak, problemlere adaptasyonunuzu artırır. Özellikle problem çözme becerileri için uygundur.",
-    tips: ["Benzer soru tiplerini karıştırın.", "Temel öğrenme sonrası uygulayın."],
-    conflicts: "Yeni başlayanlar için kafa karıştırıcı olabilir; önce temelleri öğrenin."
+    time: "Odak blokları boyunca",
+    description: "Zorluk seviyesi ile beceri seviyesinin dengede olduğu durumda kişinin tamamen odaklandığı durum (akış) oluşur; bu öğrenme için idealdir.",
+    tips: ["Görevleri zorluk seviyesine göre ayarlayın.", "Dikkat dağıtıcıları en aza indirin."],
+    conflicts: "Akışa girmek enerji ve hazırlanma gerektirir."
+  },
+  {
+    id: "primacy_recency",
+    title: "Primacy & Recency Etkileri",
+    emoji: "🧾",
+    difficulty: "Kolay",
+    time: "Ders/oturum planlaması",
+    description: "İlk ve son öğrenilen bilgilerin daha iyi hatırlandığını gösterir. Önemli konuları bu pozisyonlara koyun.",
+    tips: ["Günün en önemli konusu ilk ya da son sırada olsun."],
+    conflicts: "Uzun oturumlarda etkisi azalabilir."
   },
   {
     id: "dual_coding",
@@ -72,7 +92,9 @@ const LAWS = [
   { id: 'murphy', title: 'Murphy Kanunu', emoji: '⚠️', difficulty: 'Kolay', description: 'Eğer yanlış gidebilecek bir şey varsa, yanlış gider. Sınav hazırlığında yedek planlarınız olsun: cihaz, materyal, internet sorunlarına karşı alternatifler.' , usage: ['Sınav günü için B planı hazırlayın.','Dijital dosyaları yedekleyin.'], challenges: 'Hazırlık için ekstra zaman gerektirir.' },
   { id: 'parkinson', title: "Parkinson Yasası", emoji: '⏳', difficulty: 'Kolay', description: 'İş, kendisine verilen zamanı doldurur. Zaman sınırlamaları koyun; kısa ve net hedefler belirleyin.', usage: ['Göreve süre sınırı koyun.','Zaman kutucukları ile çalışın.'], challenges: 'Sert zaman sınırlamaları bazen stres yaratabilir.' },
   { id: 'pareto', title: 'Pareto (80/20)', emoji: '🎯', difficulty: 'Orta', description: 'Genelde sonuçların %80’i, çabaların %20’sinden gelir. Öncelikli konulara odaklanın.', usage: ['Kritik konuları belirleyin.','Zafiyet analizi yapın.'], challenges: 'Öncelik belirleme öznel olabilir.' },
-  { id: 'zeigarnik', title: 'Zeigarnik Etkisi', emoji: '🔔', difficulty: 'Kolay', description: 'Tamamlanmamış işler zihinde daha çok yer eder; küçük tamamlanabilir görevlerle motivasyon sağlayın.', usage: ['Görevleri küçük parçalara bölün.','Bir kısmını tamamlayıp bırakın, geri dönün.'], challenges: 'Parçalama yanlış uygulandığında verimsizlik olabilir.' }
+  { id: 'zeigarnik', title: 'Zeigarnik Etkisi', emoji: '🔔', difficulty: 'Kolay', description: 'Tamamlanmamış işler zihinde daha çok yer eder; küçük tamamlanabilir görevlerle motivasyon sağlayın.', usage: ['Görevleri küçük parçalara bölün.','Bir kısmını tamamlayıp bırakın, geri dönün.'], challenges: 'Parçalama yanlış uygulandığında verimsizlik olabilir.' },
+  { id: 'thorndike', title: 'Thorndike: Hazırbulunuşluk, Tekrar, Etki', emoji: '📚', difficulty: 'Kolay', description: 'Hazırbulunuşluk: Öğrenci hazırsa öğrenme kolaylaşır. Tekrar: Tekrar edilen bilgi güçlenir. Etki: Keyif veren öğrenme daha kalıcıdır.', usage: ['Hazırsa zorlu görev verin.','Tekrarı düzenli hale getirin.','Ödüllendirici öğrenme deneyimleri tasarlayın.'], challenges: 'Hazırbulunuşluk ölçümü zordur.' },
+  { id: 'yerkesdodson', title: 'Yerkes–Dodson Yasası', emoji: '⚖️', difficulty: 'Orta', description: 'Orta düzeyde uyarılma öğrenmeyi artırır; çok düşük veya çok yüksek uyarılma verimi düşürür.', usage: ['Stres yönetimi çalışmaları ekleyin.','Simülasyon sınavlarla uygun uyarılma seviyesini test edin.'], challenges: 'İdeal uyarılma kişiden kişiye değişir.' }
 ];
 
 export default function TekniklerPage() {
