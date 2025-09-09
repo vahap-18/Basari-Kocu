@@ -295,6 +295,34 @@
     --input: 152 28% 85%;
     --ring: 160 84% 39%;
   }
+
+  [data-theme="kiz"] {
+    --background: 0 0% 100%;
+    --foreground: 220 18% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 18% 12%;
+    --primary: 340 85% 60%; /* soft pink */
+    --primary-foreground: 210 40% 98%;
+    --accent: 320 80% 85%;
+    --muted: 310 40% 95%;
+    --muted-foreground: 320 35% 30%;
+    --border: 320 20% 90%;
+    --ring: 340 85% 60%;
+  }
+
+  [data-theme="erkek"] {
+    --background: 0 0% 100%;
+    --foreground: 220 18% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 18% 12%;
+    --primary: 215 90% 56%; /* soft blue */
+    --primary-foreground: 210 40% 98%;
+    --accent: 200 80% 90%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 210 30% 30%;
+    --border: 210 20% 90%;
+    --ring: 215 90% 56%;
+  }
 }
 
 @layer base {
