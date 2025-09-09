@@ -2,6 +2,7 @@ import React from "react";
 import { MobileLayout } from "@/components/MobileLayout";
 import { useTheme, type ThemeKey } from "@/components/ThemeProvider";
 import { PersonalityTest } from "@/components/PersonalityTest";
+import { useNavigate } from "react-router-dom";
 
 function getEmojiForDominant(d: string) {
   const map: Record<string,string> = {
