@@ -122,35 +122,23 @@ export default function Index() {
           </Link>
         </section>
 
-        <section className="p-4 rounded-2xl border">
-          <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
+        <section>
           <div className="grid grid-cols-1 gap-3">
-            <div>
+            <div className="p-4 rounded-2xl border bg-gradient-to-br from-card to-muted">
+              <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
               <p className="text-sm text-muted-foreground">Etkili yöntemleri keşfedin ve çalışma rutininize uygulayın.</p>
             </div>
+
             <div className="grid grid-cols-1 gap-3">
-              <div className="flex flex-col gap-3">
-                <div className="grid grid-cols-1 gap-3">
-                  {/* Cards */}
-                  <div className="grid grid-cols-1 gap-3">
-                    <div className="space-y-3">
-                      <div className="grid grid-cols-3 gap-3">
-                        <div className="col-span-3">
-                          {/* Use cards as compact blocks */}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <StudyTechniquesCard />
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                <div className="md:col-span-1">
+                  <HistoryTodayCard />
+                </div>
+                <div className="md:col-span-2">
+                  <UpliftingCard />
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="grid grid-cols-1 gap-3">
-          <div className="grid grid-cols-1 gap-3">
-            <div className="col-span-1">
-              {/* History/Uplift/Techniques cards will go here */}
             </div>
           </div>
         </section>
