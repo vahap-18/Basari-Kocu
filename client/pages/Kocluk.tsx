@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import React, { useEffect, useState } from "react";
 import { MobileLayout } from "@/components/MobileLayout";
 import { AICoach } from "@/components/AICoach";
 import { CoachOnboarding } from "@/components/CoachOnboarding";
@@ -323,7 +322,7 @@ export default function KoclukPage() {
               <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                 <li>En zor konuları sabah saatlerine koyun.</li>
                 <li>Pomodoro sürelerini profilinize göre ayarlayın.</li>
-                <li>Günlük hedeflerinizi 2–3 maddede sınırlayın.</li>
+                <li>Günlük hedeflerinizi 2��3 maddede sınırlayın.</li>
                 <li>
                   Nefes egzersizleriyle dikkat toplama süresini %20
                   artırabilirsiniz.
@@ -650,7 +649,7 @@ function TestsSection() {
     "İnsanlarla kolay iletişim kurarım.",
     "Hızlı karar verirken sezgilere güvenirim.",
     "Soyut fikirleri düşünmeyi severim.",
-    "Rutin tercihlerim vardır.",
+    "Rutin tercihlerim vard��r.",
     "Yeni deneyimler ararım.",
   ];
 
@@ -725,7 +724,7 @@ function TestsSection() {
               ? "Yüksek genel kişilik puanı (pozitif)."
               : avg === 3
                 ? "Orta düzeyde."
-                : "Düşük bazı kişilik boyutları.";
+                : "Düşük bazı kişilik boyutlar��.";
           return { score: avg, scoreText: `${avg}/5`, interpretation };
         }}
       />
