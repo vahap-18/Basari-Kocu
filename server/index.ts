@@ -19,5 +19,48 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // AI adaptive plan proxy (server-side) - requires OPENAI_API_KEY env var
+  app.post("/api/ai-plan", async (req, res) => {
+    try {
+      const key = process.env.OPENAI_API_KEY || process.env.OPENAI_KEY;
+      if (!key) return res.status(400).json({ error: "OpenAI API key not configured on server." });
+      const body = req.body || {};
+      const profile = body.profile || null;
+      const goals = body.goals || [];
+
+      const system = `You are an assistant that generates a concise adaptive study plan for a student preparing for exams. Provide a short, structured plan with daily blocks, suggested Pomodoro lengths, and tips. Be specific and actionable.`;
+      const userPrompt = `Profile: ${JSON.stringify(profile)}\nGoals: ${JSON.stringify(goals)}\nRespond in Turkish, include sections: Summary, Weekly Plan (day->blocks), Recommended Pomodoro, Quick Tips.`;
+
+      const r = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${key}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            { role: "system", content: system },
+            { role: "user", content: userPrompt },
+          ],
+          max_tokens: 800,
+          temperature: 0.7,
+        }),
+      });
+
+      if (!r.ok) {
+        const text = await r.text();
+        return res.status(502).json({ error: "OpenAI error", detail: text });
+      }
+      const j = await r.json();
+      const plan = j.choices?.[0]?.message?.content || JSON.stringify(j);
+      res.json({ plan });
+    } catch (e: any) {
+      res.status(500).json({ error: e?.message || String(e) });
+    }
+  });
+
+  return app;
+
   return app;
 }
