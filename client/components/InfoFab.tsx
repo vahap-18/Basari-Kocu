@@ -13,7 +13,7 @@ export const InfoFab: React.FC = () => {
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-60 flex items-end md:items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
           <div className="relative w-full max-w-md bg-card rounded-2xl border p-4 z-10">
             <div className="flex items-start justify-between mb-3">
@@ -21,7 +21,7 @@ export const InfoFab: React.FC = () => {
                 <h3 className="text-lg font-semibold">Hakkında</h3>
                 <div className="text-sm text-muted-foreground">Yazar: A. Vahap Doğan</div>
               </div>
-              <button onClick={() => setOpen(false)} className="px-2 py-1 rounded-md border">Kapat</button>
+              <button onClick={() => setOpen(false)} className="px-2 py-1 rounded-xl border">Kapat</button>
             </div>
 
             <div className="text-sm space-y-2">
