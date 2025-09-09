@@ -31,7 +31,7 @@ export default function KoclukPage() {
   const [profile, setProfile] = useState<any>(null);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(() => localStorage.getItem('profile-photo'));
   const [avatarEmoji, setAvatarEmoji] = useState<string>(() => '🙂');
-  const [showOnboard, setShowOnboard] = useState(() => !!localStorage.getItem('coach-onboard'));
+  const [showOnboard, setShowOnboard] = useState(() => !localStorage.getItem('coach-onboard'));
 
   useEffect(() => {
     const id = setInterval(() => setInhale((v) => !v), 4000);
@@ -125,7 +125,7 @@ export default function KoclukPage() {
                   <p className="text-sm text-muted-foreground">{quote}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button onClick={triggerAdvice} className="px-3 py-2 rounded-lg bg-primary text-primary-foreground">Yeni Tavsiye</button>
+                  <button onClick={triggerAdvice} className="px-3 py-2 rounded-xl bg-primary text-primary-foreground">Yeni Tavsiye</button>
                 </div>
               </div>
 
@@ -156,6 +156,22 @@ export default function KoclukPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="p-4 rounded-2xl border bg-card">
+          <h3 className="font-semibold mb-2">Kişisel Tavsiye</h3>
+          <div className="text-sm text-muted-foreground">
+            {profile ? (
+              <div>
+                <div className="font-medium">Kısa Özet</div>
+                <p className="mt-1">{profile.summary}</p>
+                <div className="mt-2 font-medium">Hızlı Tavsiye</div>
+                <p className="mt-1">{profile.onboarding ? (`Önerilen çalışma zamanı: ${profile.onboarding.when}, oturum: ${profile.onboarding.session}dk. Öne çıkan ihtiyaç: ${profile.onboarding.struggle}.`) : profile.recommendation}</p>
+              </div>
+            ) : (
+              <div>Kısa bir tanışma yapın, size özel tavsiyeler burada görünür.</div>
+            )}
           </div>
         </section>
 
@@ -353,7 +369,7 @@ function TestsSection() {
             <div className="font-semibold">{title}</div>
             <div className="text-sm text-muted-foreground">Kısa 10 soruluk değerlendirme.</div>
           </div>
-          <button onClick={() => setOpen((o)=>({ ...o, [id]: !o[id]}))} className="px-3 py-1 rounded-md border">{isOpen ? 'Gizle' : 'Başlat'}</button>
+          <button onClick={() => setOpen((o)=>({ ...o, [id]: !o[id]}))} className="px-3 py-1 rounded-xl border">{isOpen ? 'Gizle' : 'Başlat'}</button>
         </div>
         {isOpen && (
           <div className="mt-3 space-y-3">
@@ -460,7 +476,7 @@ function TestCatalog() {
     { id: 'eqi', title: 'EQ-i', emoji: '💖', desc: 'Duygusal zekâ envanteri.' },
     { id: 'msceit', title: 'MSCEIT', emoji: '🧩', desc: 'Duyguları algılama, kullanma, anlama ve yönetme yeteneği testi.' },
     { id: 'iq', title: 'IQ Testleri', emoji: '🧠', desc: 'Wechsler, Stanford-Binet gibi genel zekâ testleri.' },
-    { id: 'raven', title: "Raven's Matrices", emoji: '🔳', desc: 'Soyut akıl yürütme ve deseni tamamlama.' },
+    { id: 'raven', title: "Raven's Matrices", emoji: '����', desc: 'Soyut akıl yürütme ve deseni tamamlama.' },
     { id: 'nback', title: 'N-Back (Çalışma Belleği)', emoji: '🔁', desc: 'Çalışma belleği kapasitesi testleri.' },
     { id: 'stroop', title: 'Stroop Testi', emoji: '🎨', desc: 'Dikkat ve bilişsel kontrol testi.' },
     { id: 'wcst', title: 'WCST', emoji: '🃏', desc: 'Esneklik ve problem çözme yeteneği.' },
