@@ -725,7 +725,7 @@ function TestsSection() {
             answers.reduce((a, b) => a + b, 0) / answers.length,
           ),
           scoreText: `${Math.round(answers.reduce((a, b) => a + b, 0) / answers.length)}/5`,
-          interpretation: "Davran��ş eğilimleri gösterildi.",
+          interpretation: "Davranış eğilimleri gösterildi.",
         })}
       />
 
@@ -1105,7 +1105,7 @@ function Test2Back({ open, setOpen, saveTest }: any) {
       correct >= 4
         ? "Çok iyi çalışma belleği performansı."
         : correct >= 2
-          ? "Orta seviye çalı��ma belleği."
+          ? "Orta seviye çalı���ma belleği."
           : "Çalışma belleğini güçlendirecek oyunlar faydalı.";
     saveTest(key, {
       name: "2-Back Kısa",
