@@ -476,7 +476,7 @@ function TestCatalog() {
     { id: 'eqi', title: 'EQ-i', emoji: '💖', desc: 'Duygusal zekâ envanteri.' },
     { id: 'msceit', title: 'MSCEIT', emoji: '🧩', desc: 'Duyguları algılama, kullanma, anlama ve yönetme yeteneği testi.' },
     { id: 'iq', title: 'IQ Testleri', emoji: '🧠', desc: 'Wechsler, Stanford-Binet gibi genel zekâ testleri.' },
-    { id: 'raven', title: "Raven's Matrices", emoji: '����', desc: 'Soyut akıl yürütme ve deseni tamamlama.' },
+    { id: 'raven', title: "Raven's Matrices", emoji: '🔳', desc: 'Soyut akıl yürütme ve deseni tamamlama.' },
     { id: 'nback', title: 'N-Back (Çalışma Belleği)', emoji: '🔁', desc: 'Çalışma belleği kapasitesi testleri.' },
     { id: 'stroop', title: 'Stroop Testi', emoji: '🎨', desc: 'Dikkat ve bilişsel kontrol testi.' },
     { id: 'wcst', title: 'WCST', emoji: '🃏', desc: 'Esneklik ve problem çözme yeteneği.' },
@@ -502,7 +502,7 @@ function TestCatalog() {
             <div className="text-xs text-muted-foreground">{t.desc}</div>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={()=> startTest(t)} className="px-3 py-1 rounded-md bg-primary text-primary-foreground">Beni Test Et</button>
+            <button onClick={()=> startTest(t)} className="px-3 py-1 rounded-xl bg-primary text-primary-foreground">Beni Test Et</button>
           </div>
         </div>
       ))}
@@ -534,7 +534,7 @@ function TestCRT({ open, setOpen, saveTest }: any) {
           <div className="font-semibold">Cognitive Reflection Test (CRT)</div>
           <div className="text-sm text-muted-foreground">Kısa üç soruluk refleks testi.</div>
         </div>
-        <button onClick={() => setOpen((o:any)=>({ ...o, [key]: !o[key]}))} className="px-3 py-1 rounded-md border">{open[key] ? 'Gizle' : 'Başlat'}</button>
+        <button onClick={() => setOpen((o:any)=>({ ...o, [key]: !o[key]}))} className="px-3 py-1 rounded-xl border">{open[key] ? 'Gizle' : 'Başlat'}</button>
       </div>
       {open[key] && (
         <div className="mt-3 space-y-2">
@@ -575,7 +575,7 @@ function TestGrit({ open, setOpen, saveTest }: any) {
           <div className="font-semibold">Grit Scale (Kısa)</div>
           <div className="text-sm text-muted-foreground">Kararlılık ve ısrar ölçümü (Likert 1-5).</div>
         </div>
-        <button onClick={()=> setOpen((o:any)=>({...o,[key]: !o[key]}))} className="px-3 py-1 rounded-md border">{open[key] ? 'Gizle' : 'Başlat'}</button>
+        <button onClick={()=> setOpen((o:any)=>({...o,[key]: !o[key]}))} className="px-3 py-1 rounded-xl border">{open[key] ? 'Gizle' : 'Başlat'}</button>
       </div>
       {open[key] && (
         <div className="mt-3 space-y-2">
@@ -621,7 +621,7 @@ function Test2Back({ open, setOpen, saveTest }: any) {
           <div className="font-semibold">Çalışma Belleği (2-Back)</div>
           <div className="text-sm text-muted-foreground">Basit 2-back görevi — doğru eşleşmeleri işaretleyin.</div>
         </div>
-        <button onClick={()=> setOpen((o:any)=>({...o,[key]: !o[key]}))} className="px-3 py-1 rounded-md border">{open[key] ? 'Gizle' : 'Başlat'}</button>
+        <button onClick={()=> setOpen((o:any)=>({...o,[key]: !o[key]}))} className="px-3 py-1 rounded-xl border">{open[key] ? 'Gizle' : 'Başlat'}</button>
       </div>
       {open[key] && (
         <div className="mt-3 space-y-2">
@@ -658,7 +658,7 @@ function TestProcrastination({ open, setOpen, saveTest }: any) {
           <div className="font-semibold">Erteleme Ölçeği (Kısa)</div>
           <div className="text-sm text-muted-foreground">Genel erteleme eğiliminizi değerlendirin (1-5).</div>
         </div>
-        <button onClick={()=> setOpen((o:any)=>({...o,[key]: !o[key]}))} className="px-3 py-1 rounded-md border">{open[key] ? 'Gizle' : 'Başlat'}</button>
+        <button onClick={()=> setOpen((o:any)=>({...o,[key]: !o[key]}))} className="px-3 py-1 rounded-xl border">{open[key] ? 'Gizle' : 'Başlat'}</button>
       </div>
       {open[key] && (
         <div className="mt-3 space-y-2">
