@@ -398,10 +398,12 @@ function TestsSection() {
                       key={n}
                       onClick={() => {
                         setAnswers((a)=>{ const na = [...a]; na[index]=n; return na; });
-                        // auto-advance after brief delay
+                        // auto-advance after brief delay; if last question, submit
+                        window.clearTimeout((autoAdvanceRef as any).current);
                         if(index < questions.length - 1){
-                          window.clearTimeout((autoAdvanceRef as any).current);
                           (autoAdvanceRef as any).current = window.setTimeout(() => setIndex(i => Math.min(questions.length -1, i+1)), 220);
+                        } else {
+                          (autoAdvanceRef as any).current = window.setTimeout(() => submit(), 220);
                         }
                       }}
                       className={"py-4 rounded-xl text-lg font-semibold border transition-colors " + (answers[index]===n ? 'bg-primary text-primary-foreground' : 'bg-background')}
