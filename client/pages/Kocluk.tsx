@@ -113,7 +113,7 @@ export default function KoclukPage() {
   return (
     <MobileLayout>
       <div className="space-y-6">
-        { !showOnboard && <CoachOnboarding onComplete={(p)=>{ setProfile(p); setShowOnboard(true); try{ localStorage.setItem('coach-onboard','1'); }catch{} }} onClose={()=>{ setShowOnboard(true); try{ localStorage.setItem('coach-onboard','1'); }catch{} }} /> }
+        { showOnboard && <CoachOnboarding onComplete={(p)=>{ setProfile(p); setShowOnboard(false); try{ localStorage.setItem('coach-onboard','1'); }catch{} }} onClose={()=>{ setShowOnboard(false); try{ localStorage.setItem('coach-onboard','1'); }catch{} }} /> }
 
         {/* Top hero */}
         <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/6 to-card shadow-md">
@@ -180,7 +180,7 @@ export default function KoclukPage() {
           <div className="flex items-center justify-between mb-3">
             <div>
               <h3 className="font-semibold">Nefes Egzersizi 4-4</h3>
-              <p className="text-sm text-muted-foreground">Derin nefes al, ritmini bul. Zihnini sakinleştir.</p>
+              <p className="text-sm text-muted-foreground">Derin nefes al, ritmini bul. Zihnini sakinle��tir.</p>
             </div>
             <div className="text-xs text-muted-foreground">Rahatla</div>
           </div>
