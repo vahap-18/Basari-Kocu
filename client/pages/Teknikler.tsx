@@ -28,7 +28,7 @@ const TECHNIQUES = [
     difficulty: "Orta",
     time: "Günlük kısa tekrarlar",
     story:
-      "Düzenli aralıklarla çalışarak aynı bilgiyi daha iyi hatırlayan öğrenciler gördün mü?",
+      "Düzenli aralıklarla çalı��arak aynı bilgiyi daha iyi hatırlayan öğrenciler gördün mü?",
     what: "Tekrarları zaman içinde yayarak bilginin uzun süreli kalıcılığını artırma.",
     how: [
       "Kısa, hedefe yönelik tekrar oturumları planla.",
@@ -135,7 +135,7 @@ const TECHNIQUES = [
     what: "Beceri ve zorluk dengelendiğinde ortaya çıkan derin odaklanma hali.",
     how: ["Görevleri becerine göre ayarla.", "Dikkat dağıtıcıları kaldır."],
     motivation:
-      "Akış, derin ö��renme için ideal bir yoldur — hazır olduğunda ona gir.",
+      "Akış, derin öğrenme için ideal bir yoldur — hazır olduğunda ona gir.",
     visual: { icon: "🌊", color: "#06B6D4", shape: "wave" },
   },
   {
@@ -343,7 +343,7 @@ const TECHNIQUES = [
     difficulty: "Orta",
     time: "Zaman yönetimi",
     story:
-      "Uzun süre aynı şeyi yapmak verim düşürdü; mola dönüşümünü keşfettiler.",
+      "Uzun süre aynı ��eyi yapmak verim düşürdü; mola dönüşümünü keşfettiler.",
     what: "Aynı çabanın getirisinin zamanla azalması.",
     how: ["Verim azaldığında mola ver.", "Farklı araçlar dene."],
     motivation: "Dozunda çalışma, verim artırır.",
