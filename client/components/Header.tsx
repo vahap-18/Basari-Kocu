@@ -17,7 +17,7 @@ const themeOptions: { key: ThemeKey; label: string }[] = [
 ];
 
 export const Header: React.FC = () => {
-  const { theme, setTheme, gender, setGender } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <header className="sticky top-0 z-40 border-b bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/60">
