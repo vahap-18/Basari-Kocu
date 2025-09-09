@@ -9,14 +9,20 @@ export type ThemeKey =
   | "samimi"
   | "lider"
   | "korkusuz"
-  | "bilge";
+  | "bilge"
+  | "kiz"
+  | "erkek";
 
 const DEFAULT_THEME: ThemeKey = "acik";
+
+export type Gender = "female" | "male" | "other" | null;
 
 type ThemeContextValue = {
   theme: ThemeKey;
   setTheme: (t: ThemeKey) => void;
   isDark: boolean;
+  gender: Gender;
+  setGender: (g: Gender) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
