@@ -252,12 +252,116 @@ function TestsSection() {
     setTestsState((s) => ({ ...s, [key]: { ...payload, updatedAt: new Date().toISOString() } }));
   }
 
+  // Generic 10-question test component
+  function TenQuestionTest({ id, title, questions, calcResult }: any) {
+    const [openLocal, setOpenLocal] = useState(false);
+    const [answers, setAnswers] = useState<number[]>(() => Array(questions.length).fill(0));
+
+    function submit() {
+      const result = calcResult(answers);
+      saveTest(id, { name: title, ...result, createdAt: new Date().toISOString() });
+      setOpenLocal(false);
+      try { window.dispatchEvent(new CustomEvent('tests-updated', { detail: { type: 'scientific-tests', data: JSON.parse(localStorage.getItem('scientific-tests') || '{}') } })); } catch {}
+    }
+
+    return (
+      <div className="p-3 rounded-2xl border bg-card">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="font-semibold">{title}</div>
+            <div className="text-sm text-muted-foreground">Kısa 10 soruluk değerlendirme.</div>
+          </div>
+          <button onClick={() => setOpenLocal((v) => !v)} className="px-3 py-1 rounded-md border">{openLocal ? 'Gizle' : 'Başlat'}</button>
+        </div>
+        {openLocal && (
+          <div className="mt-3 space-y-3">
+            {questions.map((q:any,i:number)=> (
+              <div key={i}>
+                <div className="text-sm font-medium">{i+1}. {q}</div>
+                <div className="flex gap-2 mt-2">
+                  {[1,2,3,4,5].map((n)=> (
+                    <button key={n} onClick={() => setAnswers((a)=>{ const na = [...a]; na[i]=n; return na; })} className={"px-3 py-2 rounded-full border " + (answers[i]===n? 'bg-primary text-primary-foreground':'bg-background')}>{n}</button>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div className="flex justify-end">
+              <button onClick={submit} className="px-4 py-2 rounded-xl bg-primary text-primary-foreground">Tamamla</button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // define 10-question sets and simple scoring for several tests
+  const mbtiQuestions = [
+    'Sosyal etkinliklerde enerjinizi alır mısınız?',
+    'Kararları mantıkla mı yoksa duygu ile mi verirsiniz?',
+    'Yeni fikirlere açığımdır.',
+    'Planlı ve düzenli çalışırım.',
+    'Detaylara dikkat ederim.',
+    'İnsanlarla kolay iletişim kurarım.',
+    'Hızlı karar verirken sezgilere güvenirim.',
+    'Soyut fikirleri düşünmeyi severim.',
+    'Rutin tercihlerim vardır.',
+    'Yeni deneyimler ararım.'
+  ];
+
+  const bigFiveQuestions = [
+    'Genelde dışa dönük biriyim.',
+    'Sorumluluk sahibiyim ve düzenliyim.',
+    'Diğerleriyle kolay anlaşırım.',
+    'Çabuk endişelenirim.',
+    'Yeni deneyimlere açığım.',
+    'Sosyal ortamlarda enerjik hissederim.',
+    'Görevleri zamanında tamamlama eğilimindeyim.',
+    'Empati yeteneğim yüksek.',
+    'Duygusal iniş çıkışlarım olur.',
+    'Yaratıcı fikirler üretmeyi severim.'
+  ];
+
+  const enneagramQuestions = Array.from({length:10}).map((_,i)=>`Enneagram soru ${i+1} (kendinizi değerlendirin).`);
+  const discQuestions = Array.from({length:10}).map((_,i)=>`DISC soru ${i+1} (duruma göre 1-5 değerlendirin).`);
+  const eqQuestions = Array.from({length:10}).map((_,i)=>`Duygusal zeka sorusu ${i+1}.`);
+  const nbackQuestions = Array.from({length:10}).map((_,i)=>`İşlem belleği sorusu ${i+1} (eşleşme var mı?).`);
+  const stroopQuestions = Array.from({length:10}).map((_,i)=>`Stroop testi maddesi ${i+1} (renk/kelime uyumu).`);
+  const varkQuestions = Array.from({length:10}).map((_,i)=>`Öğrenme stili soru ${i+1}.`);
+  const kolbQuestions = Array.from({length:10}).map((_,i)=>`Kolb soru ${i+1}.`);
+  const honeyQuestions = Array.from({length:10}).map((_,i)=>`Honey & Mumford soru ${i+1}.`);
+
   return (
     <div className="space-y-3">
-      <TestCRT open={open} setOpen={setOpen} saveTest={saveTest} />
-      <TestGrit open={open} setOpen={setOpen} saveTest={saveTest} />
-      <Test2Back open={open} setOpen={setOpen} saveTest={saveTest} />
-      <TestProcrastination open={open} setOpen={setOpen} saveTest={saveTest} />
+      <TenQuestionTest id="mbti" title="MBTI (Kısa)" questions={mbtiQuestions} calcResult={(answers:number[])=>{
+        const avg = Math.round(answers.reduce((a,b)=>a+b,0)/answers.length);
+        const interpretation = avg>=4? 'Dışadönük ve karar odaklı.' : avg===3? 'Dengeli özellikler.' : 'İçe dönük yapılar daha baskın.';
+        return { score: avg, scoreText: `${avg}/5`, interpretation };
+      }} />
+
+      <TenQuestionTest id="bigfive" title="Big Five (Kısa)" questions={bigFiveQuestions} calcResult={(answers:number[])=>{
+        const avg = Math.round(answers.reduce((a,b)=>a+b,0)/answers.length);
+        const interpretation = avg>=4? 'Yüksek genel kişilik puanı (pozitif).' : avg===3? 'Orta düzeyde.' : 'Düşük bazı kişilik boyutları.';
+        return { score: avg, scoreText: `${avg}/5`, interpretation };
+      }} />
+
+      <TenQuestionTest id="enneagram" title="Enneagram (Kısa)" questions={enneagramQuestions} calcResult={(answers:number[])=>{
+        const avg = Math.round(answers.reduce((a,b)=>a+b,0)/answers.length);
+        return { score: avg, scoreText: `${avg}/5`, interpretation: 'Enneagram tarzı eğilimleriniz gösterildi.' };
+      }} />
+
+      <TenQuestionTest id="disc" title="DISC (Kısa)" questions={discQuestions} calcResult={(answers:number[])=>({ score: Math.round(answers.reduce((a,b)=>a+b,0)/answers.length), scoreText: `${Math.round(answers.reduce((a,b)=>a+b,0)/answers.length)}/5`, interpretation:'Davranış eğilimleri gösterildi.' })} />
+
+      <TenQuestionTest id="eqi" title="EQ-i (Kısa)" questions={eqQuestions} calcResult={(answers:number[])=>({ score: Math.round(answers.reduce((a,b)=>a+b,0)/answers.length), scoreText: `${Math.round(answers.reduce((a,b)=>a+b,0)/answers.length)}/5`, interpretation:'Duygusal zekâ profili.' })} />
+
+      <TenQuestionTest id="nback" title="N-Back (Kısa)" questions={nbackQuestions} calcResult={(answers:number[])=>({ score: answers.filter(Boolean).length, scoreText: `${answers.filter(Boolean).length}/${answers.length}`, interpretation: 'Çalışma belleği performansınız.' })} />
+
+      <TenQuestionTest id="stroop" title="Stroop (Kısa)" questions={stroopQuestions} calcResult={(answers:number[])=>({ score: answers.filter(Boolean).length, scoreText: `${answers.filter(Boolean).length}/${answers.length}`, interpretation: 'Dikkat ve bilişsel kontrol seviyesi.' })} />
+
+      <TenQuestionTest id="vark" title="VARK" questions={varkQuestions} calcResult={(answers:number[])=>({ score: Math.round(answers.reduce((a,b)=>a+b,0)/answers.length), scoreText: `${Math.round(answers.reduce((a,b)=>a+b,0)/answers.length)}/5`, interpretation: 'Tercih ettiğiniz öğrenme stilleri gösterildi.' })} />
+
+      <TenQuestionTest id="kolb" title="Kolb" questions={kolbQuestions} calcResult={(answers:number[])=>({ score: Math.round(answers.reduce((a,b)=>a+b,0)/answers.length), scoreText: `${Math.round(answers.reduce((a,b)=>a+b,0)/answers.length)}/5`, interpretation: 'Kolb öğrenme stiliniz değerlendirildi.' })} />
+
+      <TenQuestionTest id="honey" title="Honey & Mumford" questions={honeyQuestions} calcResult={(answers:number[])=>({ score: Math.round(answers.reduce((a,b)=>a+b,0)/answers.length), scoreText: `${Math.round(answers.reduce((a,b)=>a+b,0)/answers.length)}/5`, interpretation: 'Öğrenme tercihleriniz özetlendi.' })} />
     </div>
   );
 }
