@@ -427,7 +427,7 @@ function TestsSection() {
 
       <TenQuestionTest id="nback" title="N-Back (Kısa)" questions={nbackQuestions} calcResult={(answers:number[])=>({ score: answers.filter(Boolean).length, scoreText: `${answers.filter(Boolean).length}/${answers.length}`, interpretation: 'Çalışma belleği performansınız.' })} />
 
-      <TenQuestionTest id="stroop" title="Stroop (Kısa)" questions={stroopQuestions} calcResult={(answers:number[])=>({ score: answers.filter(Boolean).length, scoreText: `${answers.filter(Boolean).length}/${answers.length}`, interpretation: 'Dikkat ve bilişsel kontrol seviyesi.' })} />
+      <TenQuestionTest id="stroop" title="Stroop (Kısa)" questions={stroopQuestions} calcResult={(answers:number[])=>({ score: answers.filter(Boolean).length, scoreText: `${answers.filter(Boolean).length}/${answers.length}`, interpretation: 'Dikkat ve bili��sel kontrol seviyesi.' })} />
 
       <TenQuestionTest id="vark" title="VARK" questions={varkQuestions} calcResult={(answers:number[])=>({ score: Math.round(answers.reduce((a,b)=>a+b,0)/answers.length), scoreText: `${Math.round(answers.reduce((a,b)=>a+b,0)/answers.length)}/5`, interpretation: 'Tercih ettiğiniz öğrenme stilleri gösterildi.' })} />
 
@@ -457,14 +457,9 @@ function TestCatalog() {
   ];
 
   function startTest(t:any){
-    // Save a placeholder result to scientific-tests
     try{
-      const raw = localStorage.getItem('scientific-tests') || '{}';
-      const obj = JSON.parse(raw);
-      obj[t.id] = { name: t.title, scoreText: 'Hazırlık: Örnek', interpretation: t.desc, createdAt: new Date().toISOString() };
-      localStorage.setItem('scientific-tests', JSON.stringify(obj));
-      try{ window.dispatchEvent(new CustomEvent('tests-updated', { detail: { type: 'scientific-tests', data: obj } })); }catch{}
-      alert(t.title + ' sonucu kaydedildi (örnek). Ayarlar sayfasından görüntüleyin.');
+      // request to open the detailed 10-question test for this id
+      try{ window.dispatchEvent(new CustomEvent('open-test', { detail: { id: t.id } })); }catch{}
     }catch(e){console.error(e)}
   }
 
@@ -540,7 +535,7 @@ function TestGrit({ open, setOpen, saveTest }: any) {
   function submit(){
     const vals = Object.values(answers).map((v:any)=>Number(v)||1);
     const avg = Math.round((vals.reduce((a,b)=>a+b,0)/vals.length));
-    const interpretation = avg >=4 ? 'Yüksek grit: hedef odaklı ve ısrarcı.' : avg ===3 ? 'Orta seviye grit.' : 'Daha fazla kararlılık çalışması faydalı olabilir.';
+    const interpretation = avg >=4 ? 'Yüksek grit: hedef odaklı ve ısrarcı.' : avg ===3 ? 'Orta seviye grit.' : 'Daha fazla kararlılık çal��şması faydalı olabilir.';
     saveTest(key, { name: 'Grit (Kısa)', score: avg, scoreText: `${avg}/5`, interpretation, createdAt: new Date().toISOString() });
     setOpen((o:any)=>({ ...o, [key]: false }));
   }
