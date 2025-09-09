@@ -1,21 +1,23 @@
-const CACHE_NAME = 'app-cache-v1';
-const OFFLINE_URL = '/index.html';
+const CACHE_NAME = "app-cache-v1";
+const OFFLINE_URL = "/index.html";
 
-self.addEventListener('install', (event) => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll([OFFLINE_URL, '/placeholder.svg']))
+    caches
+      .open(CACHE_NAME)
+      .then((cache) => cache.addAll([OFFLINE_URL, "/placeholder.svg"])),
   );
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(self.clients.claim());
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
   const req = event.request;
   // only handle navigation and same-origin GETs
-  if (req.method !== 'GET') return;
+  if (req.method !== "GET") return;
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
@@ -29,6 +31,6 @@ self.addEventListener('fetch', (event) => {
           return res;
         })
         .catch(() => caches.match(OFFLINE_URL));
-    })
+    }),
   );
 });
