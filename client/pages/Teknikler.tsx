@@ -28,7 +28,7 @@ const TECHNIQUES = [
     difficulty: "Orta",
     time: "Günlük kısa tekrarlar",
     story:
-      "Düzenli aralıklarla çalı��arak aynı bilgiyi daha iyi hatırlayan öğrenciler gördün mü?",
+      "Düzenli aralıklarla çalışarak aynı bilgiyi daha iyi hatırlayan öğrenciler gördün mü?",
     what: "Tekrarları zaman içinde yayarak bilginin uzun süreli kalıcılığını artırma.",
     how: [
       "Kısa, hedefe yönelik tekrar oturumları planla.",
@@ -262,7 +262,7 @@ const TECHNIQUES = [
     difficulty: "Kolay",
     time: "Hedef takibi",
     story: "Hedefe yaklaştıkça bir öğrenci daha hızlı çalışmaya başladı.",
-    what: "Hedefe yaklaşıldıkça motivasyon artma etkisi.",
+    what: "Hedefe yaklaş��ldıkça motivasyon artma etkisi.",
     how: ["Hedefleri küçük aşamalara böl.", "İlerlemeni görünür kıl."],
     motivation: "İlerlemeni görmek hızlandırır — küçük kilometre taşları koy.",
     visual: { icon: "🏁", color: "#10B981", shape: "flag" },
@@ -343,7 +343,7 @@ const TECHNIQUES = [
     difficulty: "Orta",
     time: "Zaman yönetimi",
     story:
-      "Uzun süre aynı ��eyi yapmak verim düşürdü; mola dönüşümünü keşfettiler.",
+      "Uzun süre aynı şeyi yapmak verim düşürdü; mola dönüşümünü keşfettiler.",
     what: "Aynı çabanın getirisinin zamanla azalması.",
     how: ["Verim azaldığında mola ver.", "Farklı araçlar dene."],
     motivation: "Dozunda çalışma, verim artırır.",
@@ -391,7 +391,7 @@ const TECHNIQUES = [
     emoji: "👀",
     difficulty: "Kolay",
     time: "Gözlem temelli",
-    story: "Gözlendiğini bilen bir ekip performans��nı artırdı.",
+    story: "Gözlendiğini bilen bir ekip performansını artırdı.",
     what: "Gözlenme algısının performansı etkilemesi.",
     how: [
       "Hedefleri paylaş ve rapor et.",
