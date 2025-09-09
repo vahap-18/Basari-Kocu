@@ -1,40 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { MOTIVATIONS, UPLIFTINGS } from "@/data/quotes";
 import { pickDailyIndex, pickRandomAndStore } from "@/lib/daily";
 
 const STUDY_TECHNIQUES = [
-  {
-    title: "Spaced Repetition",
-    desc: "Bilginin kalıcılığı için tekrarları zamanla artırın. Anki gibi araçlarla küçük, hedefe yönelik tekrarlar yapın. Hangi kartların zorlandığını takip edin ve zorlanılan konuları sık tekrar edin. (Çakışma: yoğun tekrar, öğrenme tükenmesine yol açarsa mola ve varyasyon ekleyin.)",
-  },
-  {
-    title: "Active Recall",
-    desc: "Bilgiyi hatırlamaya çalışarak öğrenin; notları pasif okumak yerine kendi sorularınızı yazın, cevaplayın ve yanlışları inceleyin. (Çakışma: sadece tekrar etmek yerine, anlamaya yönelik Feynman ile birleşince etkilidir.)",
-  },
-  {
-    title: "Interleaving",
-    desc: "Benzer konuları karıştırarak çalışmak, farklı problemlere uyum yeteneğinizi geliştirir. Uygulamada farklı soru tiplerini birleştirin. (Çakışma: başlangıçta zorlayıcı olabilir; temel öğrenme sonrası uygulayın.)",
-  },
-  {
-    title: "Dual Coding",
-    desc: "Kavramları metin + görsel ile eşleştirin: şemalar, zaman çizelgeleri, tablolar. Bu, bilgiyi farklı yollarla kodlamanızı sağlar. (Tamamlayıcı: Active Recall ile birlikte güçlü sonuç verir.)",
-  },
-  {
-    title: "Pomodoro",
-    desc: "Kısa odak seansları (25/5, 50/10 gibi) ile dikkat sürenizi artırın. Hedefe yönelik görevler belirleyip oturumları sayın. (Uyum: bazı kişiler daha uzun odak sürelerinde verimli olabilir.)",
-  },
-  {
-    title: "Feynman Tekniği",
-    desc: "Bir konuyu basit bir dille anlatmaya çalışın; kavramdaki boşlukları bu şekilde keşfedin. Öğretmek, en etkili öğrenme yöntemlerindendir.",
-  },
-  {
-    title: "Self-Explanation",
-    desc: "Çözerken her adımı kendinize açıklayın; bu zihinsel model kurmayı güçlendirir ve transferi destekler.",
-  },
-  {
-    title: "Practice Testing",
-    desc: "Gerçek sınav koşullarında düzenli denemeler yapın; sınav stratejileri, süre yönetimi ve yanlış analizine odaklanın.",
-  },
+  { id: "spaced", title: "Spaced Repetition", desc: "Tekrarları zamanla yayarak bilgiyi kalıcı hale getirme yöntemi." },
+  { id: "testing_effect", title: "Testing Effect", desc: "Öğrendiklerinizi sınayarak daha kalıcı hale getirme yöntemi." },
+  { id: "dual_coding", title: "Dual Coding", desc: "Metin ve görselleri birlikte kullanarak bilgiyi pekiştirme." },
+  { id: "feynman", title: "Feynman Tekniği", desc: "Bir konuyu basitçe anlatarak eksikleri keşfetme yöntemi." },
+  { id: "pomodoro", title: "Pomodoro", desc: "Kısa odak seansları ile süre yönetimi ve dikkat artırma." },
 ];
 
 const LAWS = [
@@ -71,18 +45,25 @@ export const StudyTechniquesCard: React.FC = () => {
   return (
     <Card className="animate-pop">
       <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
-      <p className="text-sm text-muted-foreground mb-3">Temel tekniklerin özetleri burada. Detaylı rehber için Teknikler sayfasına gidin.</p>
-      <ul className="space-y-2 text-sm text-muted-foreground">
-        {STUDY_TECHNIQUES.slice(0, 3).map((s) => (
-          <li key={s.title}>
-            <div className="font-medium">• {s.title}</div>
-            <div className="text-sm text-muted-foreground">{s.desc}</div>
+      <p className="text-sm text-muted-foreground mb-3">Önemli tekniklerin isimleri ve kısa açıklamaları. Detayı görmek için isme dokun.</p>
+
+      <ul className="space-y-2">
+        {STUDY_TECHNIQUES.map((s, idx) => (
+          <li key={s.id} className="flex items-start justify-between">
+            <div>
+              <Link to={`/teknikler#${s.id}`} className="font-medium text-base text-foreground hover:underline">
+                {s.title}
+              </Link>
+              {idx < 2 && <div className="text-sm text-muted-foreground mt-1">{s.desc}</div>}
+            </div>
+            <Link to={`/teknikler#${s.id}`} className="text-sm text-muted-foreground ml-4">Aç</Link>
           </li>
         ))}
       </ul>
+
       <div className="mt-3 flex items-center gap-2">
-        <a href="/teknikler" className="px-3 py-2 rounded-xl bg-primary text-primary-foreground">Tekniklere Git 🔎</a>
-        <a href="/teknikler" className="text-sm text-muted-foreground">Tüm tekniklere gözat</a>
+        <Link to="/teknikler" className="px-3 py-2 rounded-xl bg-primary text-primary-foreground">Tüm tekniklere gözat</Link>
+        <Link to="/teknikler" className="text-sm text-muted-foreground">Detaylı rehber</Link>
       </div>
     </Card>
   );
