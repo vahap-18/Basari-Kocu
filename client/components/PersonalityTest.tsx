@@ -86,7 +86,7 @@ export const PersonalityTest: React.FC<{
       resilience:
         "Zorluklara karşı dirençlisin; zor konularda ısrar etmelisin. 💪",
       social:
-        "Grupla tartışarak öğrenme verimli; çalışma grupları faydalı olabilir. ���",
+        "Grupla tartışarak öğrenme verimli; çalışma grupları faydalı olabilir. 🤝",
       structure:
         "Planlı çalışıyorsun; liste ve programlar verimliliği artırır. 📋",
       curiosity:
@@ -177,15 +177,15 @@ export const PersonalityTest: React.FC<{
             {step > 0 && (
               <button
                 onClick={prev}
-                className="px-4 py-2 rounded-xl border mr-2"
+                className="px-3 py-2 rounded-lg border mr-2"
               >
                 ← Geri
               </button>
             )}
-            {step < QUESTIONS.length - 1 && (
+            {!examMode && step < QUESTIONS.length - 1 && (
               <button
                 onClick={next}
-                className="px-4 py-2 rounded-xl bg-primary text-primary-foreground"
+                className="px-4 py-2 rounded-lg bg-primary text-primary-foreground"
               >
                 İleri →
               </button>
@@ -196,15 +196,15 @@ export const PersonalityTest: React.FC<{
               <>
                 <button
                   onClick={onClose}
-                  className="px-3 py-2 rounded-xl border mr-2"
+                  className="px-3 py-2 rounded-lg border mr-2"
                 >
                   Kapat
                 </button>
                 <button
                   onClick={finish}
-                  className="px-4 py-2 rounded-xl bg-primary text-primary-foreground"
+                  className="px-4 py-2 rounded-lg bg-primary text-primary-foreground"
                 >
-                  Testi Tamamla ✅
+                  {examMode ? 'Tamamla' : 'Testi Tamamla ✅'}
                 </button>
               </>
             )}
