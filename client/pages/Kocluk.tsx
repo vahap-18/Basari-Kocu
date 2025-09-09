@@ -647,7 +647,7 @@ function TestsSection() {
     (_, i) => `Duygusal zeka sorusu ${i + 1}.`,
   );
   const nbackQuestions = Array.from({ length: 10 }).map(
-    (_, i) => `İşlem belleği sorusu ${i + 1} (eşleşme var mı?).`,
+    (_, i) => `İşlem belleği sorusu ${i + 1} (e��leşme var mı?).`,
   );
   const stroopQuestions = Array.from({ length: 10 }).map(
     (_, i) => `Stroop testi maddesi ${i + 1} (renk/kelime uyumu).`,
@@ -760,7 +760,7 @@ function TestsSection() {
         calcResult={(answers: number[]) => ({
           score: answers.filter(Boolean).length,
           scoreText: `${answers.filter(Boolean).length}/${answers.length}`,
-          interpretation: "Dikkat ve bili��sel kontrol seviyesi.",
+          interpretation: "Dikkat ve bilişsel kontrol seviyesi.",
         })}
       />
 
