@@ -236,6 +236,40 @@ export default function AyarlarPage() {
 
       <section>
         <h2 className="text-lg font-bold mb-3">Tema</h2>
+
+        {/* LIVE THEME PREVIEW: shows how the selected theme affects background and accent */}
+        <div className="mb-3">
+          <div
+            className="p-4 rounded-2xl border"
+            style={{
+              background: "linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)))",
+              color: "hsl(var(--foreground))",
+            }}
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm text-muted-foreground">Aktif Tema</div>
+                <div className="font-semibold">{themes.find((t) => t.key === theme)?.label}</div>
+              </div>
+              <div className="text-right">
+                <div className="inline-flex items-center gap-2">
+                  <div
+                    className="w-10 h-10 rounded-md"
+                    style={{ background: "hsl(var(--primary) / 0.16)", border: "1px solid hsl(var(--primary))" }}
+                  />
+                  <div
+                    className="w-10 h-10 rounded-md"
+                    style={{ background: "hsl(var(--accent) / 0.16)", border: "1px solid hsl(var(--accent))" }}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="mt-3 text-sm text-muted-foreground">
+              Bu alanda seçili temanın arka planı ve vurgu renkleri canlı olarak görünür.
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 gap-3">
           {themes.map((t) => (
             <button
