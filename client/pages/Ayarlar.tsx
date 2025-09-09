@@ -13,6 +13,8 @@ const themes: { key: ThemeKey; label: string; preview: string[] }[] = [
   { key: "lider", label: "Lider", preview: ["#0f172a", "#8b5cf6", "#dbeafe"] },
   { key: "korkusuz", label: "Korkusuz", preview: ["#0f172a", "#f43f5e", "#fee2e2"] },
   { key: "bilge", label: "Bilge", preview: ["#0f172a", "#10b981", "#a7f3d0"] },
+  { key: "kiz", label: "Kız Teması", preview: ["#fff1f2", "#f43f5e", "#fbcfe8"] },
+  { key: "erkek", label: "Erkek Teması", preview: ["#f0f9ff", "#2563eb", "#bfdbfe"] },
 ];
 
 export default function AyarlarPage() {
