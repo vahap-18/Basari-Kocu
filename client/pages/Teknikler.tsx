@@ -10,7 +10,7 @@ const TECHNIQUES = [
     difficulty: "Kolay",
     time: "İlk 24 saat kritik",
     story:
-      "Sınavdan sonra bir öğrenci notlarını gözden geçirmeyince bir hafta içinde büyük kısmın�� unuttu.",
+      "Sınavdan sonra bir öğrenci notlarını gözden geçirmeyince bir hafta içinde büyük kısmını unuttu.",
     what: "Zamanla unutma hızını gösteren eğri; erken tekrarlar bilgiyi kurtarır.",
     how: [
       "İlk 24 saatte kısa tekrar yap.",
@@ -200,7 +200,7 @@ const TECHNIQUES = [
   // 13-17 Study Techniques
   {
     id: "pomodoro",
-    title: "Pomodoro Tekni��i",
+    title: "Pomodoro Tekniği",
     emoji: "⏳",
     difficulty: "Kolay",
     time: "25/5 veya 50/10",
@@ -357,7 +357,7 @@ const TECHNIQUES = [
     time: "Problem çözme",
     story: "Basit çözümü tercih eden öğrenci daha hızlı sonuca ulaştı.",
     what: "Gereksiz varsayımları eleyip en basit açıklamayı seçme ilkesi.",
-    how: ["Çözümü basitleştir.", "Önce temel nedenleri sorgula."],
+    how: ["Çöz��mü basitleştir.", "Önce temel nedenleri sorgula."],
     motivation: "Basitlik genelde en etkili yoldur.",
     visual: { icon: "🪒", color: "#111827", shape: "line" },
   },
@@ -490,7 +490,7 @@ export default function TekniklerPage() {
                   <div className="font-medium">🧠 Nedir?</div>
                   <div>{t.what}</div>
 
-                  <div className="font-medium">��� Nasıl Uygula?</div>
+                  <div className="font-medium">✨ Nasıl Uygula?</div>
                   <ul className="list-disc pl-5">
                     {t.how.map((h: any, i: number) => (
                       <li key={i}>{h}</li>
