@@ -86,7 +86,7 @@ export default function AyarlarPage() {
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold">Kişilik Profili</h2>
           <div>
-            <button onClick={() => setShowTest(true)} className="px-3 py-1 rounded-md border text-sm">
+            <button onClick={() => navigate('/test/personality')} className="px-3 py-1 rounded-md border text-sm">
               Testi Yeniden Doldur
             </button>
           </div>
