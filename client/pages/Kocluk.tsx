@@ -79,9 +79,21 @@ export default function KoclukPage() {
               </div>
 
               <div className="mt-4 flex items-center gap-4">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                  {profile?.dominant ? String(profile.dominant).slice(0,2).toUpperCase() : "?"}
+                <div>
+                  <div className="relative">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-2xl shadow-lg overflow-hidden">
+                      {/** avatar image or emoji */}
+                      {profilePhoto ? (
+                        <img src={profilePhoto} alt="avatar" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="text-3xl">{avatarEmoji}</div>
+                      )}
+                    </div>
+                    <input id="profile-photo-input" type="file" accept="image/*" onChange={onPhotoChange} className="hidden" />
+                    <label htmlFor="profile-photo-input" className="absolute -bottom-2 -right-2 bg-white rounded-full p-1 border cursor-pointer text-xs">📷</label>
+                  </div>
                 </div>
+
                 <div className="flex-1">
                   <div className="text-sm text-muted-foreground">Profil</div>
                   <div className="font-semibold capitalize">{profile?.dominant ?? "Henüz yok"}</div>
