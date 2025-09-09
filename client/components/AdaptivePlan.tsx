@@ -19,6 +19,27 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
       if (!res.ok) throw new Error(`Server responded ${res.status}`);
       const data = await res.json();
       setPlan(data.plan ?? String(data));
+
+      // if the server returned structured analysis, persist as personality-profile and dispatch update
+      try {
+        if (data.analysis) {
+          const profile = {
+            createdAt: new Date().toISOString(),
+            scores: data.analysis.scores || {},
+            dominant: data.analysis.dominant || "",
+            summary: data.plan ? (data.plan.split("\n").slice(0, 2).join(" ")) : "AI tarafından oluşturuldu",
+            recommendedPomodoro: data.analysis.recommendedPomodoro || { work: 25, short: 5, long: 15 },
+          };
+          localStorage.setItem("personality-profile", JSON.stringify(profile));
+          try {
+            window.dispatchEvent(new CustomEvent("personality-updated", { detail: profile }));
+          } catch {}
+        }
+        // save plan history
+        const hist = JSON.parse(localStorage.getItem("ai-plan-history") || "[]");
+        hist.unshift({ createdAt: new Date().toISOString(), plan: data.plan, analysis: data.analysis || null });
+        localStorage.setItem("ai-plan-history", JSON.stringify(hist));
+      } catch {}
     } catch (e: any) {
       setError(e?.message ?? "Bilinmeyen hata");
     } finally {
