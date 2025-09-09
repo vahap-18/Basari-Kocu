@@ -140,17 +140,14 @@ export const PersonalityTest: React.FC<{
       >
         <div className="flex items-center justify-between mb-3">
           <div>
-            <h3 className="text-xl font-bold">
-              Kişilik Testi — {step + 1}/{QUESTIONS.length} ✨
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Her soru ayrı kartta — kısa ve animasyonlu. Tamamlandığında
-              kişisel stratejin hazırlanır.
-            </p>
+            <h3 className="text-xl font-bold">{examMode ? `Sınav — ${step + 1}/${QUESTIONS.length}` : `Kişilik Testi — ${step + 1}/${QUESTIONS.length} ✨`}</h3>
+            {!examMode && (
+              <p className="text-sm text-muted-foreground">
+                Her soru ayrı kartta — kısa ve animasyonlu. Tamamlandığında kişisel stratejin hazırlanır.
+              </p>
+            )}
           </div>
-          <div className="text-sm text-muted-foreground">
-            {new Array(step).fill(0).map((_, i) => "•")}
-          </div>
+          <div className="text-sm text-muted-foreground">{new Array(step).fill(0).map((_, i) => "•")}</div>
         </div>
 
         <div className="mb-4">
