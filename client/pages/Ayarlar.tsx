@@ -1,6 +1,7 @@
 import React from "react";
 import { MobileLayout } from "@/components/MobileLayout";
 import { useTheme, type ThemeKey } from "@/components/ThemeProvider";
+import { PersonalityTest } from "@/components/PersonalityTest";
 
 const themes: { key: ThemeKey; label: string; preview: string[] }[] = [
   { key: "acik", label: "Açık", preview: ["#111827", "#3b82f6", "#e5e7eb"] },
