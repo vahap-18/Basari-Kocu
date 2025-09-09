@@ -89,6 +89,11 @@ export default function KoclukPage() {
   function onPhotoChange(e: React.ChangeEvent<HTMLInputElement>){
     const file = e.target.files?.[0];
     if(!file) return;
+    // limit to 1MB to avoid localStorage bloat
+    if (file.size > 1_000_000) {
+      alert('Profil resmi 1MB dan küçük olmalı. Lütfen daha küçük bir resim seçin.');
+      return;
+    }
     const reader = new FileReader();
     reader.onload = () => {
       const data = String(reader.result);
