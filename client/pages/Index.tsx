@@ -119,7 +119,7 @@ export default function Index() {
           </Link>
           <Link to="/teknikler" className="p-4 rounded-2xl border hover:border-primary transition-colors">
             <p className="text-xs text-muted-foreground">Yöntemler</p>
-            <h3 className="text-lg font-semibold">Teknikler 📚</h3>
+            <h3 className="text-lg font-semibold">📚 Teknikler</h3>
           </Link>
           <Link to="/ayarlar" className="p-4 rounded-2xl border hover:border-primary transition-colors">
             <p className="text-xs text-muted-foreground">Kişiselleştir</p>
