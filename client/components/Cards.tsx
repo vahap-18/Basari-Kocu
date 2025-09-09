@@ -3,19 +3,62 @@ import { Link } from "react-router-dom";
 import { MOTIVATIONS, UPLIFTINGS } from "@/data/quotes";
 import { pickDailyIndex, pickRandomAndStore } from "@/lib/daily";
 
-const STUDY_TECHNIQUES = [
-  { id: "spaced", title: "Spaced Repetition", desc: "Tekrarları zamanla yayarak bilgiyi kalıcı hale getirme yöntemi." },
-  { id: "testing_effect", title: "Testing Effect", desc: "Öğrendiklerinizi sınayarak daha kalıcı hale getirme yöntemi." },
-  { id: "dual_coding", title: "Dual Coding", desc: "Metin ve görselleri birlikte kullanarak bilgiyi pekiştirme." },
-  { id: "feynman", title: "Feynman Tekniği", desc: "Bir konuyu basitçe anlatarak eksikleri keşfetme yöntemi." },
-  { id: "pomodoro", title: "Pomodoro", desc: "Kısa odak seansları ile süre yönetimi ve dikkat artırma." },
-];
-
-const LAWS = [
-  { name: "Murphy Kanunu", text: "Eğer yanlış gidebilecek bir şey varsa, yanlış gidecektir. Sınav hazırlığında yedek planınız olsun: ekstra materyal, yedek notlar, ve teknik aksaklıklara karşı çözümler." },
-  { name: "Parkinson Yasası", text: "İş, kendisine verilen zamanı doldurur. Süre sınırlamaları koyun, kısa ve net hedeflerle çalışın." },
-  { name: "Pareto (80/20)", text: "Genelde sonuçların %80'i çabalarınızın %20'sinden gelir. En yüksek getirili konuları önceleyin." },
-  { name: "Zeigarnik Etkisi", text: "Tamamlanmamış işler zihninizde daha çok yer edinir; küçük tamamlanabilir görevler yaratın ve bitirdikçe motivasyonunuz artar." },
+const CATEGORIES: { title: string; items: { id: string; title: string }[] }[] = [
+  {
+    title: "🎯 Öğrenme ve Hafıza Kanunları",
+    items: [
+      { id: "ebbinghaus", title: "Ebbinghaus’un Unutma Eğrisi" },
+      { id: "spacing", title: "Spacing Effect (Aralıklı Tekrar)" },
+      { id: "testing_effect", title: "Testing Effect (Kendini Test Etme)" },
+      { id: "primacy_recency", title: "Primacy & Recency (İlk ve Son Etkisi)" },
+      { id: "miller", title: "Çalışma Belleği Sınırı (7±2 Kuralı – Miller)" },
+      { id: "emotional_binding", title: "Duygusal Bağ Kurma İlkesi" },
+    ],
+  },
+  {
+    title: "⚡ Motivasyon ve Performans Kanunları",
+    items: [
+      { id: "yerkesdodson", title: "Yerkes-Dodson Yasası" },
+      { id: "flow", title: "Flow Teorisi (Akış Hali)" },
+      { id: "pareto", title: "Pareto İlkesi (80/20)" },
+      { id: "parkinson", title: "Parkinson Yasası" },
+      { id: "murphy", title: "Murphy Yasası" },
+      { id: "selfdetermination", title: "Self-Determination Theory" },
+    ],
+  },
+  {
+    title: "⏳ Çalışma Teknikleri ve Odaklanma",
+    items: [
+      { id: "pomodoro", title: "Pomodoro Tekniği" },
+      { id: "zeigarnik", title: "Zeigarnik Etkisi" },
+      { id: "chunking", title: "Chunking (Bilgiyi parçalara bölmek)" },
+      { id: "eisenhower", title: "Eisenhower Matrisi" },
+      { id: "goalgradient", title: "Goal Gradient Effect" },
+    ],
+  },
+  {
+    title: "🧠 Psikoloji ve Gelişim İlkeleri",
+    items: [
+      { id: "growthmindset", title: "Carol Dweck – Growth Mindset" },
+      { id: "kaizen", title: "Kaizen Felsefesi" },
+      { id: "pavlov", title: "Pavlov – Koşullanma" },
+      { id: "hebbian", title: "Hebbian Learning" },
+      { id: "socratic", title: "Socratic Learning" },
+    ],
+  },
+  {
+    title: "🌍 Hayat ve Verimlilik Kanunları",
+    items: [
+      { id: "diminishing", title: "Law of Diminishing Returns" },
+      { id: "occam", title: "Ockham’ın Usturası" },
+      { id: "firstprinciples", title: "First Principles Thinking" },
+      { id: "feynman", title: "Feynman Tekniği" },
+      { id: "hawthorne", title: "Hawthorne Effect" },
+      { id: "procrastination", title: "Procrastination Loop" },
+      { id: "momentum", title: "Momentum İlkesi" },
+      { id: "butterfly", title: "Butterfly Effect" },
+    ],
+  },
 ];
 
 const HISTORY_MAP: Record<string, string[]> = {
@@ -45,21 +88,23 @@ export const StudyTechniquesCard: React.FC = () => {
   return (
     <Card className="animate-pop">
       <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
-      <p className="text-sm text-muted-foreground mb-3">Önemli tekniklerin isimleri ve kısa açıklamaları. Detayı görmek için isme dokun.</p>
+      <p className="text-sm text-muted-foreground mb-3">Kategori bazlı önemli başlıklar. İsme tıklayın, teknikler sayfasında detayına atlayın.</p>
 
-      <ul className="space-y-2">
-        {STUDY_TECHNIQUES.map((s, idx) => (
-          <li key={s.id} className="flex items-start justify-between">
-            <div>
-              <Link to={`/teknikler#${s.id}`} className="font-medium text-base text-foreground hover:underline">
-                {s.title}
-              </Link>
-              {idx < 2 && <div className="text-sm text-muted-foreground mt-1">{s.desc}</div>}
-            </div>
-            <Link to={`/teknikler#${s.id}`} className="text-sm text-muted-foreground ml-4">Aç</Link>
-          </li>
+      <div className="space-y-3">
+        {CATEGORIES.map((cat) => (
+          <div key={cat.title}>
+            <div className="font-medium mb-2">{cat.title}</div>
+            <ul className="grid grid-cols-1 gap-2">
+              {cat.items.map((it) => (
+                <li key={it.id} className="flex items-center justify-between">
+                  <Link to={`/teknikler#${it.id}`} className="text-sm text-foreground hover:underline">{it.title}</Link>
+                  <Link to={`/teknikler#${it.id}`} className="text-xs text-muted-foreground">Detay</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
-      </ul>
+      </div>
 
       <div className="mt-3 flex items-center gap-2">
         <Link to="/teknikler" className="px-3 py-2 rounded-xl bg-primary text-primary-foreground">Tüm tekniklere gözat</Link>
@@ -87,7 +132,6 @@ export const UpliftingCard: React.FC = () => {
   const key = "uplifting-daily-index";
   const [idx, setIdx] = useState(() => pickDailyIndex(UPLIFTINGS.length, key));
   useEffect(() => {
-    // refresh if date changes
     const id = setInterval(() => {
       const current = pickDailyIndex(UPLIFTINGS.length, key);
       setIdx(current);
