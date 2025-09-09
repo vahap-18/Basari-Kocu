@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { MOTIVATIONS, UPLIFTINGS } from "@/data/quotes";
+import { pickDailyIndex, pickRandomAndStore } from "@/lib/daily";
 
 const STUDY_TECHNIQUES = [
   {
@@ -25,14 +27,6 @@ const STUDY_TECHNIQUES = [
     title: "Feynman Tekniği",
     desc: "Konuyu basit bir dille birine anlatın; eksiklerinizi bu sayede keşfedin.",
   },
-];
-
-const UPLIFTING = [
-  "Sen zaten buradasın — bu büyük bir adım.",
-  "Her küçük ilerleme birikerek başarıya dönüşür.",
-  "Hatalar öğretmendir; vazgeçme.",
-  "Bugün kendin için çalışıyorsun; bu değerlidir.",
-  "Konsantre olduğunda en iyi haline ulaşırsın.",
 ];
 
 const HISTORY_MAP: Record<string, string[]> = {
@@ -87,11 +81,49 @@ export const HistoryTodayCard: React.FC = () => {
 };
 
 export const UpliftingCard: React.FC = () => {
-  const idx = Math.floor(Date.now() / (1000 * 60 * 60)) % UPLIFTING.length; // rotates hourly
+  const key = "uplifting-daily-index";
+  const [idx, setIdx] = useState(() => pickDailyIndex(UPLIFTINGS.length, key));
+  useEffect(() => {
+    // refresh if date changes
+    const id = setInterval(() => {
+      const current = pickDailyIndex(UPLIFTINGS.length, key);
+      setIdx(current);
+    }, 60_000);
+    return () => clearInterval(id);
+  }, []);
+
+  function randomize() {
+    const n = pickRandomAndStore(UPLIFTINGS.length, key);
+    setIdx(n);
+  }
+
   return (
     <Card className="animate-fade-in">
-      <h3 className="font-semibold mb-2">Kendini İyi Hisset</h3>
-      <p className="text-lg">“{UPLIFTING[idx]}”</p>
+      <div className="flex items-start justify-between">
+        <h3 className="font-semibold mb-2">Kendini İyi Hisset</h3>
+        <button onClick={randomize} className="text-xs px-2 py-1 rounded-md border">Değiştir</button>
+      </div>
+      <p className="text-lg">“{UPLIFTINGS[idx]}”</p>
+    </Card>
+  );
+};
+
+export const MotivationCard: React.FC = () => {
+  const key = "motivation-daily-index";
+  const [idx, setIdx] = useState(() => pickDailyIndex(MOTIVATIONS.length, key));
+
+  function randomize() {
+    const n = pickRandomAndStore(MOTIVATIONS.length, key);
+    setIdx(n);
+  }
+
+  return (
+    <Card className="animate-pop">
+      <div className="flex items-start justify-between">
+        <h3 className="font-semibold mb-2">Günün Motivasyonu</h3>
+        <button onClick={randomize} className="text-xs px-2 py-1 rounded-md border">Değiştir</button>
+      </div>
+      <p className="text-sm text-muted-foreground">{MOTIVATIONS[idx]}</p>
     </Card>
   );
 };
