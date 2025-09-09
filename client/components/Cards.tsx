@@ -72,27 +72,81 @@ export const StudyTechniquesCard: React.FC = () => {
   return (
     <Card className="animate-pop">
       <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
-      <ul className="space-y-3 text-sm text-muted-foreground">
-        {STUDY_TECHNIQUES.map((s) => (
-          <li key={s.title} className="">
+      <p className="text-sm text-muted-foreground mb-3">Temel tekniklerin özetleri burada. Detaylı rehber için Teknikler sayfasına gidin.</p>
+      <ul className="space-y-2 text-sm text-muted-foreground">
+        {STUDY_TECHNIQUES.slice(0,3).map((s) => (
+          <li key={s.title}>
             <div className="font-medium">• {s.title}</div>
             <div className="text-sm text-muted-foreground">{s.desc}</div>
           </li>
         ))}
       </ul>
-
-      <div className="mt-4">
-        <h4 className="font-semibold mb-2">Sınava Hazırlık Kanunları</h4>
-        <ul className="space-y-2 text-sm text-muted-foreground">
-          {LAWS.map((l) => (
-            <li key={l.name}>
-              <div className="font-medium">{l.name} — <span className="text-xs text-muted-foreground">{l.text}</span></div>
-            </li>
-          ))}
-        </ul>
+      <div className="mt-3 flex items-center gap-2">
+        <a href="/teknikler" className="px-3 py-2 rounded-xl bg-primary text-primary-foreground">Tekniklere Git 🔎</a>
+        <a href="/teknikler" className="text-sm text-muted-foreground">Tüm tekniklere gözat</a>
       </div>
+    </Card>
+  );
+};
 
-      <div className="mt-3 text-xs text-muted-foreground">Daha fazlası için Teknikler sayfasına gidin. 🎯</div>
+export const HistoryTodayCard: React.FC = () => {
+  const events = getHistoryForToday();
+  return (
+    <Card className="animate-slide-up">
+      <h3 className="font-semibold mb-2">Tarihte Bugün</h3>
+      <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
+        {events.map((e, i) => (
+          <li key={i}>{e}</li>
+        ))}
+      </ul>
+    </Card>
+  );
+};
+
+export const UpliftingCard: React.FC = () => {
+  const key = "uplifting-daily-index";
+  const [idx, setIdx] = useState(() => pickDailyIndex(UPLIFTINGS.length, key));
+  useEffect(() => {
+    // refresh if date changes
+    const id = setInterval(() => {
+      const current = pickDailyIndex(UPLIFTINGS.length, key);
+      setIdx(current);
+    }, 60_000);
+    return () => clearInterval(id);
+  }, []);
+
+  function randomize() {
+    const n = pickRandomAndStore(UPLIFTINGS.length, key);
+    setIdx(n);
+  }
+
+  return (
+    <Card className="animate-fade-in">
+      <div className="flex items-start justify-between">
+        <h3 className="font-semibold mb-2">Kendini İyi Hisset</h3>
+        <button onClick={randomize} className="text-xs px-2 py-1 rounded-md border">Değiştir</button>
+      </div>
+      <p className="text-lg">“{UPLIFTINGS[idx]}”</p>
+    </Card>
+  );
+};
+
+export const MotivationCard: React.FC = () => {
+  const key = "motivation-daily-index";
+  const [idx, setIdx] = useState(() => pickDailyIndex(MOTIVATIONS.length, key));
+
+  function randomize() {
+    const n = pickRandomAndStore(MOTIVATIONS.length, key);
+    setIdx(n);
+  }
+
+  return (
+    <Card className="animate-pop">
+      <div className="flex items-start justify-between">
+        <h3 className="font-semibold mb-2">Günün Motivasyonu</h3>
+        <button onClick={randomize} className="text-xs px-2 py-1 rounded-md border">Değiştir</button>
+      </div>
+      <p className="text-sm text-muted-foreground">{MOTIVATIONS[idx]}</p>
     </Card>
   );
 };
