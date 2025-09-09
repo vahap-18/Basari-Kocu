@@ -163,6 +163,13 @@ export default function KoclukPage() {
               <h4 className="font-semibold mb-2">Günlük Hedef</h4>
               <DailyGoals />
             </div>
+
+            <div className="p-3 rounded-2xl border bg-card">
+              <h4 className="font-semibold mb-2">Bilimsel Testler</h4>
+              <p className="text-sm text-muted-foreground mb-2">Kısa, güvenilir psikometrik ve bilişsel testlerle profilinizi derinleştirin. Her testi açıp tamamlayabilirsiniz.</p>
+
+              <TestsSection />
+            </div>
           </div>
         </section>
 
