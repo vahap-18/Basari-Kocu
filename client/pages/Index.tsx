@@ -130,7 +130,7 @@ export default function Index() {
         <section>
           <div className="grid grid-cols-1 gap-3">
             <div className="p-4 rounded-2xl border bg-gradient-to-br from-card to-muted">
-              <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
+              <h3 className="font-semibold mb-2">🎯 Bilimsel Çalışma Teknikleri</h3>
               <p className="text-sm text-muted-foreground">Etkili yöntemleri keşfedin ve çalışma rutininize uygulayın.</p>
             </div>
 
