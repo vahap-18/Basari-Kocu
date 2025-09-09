@@ -164,7 +164,7 @@ export default function Index() {
 
 function QuickTasks() {
   const [text, setText] = React.useState("");
-  const [items, setItems] = React.useState<string[]>(() => {
+  const [items, setItems] = React.useState<{ text: string; done: boolean; id: string }[]>(() => {
     try {
       const v = localStorage.getItem("quick-tasks");
       return v ? JSON.parse(v) : [];
@@ -177,6 +177,24 @@ function QuickTasks() {
     localStorage.setItem("quick-tasks", JSON.stringify(items));
   }, [items]);
 
+  function add() {
+    const t = text.trim();
+    if (!t) return;
+    const item = { text: t, done: false, id: String(Date.now()) };
+    setItems((arr) => [item, ...arr]);
+    setText("");
+  }
+
+  function toggleDone(id: string) {
+    setItems((arr) => arr.map((it) => (it.id === id ? { ...it, done: !it.done } : it)));
+  }
+
+  function clearCompleted() {
+    setItems((arr) => arr.filter((it) => !it.done));
+  }
+
+  const completed = items.filter((i) => i.done).length;
+
   return (
     <div>
       <div className="flex gap-2 mb-2">
@@ -185,23 +203,28 @@ function QuickTasks() {
           placeholder="Örn. Matematik 2 test"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e)=> e.key === 'Enter' && add()}
         />
         <button
           className="px-3 py-2 rounded-xl bg-primary text-primary-foreground"
-          onClick={() => {
-            if (!text.trim()) return;
-            setItems((arr) => [text.trim(), ...arr]);
-            setText("");
-          }}
+          onClick={add}
         >
           Ekle
         </button>
       </div>
+
+      <div className="flex items-center justify-between mb-2">
+        <div className="text-sm text-muted-foreground">Toplam: {items.length} • Tamamlandı: {completed}</div>
+        <div className="flex gap-2">
+          <button onClick={clearCompleted} className="text-sm px-2 py-1 rounded-md border">Tamamlananları Temizle</button>
+        </div>
+      </div>
+
       <ul className="space-y-2">
-        {items.map((it, i) => (
-          <li key={i} className="flex items-center gap-2 p-2 rounded-lg border">
-            <input type="checkbox" onChange={(e) => e.target.checked && setItems((arr) => arr.filter((_, idx) => idx !== i))} />
-            <span className="text-sm">{it}</span>
+        {items.map((it) => (
+          <li key={it.id} className="flex items-center gap-2 p-2 rounded-lg border">
+            <input type="checkbox" checked={it.done} onChange={() => toggleDone(it.id)} />
+            <span className={it.done ? 'line-through text-muted-foreground text-sm' : 'text-sm'}>{it.text}</span>
           </li>
         ))}
         {items.length === 0 && <li className="text-sm text-muted-foreground">Bir görev ekleyin.</li>}
