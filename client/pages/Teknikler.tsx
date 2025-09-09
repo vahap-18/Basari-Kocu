@@ -188,7 +188,7 @@ const TECHNIQUES = [
     time: "Uzun vadeli hedefler",
     story:
       "Özerklik ve amaç bulan öğrenciler daha motive ve kalıcı öğrenme gösterdi.",
-    what: "Özerklik, yeterlilik ve bağlıl��k duyguları motivasyonu artırır.",
+    what: "Özerklik, yeterlilik ve bağlılık duyguları motivasyonu artırır.",
     how: [
       "Küçük hedefler belirle.",
       "İlerlemeni takip et ve özerk seçimler yap.",
