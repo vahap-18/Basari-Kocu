@@ -65,6 +65,9 @@ export const PersonalityTest: React.FC<{ onComplete?: (p: PersonalityProfile) =>
     try {
       localStorage.setItem("personality-profile", JSON.stringify(profile));
       localStorage.setItem("personality-completed", "1");
+      try {
+        window.dispatchEvent(new CustomEvent("personality-updated", { detail: profile }));
+      } catch {}
     } catch (e) {}
 
     onComplete?.(profile);
