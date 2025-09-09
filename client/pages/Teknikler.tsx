@@ -70,7 +70,7 @@ const TECHNIQUES = [
       "Kritik konuları oturum başı/sonuna yerleştir.",
       "Önemli notları tekrarında vurgula.",
     ],
-    motivation: "Doğru yerleştirme ile hat��rlama şansını artırırsın.",
+    motivation: "Doğru yerleştirme ile hatırlama şansını artırırsın.",
     visual: { icon: "🧾", color: "#F59E0B", shape: "bookmark" },
   },
   {
@@ -359,7 +359,7 @@ const TECHNIQUES = [
     what: "Gereksiz varsayımları eleyip en basit açıklamayı seçme ilkesi.",
     how: ["Çözümü basitleştir.", "Önce temel nedenleri sorgula."],
     motivation: "Basitlik genelde en etkili yoldur.",
-    visual: { icon: "🪒", color: "#111827", shape: "line" },
+    visual: { icon: "��", color: "#111827", shape: "line" },
   },
   {
     id: "firstprinciples",
@@ -490,7 +490,7 @@ export default function TekniklerPage() {
                   <div className="font-medium">🧠 Nedir?</div>
                   <div>{t.what}</div>
 
-                  <div className="font-medium">✨ Nasıl Uygula?</div>
+                  <div className="font-medium">✨ Nas��l Uygula?</div>
                   <ul className="list-disc pl-5">
                     {t.how.map((h: any, i: number) => (
                       <li key={i}>{h}</li>
