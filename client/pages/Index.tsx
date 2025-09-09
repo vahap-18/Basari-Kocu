@@ -111,7 +111,7 @@ export default function Index() {
         <section className="grid grid-cols-2 gap-3">
           <Link to="/pomodoro" className="p-4 rounded-2xl border hover:border-primary transition-colors">
             <p className="text-xs text-muted-foreground">Zamanlayıcı</p>
-            <h3 className="text-lg font-semibold">Pomodoro</h3>
+            <h3 className="text-lg font-semibold">⏳ Pomodoro</h3>
           </Link>
           <Link to="/kocluk" className="p-4 rounded-2xl border hover:border-primary transition-colors">
             <p className="text-xs text-muted-foreground">Motivasyon</p>
