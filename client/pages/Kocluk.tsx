@@ -62,6 +62,9 @@ export default function KoclukPage() {
     };
     window.addEventListener('tests-updated', onTests as EventListener);
 
+    // run once on mount to sync avatar with existing tests
+    try { const existing = JSON.parse(localStorage.getItem('scientific-tests') || '{}'); updateAvatarFromTests(existing); } catch {}
+
     return () => {
       window.removeEventListener("personality-updated", onUpdate as EventListener);
       window.removeEventListener('tests-updated', onTests as EventListener);
