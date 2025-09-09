@@ -82,16 +82,6 @@ export default function AyarlarPage() {
 
   return (
     <MobileLayout>
-      {showTest && (
-        <PersonalityTest
-          onComplete={(p) => {
-            setProfile(p);
-            setShowTest(false);
-          }}
-          onClose={() => setShowTest(false)}
-        />
-      )}
-
       <section className="mb-4">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold">Kişilik Profili</h2>
