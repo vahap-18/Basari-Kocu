@@ -359,10 +359,30 @@ export default function KoclukPage() {
           </div>
         </section>
 
-        {/* AI Coach */}
-        <section className="p-4 rounded-2xl border">
-          <AICoach />
-        </section>
+        {/* AI Coach + new coach features */}
+        <div className="grid grid-cols-1 gap-3">
+          <section className="p-4 rounded-2xl border">
+            <AICoach />
+          </section>
+
+          <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <div>
+              <AdaptivePlan profile={profile} />
+            </div>
+            <div>
+              <TasksManager />
+            </div>
+          </section>
+
+          <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <div>
+              <CoachCalendar />
+            </div>
+            <div>
+              <ProgressDetails />
+            </div>
+          </section>
+        </div>
       </div>
     </MobileLayout>
   );
