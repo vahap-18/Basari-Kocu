@@ -9,6 +9,7 @@ export const MobileLayout: React.FC<{ children: React.ReactNode }> = ({ children
       <Header />
       <main className="pb-16 px-4 pt-4">{children}</main>
       <BottomNav />
+      <InfoFab />
     </div>
   );
 };
