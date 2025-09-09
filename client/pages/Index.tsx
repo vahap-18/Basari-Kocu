@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import React, { useMemo } from "react";
 import { MobileLayout } from "@/components/MobileLayout";
 import { Link } from "react-router-dom";
 import { PersonalityTest } from "@/components/PersonalityTest";
