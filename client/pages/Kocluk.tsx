@@ -180,7 +180,7 @@ export default function KoclukPage() {
           <div className="flex items-center justify-between mb-3">
             <div>
               <h3 className="font-semibold">Nefes Egzersizi 4-4</h3>
-              <p className="text-sm text-muted-foreground">Derin nefes al, ritmini bul. Zihnini sakinle��tir.</p>
+              <p className="text-sm text-muted-foreground">Derin nefes al, ritmini bul. Zihnini sakinleştir.</p>
             </div>
             <div className="text-xs text-muted-foreground">Rahatla</div>
           </div>
@@ -346,6 +346,7 @@ function TestsSection() {
   function TenQuestionTest({ id, title, questions, calcResult }: any) {
     const isOpen = !!open[id];
     const [answers, setAnswers] = useState<number[]>(() => Array(questions.length).fill(0));
+    const [index, setIndex] = useState(0);
 
     function submit() {
       // ensure all answered
@@ -356,37 +357,55 @@ function TestsSection() {
       try { window.dispatchEvent(new CustomEvent('tests-updated', { detail: { type: 'scientific-tests', data: JSON.parse(localStorage.getItem('scientific-tests') || '{}') } })); } catch {}
     }
 
-    const unansweredCount = answers.filter((v) => v === 0).length;
-
     React.useEffect(() => {
-      if (isOpen) setAnswers(Array(questions.length).fill(0));
+      if (isOpen) {
+        setAnswers(Array(questions.length).fill(0));
+        setIndex(0);
+      }
     }, [isOpen, questions.length]);
+
+    const answeredCount = answers.filter(Boolean).length;
 
     return (
       <div className="p-3 rounded-2xl border bg-card">
         <div className="flex items-center justify-between">
           <div>
             <div className="font-semibold">{title}</div>
-            <div className="text-sm text-muted-foreground">Kısa 10 soruluk değerlendirme.</div>
           </div>
           <button onClick={() => setOpen((o)=>({ ...o, [id]: !o[id]}))} className="px-3 py-1 rounded-xl border">{isOpen ? 'Gizle' : 'Başlat'}</button>
         </div>
+
         {isOpen && (
-          <div className="mt-3 space-y-3">
-            {questions.map((q:any,i:number)=> (
-              <div key={i}>
-                <div className="text-sm font-medium">{i+1}. {q}</div>
-                <div className="flex gap-2 mt-2">
+          <div className="mt-3">
+            <div className="animate-pop p-4 rounded-xl bg-gradient-to-br from-primary/5 to-card shadow-md">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-sm text-muted-foreground">Soru {index + 1} / {questions.length}</div>
+                <div className="text-sm text-muted-foreground">Cevaplanan: {answeredCount}</div>
+              </div>
+
+              <div className="text-center py-6">
+                <div className="text-lg font-semibold mb-3 leading-tight">{questions[index]}</div>
+
+                <div className="grid grid-cols-5 gap-2 mt-4">
                   {[1,2,3,4,5].map((n)=> (
-                    <button key={n} onClick={() => setAnswers((a)=>{ const na = [...a]; na[i]=n; return na; })} className={"px-3 py-2 rounded-full border " + (answers[i]===n? 'bg-primary text-primary-foreground':'bg-background')}>{n}</button>
+                    <button
+                      key={n}
+                      onClick={() => setAnswers((a)=>{ const na = [...a]; na[index]=n; return na; })}
+                      className={"py-4 rounded-xl text-lg font-semibold border transition-colors " + (answers[index]===n ? 'bg-primary text-primary-foreground' : 'bg-background')}
+                    >
+                      {n}
+                    </button>
                   ))}
                 </div>
-              </div>
-            ))}
-            <div className="flex items-center justify-between">
-              <div className="text-xs text-muted-foreground">Eksik sorular: {unansweredCount}</div>
-              <div>
-                <button disabled={unansweredCount>0} onClick={submit} className={"px-4 py-2 rounded-xl " + (unansweredCount>0? 'bg-muted text-muted-foreground cursor-not-allowed' : 'bg-primary text-primary-foreground')}>{unansweredCount>0? 'Tüm soruları cevaplayın' : 'Tamamla'}</button>
+
+                <div className="flex items-center justify-between mt-6">
+                  <button disabled={index===0} onClick={() => setIndex((i) => Math.max(0, i-1))} className="px-4 py-2 rounded-xl border">Geri</button>
+                  {index < questions.length - 1 ? (
+                    <button onClick={() => setIndex((i) => Math.min(questions.length -1, i+1))} className="px-4 py-2 rounded-xl bg-primary text-primary-foreground">Sonraki</button>
+                  ) : (
+                    <button onClick={submit} className="px-4 py-2 rounded-xl bg-primary text-primary-foreground">Tamamla</button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
