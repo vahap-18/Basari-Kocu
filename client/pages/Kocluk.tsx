@@ -308,15 +308,19 @@ function TestsSection() {
 
   // Generic 10-question test component
   function TenQuestionTest({ id, title, questions, calcResult }: any) {
-    const [openLocal, setOpenLocal] = useState(false);
+    const isOpen = !!open[id];
     const [answers, setAnswers] = useState<number[]>(() => Array(questions.length).fill(0));
 
     function submit() {
+      // ensure all answered
+      if (answers.some((v) => v === 0)) return;
       const result = calcResult(answers);
       saveTest(id, { name: title, ...result, createdAt: new Date().toISOString() });
-      setOpenLocal(false);
+      setOpen((o)=>({ ...o, [id]: false }));
       try { window.dispatchEvent(new CustomEvent('tests-updated', { detail: { type: 'scientific-tests', data: JSON.parse(localStorage.getItem('scientific-tests') || '{}') } })); } catch {}
     }
+
+    const unansweredCount = answers.filter((v) => v === 0).length;
 
     return (
       <div className="p-3 rounded-2xl border bg-card">
@@ -325,9 +329,9 @@ function TestsSection() {
             <div className="font-semibold">{title}</div>
             <div className="text-sm text-muted-foreground">Kısa 10 soruluk değerlendirme.</div>
           </div>
-          <button onClick={() => setOpenLocal((v) => !v)} className="px-3 py-1 rounded-md border">{openLocal ? 'Gizle' : 'Başlat'}</button>
+          <button onClick={() => setOpen((o)=>({ ...o, [id]: !o[id]}))} className="px-3 py-1 rounded-md border">{isOpen ? 'Gizle' : 'Başlat'}</button>
         </div>
-        {openLocal && (
+        {isOpen && (
           <div className="mt-3 space-y-3">
             {questions.map((q:any,i:number)=> (
               <div key={i}>
@@ -339,8 +343,11 @@ function TestsSection() {
                 </div>
               </div>
             ))}
-            <div className="flex justify-end">
-              <button onClick={submit} className="px-4 py-2 rounded-xl bg-primary text-primary-foreground">Tamamla</button>
+            <div className="flex items-center justify-between">
+              <div className="text-xs text-muted-foreground">Eksik sorular: {unansweredCount}</div>
+              <div>
+                <button disabled={unansweredCount>0} onClick={submit} className={"px-4 py-2 rounded-xl " + (unansweredCount>0? 'bg-muted text-muted-foreground cursor-not-allowed' : 'bg-primary text-primary-foreground')}>{unansweredCount>0? 'Tüm soruları cevaplayın' : 'Tamamla'}</button>
+              </div>
             </div>
           </div>
         )}
