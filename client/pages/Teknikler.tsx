@@ -100,7 +100,7 @@ const TECHNIQUES = [
     what: "Duygu ile bağlantılı öğrenme, bilgiyi daha güçlü ve kalıcı kılar.",
     how: [
       "Konuya kişisel örnekler bağla.",
-      "Anlatırken duygusal çağrış��mlar kullan.",
+      "Anlatırken duygusal çağrışımlar kullan.",
     ],
     motivation: "Duyguyla bağlanınca öğrenme daha anlamlı olur.",
     visual: { icon: "❤️", color: "#EC4899", shape: "heart" },
@@ -135,7 +135,7 @@ const TECHNIQUES = [
     what: "Beceri ve zorluk dengelendiğinde ortaya çıkan derin odaklanma hali.",
     how: ["Görevleri becerine göre ayarla.", "Dikkat dağıtıcıları kaldır."],
     motivation:
-      "Akış, derin öğrenme için ideal bir yoldur — hazır olduğunda ona gir.",
+      "Akış, derin ö��renme için ideal bir yoldur — hazır olduğunda ona gir.",
     visual: { icon: "🌊", color: "#06B6D4", shape: "wave" },
   },
   {
@@ -359,7 +359,7 @@ const TECHNIQUES = [
     what: "Gereksiz varsayımları eleyip en basit açıklamayı seçme ilkesi.",
     how: ["Çözümü basitleştir.", "Önce temel nedenleri sorgula."],
     motivation: "Basitlik genelde en etkili yoldur.",
-    visual: { icon: "��", color: "#111827", shape: "line" },
+    visual: { icon: "🪒", color: "#111827", shape: "line" },
   },
   {
     id: "firstprinciples",
@@ -391,7 +391,7 @@ const TECHNIQUES = [
     emoji: "👀",
     difficulty: "Kolay",
     time: "Gözlem temelli",
-    story: "Gözlendiğini bilen bir ekip performansını artırdı.",
+    story: "Gözlendiğini bilen bir ekip performans��nı artırdı.",
     what: "Gözlenme algısının performansı etkilemesi.",
     how: [
       "Hedefleri paylaş ve rapor et.",
@@ -422,7 +422,7 @@ const TECHNIQUES = [
     story:
       "Başlayan öğrenci kısa sürede hız kazandı ve düzenli çalışmaya geçti.",
     what: "Başlamak en zor, devam etmek momentum getirir.",
-    how: ["Küçük başlangıç hedefleri koy.", "Sürekli aynı saatte çalış."],
+    how: ["Küçük başlangıç hedefleri koy.", "Sürekli ayn�� saatte çalış."],
     motivation: "Başlamak, başarıya giden en büyük adımdır.",
     visual: { icon: "🚀", color: "#06B6D4", shape: "rocket" },
   },
@@ -490,7 +490,7 @@ export default function TekniklerPage() {
                   <div className="font-medium">🧠 Nedir?</div>
                   <div>{t.what}</div>
 
-                  <div className="font-medium">✨ Nas��l Uygula?</div>
+                  <div className="font-medium">��� Nasıl Uygula?</div>
                   <ul className="list-disc pl-5">
                     {t.how.map((h: any, i: number) => (
                       <li key={i}>{h}</li>
