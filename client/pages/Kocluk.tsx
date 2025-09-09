@@ -1105,7 +1105,7 @@ function Test2Back({ open, setOpen, saveTest }: any) {
       correct >= 4
         ? "Çok iyi çalışma belleği performansı."
         : correct >= 2
-          ? "Orta seviye çalı���ma belleği."
+          ? "Orta seviye çalışma belleği."
           : "Çalışma belleğini güçlendirecek oyunlar faydalı.";
     saveTest(key, {
       name: "2-Back Kısa",
