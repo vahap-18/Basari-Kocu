@@ -16,7 +16,7 @@ function generateAdvice(profile: PersonalityProfile | null) {
   else if (s.focus === 3) adv.push("Orta seviye odak; 25 dk çalışma + 5 dk mola iyi gelir.");
   else adv.push("Kısa ve sık seanslar (20 dk) verimli olabilir. Dikkat dağılması için çevrenizi düzenleyin.");
 
-  if (s.procrastinate <= 2) adv.push("Erteleme eğilimlerin dü��ük; hedeflerini büyütebilirsin.");
+  if (s.procrastinate <= 2) adv.push("Erteleme eğilimlerin düşük; hedeflerini büyütebilirsin.");
   else if (s.procrastinate <= 4) adv.push("Bazen erteleme oluyor; Pomodoro başlangıcında 1 küçük ödül belirle.");
   else adv.push("Erteleme yüksek; günlük küçük görevlerle (2–3) başla ve başarı hissini kullan.");
 
@@ -34,6 +34,16 @@ export const AICoach: React.FC = () => {
 
   useEffect(() => {
     setProfile(loadProfile());
+    const onUpdate = (e: Event) => {
+      try {
+        const detail = (e as CustomEvent).detail as any;
+        setProfile(detail ?? loadProfile());
+      } catch {
+        setProfile(loadProfile());
+      }
+    };
+    window.addEventListener("personality-updated", onUpdate as EventListener);
+    return () => window.removeEventListener("personality-updated", onUpdate as EventListener);
   }, []);
 
   useEffect(() => {
