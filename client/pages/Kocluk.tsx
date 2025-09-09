@@ -30,6 +30,7 @@ export default function KoclukPage() {
   const [profile, setProfile] = useState<any>(null);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(() => localStorage.getItem('profile-photo'));
   const [avatarEmoji, setAvatarEmoji] = useState<string>(() => '🙂');
+  const [showOnboard, setShowOnboard] = useState(() => !!localStorage.getItem('coach-onboard'));
 
   useEffect(() => {
     const id = setInterval(() => setInhale((v) => !v), 4000);
