@@ -15,7 +15,7 @@ const themeOptions: { key: ThemeKey; label: string }[] = [
 ];
 
 export const Header: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, gender, setGender } = useTheme();
 
   return (
     <header className="sticky top-0 z-40 border-b bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/60">
@@ -27,20 +27,35 @@ export const Header: React.FC = () => {
             <p className="text-xs text-muted-foreground leading-tight">Sınav hazırlık koçun</p>
           </div>
         </div>
-        <label className="inline-flex items-center gap-2 text-sm">
-          <Palette className="h-4 w-4" />
-          <select
-            className="bg-transparent text-sm px-2 py-1 rounded-md border"
-            value={theme}
-            onChange={(e) => setTheme(e.target.value as any)}
-          >
-            {themeOptions.map((t) => (
-              <option key={t.key} value={t.key}>
-                {t.label}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div className="flex items-center gap-3">
+          <label className="inline-flex items-center gap-2 text-sm">
+            <Palette className="h-4 w-4" />
+            <select
+              className="bg-transparent text-sm px-2 py-1 rounded-md border"
+              value={theme}
+              onChange={(e) => setTheme(e.target.value as any)}
+            >
+              {themeOptions.map((t) => (
+                <option key={t.key} value={t.key}>
+                  {t.label}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="inline-flex items-center gap-2 text-sm">
+            <select
+              className="bg-transparent text-sm px-2 py-1 rounded-md border"
+              value={gender ?? ""}
+              onChange={(e) => setGender((e.target.value as any) || null)}
+            >
+              <option value="">Cinsiyet</option>
+              <option value="female">Kız</option>
+              <option value="male">Erkek</option>
+              <option value="other">Diğer</option>
+            </select>
+          </label>
+        </div>
       </div>
     </header>
   );
