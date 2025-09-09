@@ -10,7 +10,7 @@ const TECHNIQUES = [
     difficulty: "Kolay",
     time: "İlk 24 saat kritik",
     story:
-      "Sınavdan sonra bir öğrenci notlarını gözden geçirmeyince bir hafta içinde büyük kısmını unuttu.",
+      "Sınavdan sonra bir öğrenci notlarını g��zden geçirmeyince bir hafta içinde büyük kısmını unuttu.",
     what: "Zamanla unutma hızını gösteren eğri; erken tekrarlar bilgiyi kurtarır.",
     how: [
       "İlk 24 saatte kısa tekrar yap.",
@@ -55,7 +55,7 @@ const TECHNIQUES = [
     ],
     motivation:
       "Kendini test etmek, gerçek ilerlemeyi gösterir — hata yapmaktan korkma, onlardan öğren.",
-    visual: { icon: "��", color: "#059669", shape: "checklist" },
+    visual: { icon: "🧪", color: "#059669", shape: "checklist" },
   },
   {
     id: "primacy_recency",
