@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MobileLayout } from "@/components/MobileLayout";
 import { AICoach } from "@/components/AICoach";
 import { CoachOnboarding } from "@/components/CoachOnboarding";
 import { BarChart2, Sparkles, Star, Activity } from "lucide-react";
+
+// new coach features
+import AdaptivePlan from "@/components/AdaptivePlan";
+import CoachCalendar from "@/components/CoachCalendar";
+import TasksManager from "@/components/TasksManager";
+import ProgressDetails from "@/components/ProgressDetails";
 
 const QUOTES = [
   "Bugün küçük bir adım, yarın büyük bir fark.",
