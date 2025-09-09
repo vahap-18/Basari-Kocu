@@ -47,7 +47,7 @@ export default function Index() {
         <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/10 to-card">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h2 className="text-lg font-bold">Sınav Geri Sayımı ⏳</h2>
+              <h2 className="text-lg font-bold">⏳ Sınav Geri Sayımı</h2>
               <p className="text-sm text-muted-foreground">Sınavını ekle ve kalan zamanı takip et.</p>
             </div>
             <div className="text-xs text-muted-foreground">{today}</div>
