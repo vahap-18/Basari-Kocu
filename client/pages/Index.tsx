@@ -2,12 +2,24 @@ import React, { useMemo } from "react";
 import { MobileLayout } from "@/components/MobileLayout";
 import { Link } from "react-router-dom";
 import { PersonalityTest } from "@/components/PersonalityTest";
-import { StudyTechniquesCard, HistoryTodayCard, UpliftingCard, MotivationCard } from "@/components/Cards";
+import {
+  StudyTechniquesCard,
+  HistoryTodayCard,
+  UpliftingCard,
+  MotivationCard,
+} from "@/components/Cards";
 
 export default function Index() {
-  const today = useMemo(() => new Date().toLocaleDateString("tr-TR", { weekday: "long" }), []);
-  const [examName, setExamName] = React.useState<string>(() => localStorage.getItem("exam-name") || "");
-  const [examDateRaw, setExamDateRaw] = React.useState<string>(() => localStorage.getItem("exam-date") || "");
+  const today = useMemo(
+    () => new Date().toLocaleDateString("tr-TR", { weekday: "long" }),
+    [],
+  );
+  const [examName, setExamName] = React.useState<string>(
+    () => localStorage.getItem("exam-name") || "",
+  );
+  const [examDateRaw, setExamDateRaw] = React.useState<string>(
+    () => localStorage.getItem("exam-date") || "",
+  );
   const [now, setNow] = React.useState(() => Date.now());
 
   React.useEffect(() => {
@@ -38,17 +50,26 @@ export default function Index() {
     return { days, hours, minutes, seconds, total: diff };
   }, [now, targetTs]);
 
-  const [showTest, setShowTest] = React.useState(() => localStorage.getItem("personality-completed") !== "1");
+  const [showTest, setShowTest] = React.useState(
+    () => localStorage.getItem("personality-completed") !== "1",
+  );
 
   return (
     <MobileLayout>
-      {showTest && <PersonalityTest onComplete={() => setShowTest(false)} onClose={() => setShowTest(false)} />}
+      {showTest && (
+        <PersonalityTest
+          onComplete={() => setShowTest(false)}
+          onClose={() => setShowTest(false)}
+        />
+      )}
       <div className="space-y-4">
         <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/10 to-card">
           <div className="flex items-start justify-between gap-3">
             <div>
               <h2 className="text-lg font-bold">⏳ Sınav Geri Sayımı</h2>
-              <p className="text-sm text-muted-foreground">Sınavını ekle ve kalan zamanı takip et.</p>
+              <p className="text-sm text-muted-foreground">
+                Sınavını ekle ve kalan zamanı takip et.
+              </p>
             </div>
             <div className="text-xs text-muted-foreground">{today}</div>
           </div>
@@ -70,15 +91,23 @@ export default function Index() {
             {remaining ? (
               <div className="p-3 rounded-xl bg-gradient-to-r from-primary/20 to-accent/10 border flex items-center justify-between">
                 <div>
-                  <div className="text-xs text-muted-foreground">{examName || "Planlanan sınav"}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {examName || "Planlanan sınav"}
+                  </div>
                   <div className="text-2xl font-bold tabular-nums">
-                    {remaining.days}g {String(remaining.hours).padStart(2, "0")}:{String(remaining.minutes).padStart(2, "0")}:{String(remaining.seconds).padStart(2, "0")}
+                    {remaining.days}g {String(remaining.hours).padStart(2, "0")}
+                    :{String(remaining.minutes).padStart(2, "0")}:
+                    {String(remaining.seconds).padStart(2, "0")}
                   </div>
                 </div>
-                <div className="text-sm text-muted-foreground">{remaining.total === 0 ? "Süre doldu" : "Kalan süre"}</div>
+                <div className="text-sm text-muted-foreground">
+                  {remaining.total === 0 ? "Süre doldu" : "Kalan süre"}
+                </div>
               </div>
             ) : (
-              <div className="text-sm text-muted-foreground">Sınav tarihi girilmedi.</div>
+              <div className="text-sm text-muted-foreground">
+                Sınav tarihi girilmedi.
+              </div>
             )}
 
             <div className="flex gap-2">
@@ -91,7 +120,10 @@ export default function Index() {
               >
                 Temizle
               </button>
-              <a href="/pomodoro" className="flex-1 py-2 rounded-xl bg-primary text-primary-foreground text-center">
+              <a
+                href="/pomodoro"
+                className="flex-1 py-2 rounded-xl bg-primary text-primary-foreground text-center"
+              >
                 Hemen Çalış
               </a>
             </div>
@@ -109,19 +141,31 @@ export default function Index() {
         </section>
 
         <section className="grid grid-cols-2 gap-3">
-          <Link to="/pomodoro" className="p-4 rounded-2xl border hover:border-primary transition-colors">
+          <Link
+            to="/pomodoro"
+            className="p-4 rounded-2xl border hover:border-primary transition-colors"
+          >
             <p className="text-xs text-muted-foreground">Zamanlayıcı</p>
             <h3 className="text-lg font-semibold">⏳ Pomodoro</h3>
           </Link>
-          <Link to="/kocluk" className="p-4 rounded-2xl border hover:border-primary transition-colors">
+          <Link
+            to="/kocluk"
+            className="p-4 rounded-2xl border hover:border-primary transition-colors"
+          >
             <p className="text-xs text-muted-foreground">Motivasyon</p>
             <h3 className="text-lg font-semibold">💬 Koçluk</h3>
           </Link>
-          <Link to="/teknikler" className="p-4 rounded-2xl border hover:border-primary transition-colors">
+          <Link
+            to="/teknikler"
+            className="p-4 rounded-2xl border hover:border-primary transition-colors"
+          >
             <p className="text-xs text-muted-foreground">Yöntemler</p>
             <h3 className="text-lg font-semibold">📚 Teknikler</h3>
           </Link>
-          <Link to="/ayarlar" className="p-4 rounded-2xl border hover:border-primary transition-colors">
+          <Link
+            to="/ayarlar"
+            className="p-4 rounded-2xl border hover:border-primary transition-colors"
+          >
             <p className="text-xs text-muted-foreground">Kişiselleştir</p>
             <h3 className="text-lg font-semibold">⚙️ Ayarlar</h3>
           </Link>
@@ -130,8 +174,12 @@ export default function Index() {
         <section>
           <div className="grid grid-cols-1 gap-3">
             <div className="p-4 rounded-2xl border bg-gradient-to-br from-card to-muted">
-              <h3 className="font-semibold mb-2">🎯 Bilimsel Çalışma Teknikleri</h3>
-              <p className="text-sm text-muted-foreground">Etkili yöntemleri keşfedin ve çalışma rutininize uygulayın.</p>
+              <h3 className="font-semibold mb-2">
+                🎯 Bilimsel Çalışma Teknikleri
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Etkili yöntemleri keşfedin ve çalışma rutininize uygulayın.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 gap-3">
@@ -164,7 +212,9 @@ export default function Index() {
 
 function QuickTasks() {
   const [text, setText] = React.useState("");
-  const [items, setItems] = React.useState<{ text: string; done: boolean; id: string }[]>(() => {
+  const [items, setItems] = React.useState<
+    { text: string; done: boolean; id: string }[]
+  >(() => {
     try {
       const v = localStorage.getItem("quick-tasks");
       return v ? JSON.parse(v) : [];
@@ -186,7 +236,9 @@ function QuickTasks() {
   }
 
   function toggleDone(id: string) {
-    setItems((arr) => arr.map((it) => (it.id === id ? { ...it, done: !it.done } : it)));
+    setItems((arr) =>
+      arr.map((it) => (it.id === id ? { ...it, done: !it.done } : it)),
+    );
   }
 
   function clearCompleted() {
@@ -203,7 +255,7 @@ function QuickTasks() {
           placeholder="Örn. Matematik 2 test"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e)=> e.key === 'Enter' && add()}
+          onKeyDown={(e) => e.key === "Enter" && add()}
         />
         <button
           className="px-3 py-2 rounded-xl bg-primary text-primary-foreground"
@@ -214,20 +266,44 @@ function QuickTasks() {
       </div>
 
       <div className="flex items-center justify-between mb-2">
-        <div className="text-sm text-muted-foreground">Toplam: {items.length} • Tamamlandı: {completed}</div>
+        <div className="text-sm text-muted-foreground">
+          Toplam: {items.length} • Tamamlandı: {completed}
+        </div>
         <div className="flex gap-2">
-          <button onClick={clearCompleted} className="text-sm px-2 py-1 rounded-md border">Tamamlananları Temizle</button>
+          <button
+            onClick={clearCompleted}
+            className="text-sm px-2 py-1 rounded-md border"
+          >
+            Tamamlananları Temizle
+          </button>
         </div>
       </div>
 
       <ul className="space-y-2">
         {items.map((it) => (
-          <li key={it.id} className="flex items-center gap-2 p-2 rounded-lg border">
-            <input type="checkbox" checked={it.done} onChange={() => toggleDone(it.id)} />
-            <span className={it.done ? 'line-through text-muted-foreground text-sm' : 'text-sm'}>{it.text}</span>
+          <li
+            key={it.id}
+            className="flex items-center gap-2 p-2 rounded-lg border"
+          >
+            <input
+              type="checkbox"
+              checked={it.done}
+              onChange={() => toggleDone(it.id)}
+            />
+            <span
+              className={
+                it.done
+                  ? "line-through text-muted-foreground text-sm"
+                  : "text-sm"
+              }
+            >
+              {it.text}
+            </span>
           </li>
         ))}
-        {items.length === 0 && <li className="text-sm text-muted-foreground">Bir görev ekleyin.</li>}
+        {items.length === 0 && (
+          <li className="text-sm text-muted-foreground">Bir görev ekleyin.</li>
+        )}
       </ul>
     </div>
   );
@@ -247,7 +323,14 @@ function ProgressMini() {
     <div className="flex items-center gap-3">
       <div className="relative w-16 h-16">
         <svg viewBox="0 0 100 100" className="absolute inset-0 -rotate-90">
-          <circle cx="50" cy="50" r="44" className="stroke-muted" strokeWidth="8" fill="none" />
+          <circle
+            cx="50"
+            cy="50"
+            r="44"
+            className="stroke-muted"
+            strokeWidth="8"
+            fill="none"
+          />
           <circle
             cx="50"
             cy="50"
