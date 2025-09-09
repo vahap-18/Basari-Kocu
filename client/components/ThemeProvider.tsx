@@ -15,14 +15,11 @@ export type ThemeKey =
 
 const DEFAULT_THEME: ThemeKey = "acik";
 
-export type Gender = "female" | "male" | "other" | null;
 
 type ThemeContextValue = {
   theme: ThemeKey;
   setTheme: (t: ThemeKey) => void;
   isDark: boolean;
-  gender: Gender;
-  setGender: (g: Gender) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
@@ -33,12 +30,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return saved ?? DEFAULT_THEME;
   });
 
-  const [gender, setGender] = useState<Gender>(() => {
-    try {
-      const v = localStorage.getItem("app-gender");
-      return v === "female" || v === "male" || v === "other" ? (v as Gender) : null;
-    } catch { return null; }
-  });
 
   const isDark = useMemo(() => theme === "koyu", [theme]);
 
@@ -47,10 +38,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     root.dataset.theme = theme;
     root.classList.toggle("dark", isDark);
     localStorage.setItem("app-theme", theme);
-    try { localStorage.setItem("app-gender", gender ?? ""); } catch {}
-  }, [theme, isDark, gender]);
+  }, [theme, isDark]);
 
-  const value = useMemo(() => ({ theme, setTheme, isDark, gender, setGender }), [theme, isDark, gender]);
+  const value = useMemo(() => ({ theme, setTheme, isDark }), [theme, isDark]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

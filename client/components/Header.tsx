@@ -12,8 +12,8 @@ const themeOptions: { key: ThemeKey; label: string }[] = [
   { key: "lider", label: "Lider" },
   { key: "korkusuz", label: "Korkusuz" },
   { key: "bilge", label: "Bilge" },
-  { key: "kiz", label: "Kız Teması" },
-  { key: "erkek", label: "Erkek Teması" },
+  { key: "kiz", label: "Pembe" },
+  { key: "erkek", label: "Mavi" },
 ];
 
 export const Header: React.FC = () => {
@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-accent" />
           <div>
-            <h1 className="text-base font-bold leading-tight">Odak+</h1>
+            <h1 className="text-base font-bold leading-tight">Başarı Kulübü</h1>
             <p className="text-xs text-muted-foreground leading-tight">Sınav hazırlık koçun</p>
           </div>
         </div>
@@ -45,18 +45,6 @@ export const Header: React.FC = () => {
             </select>
           </label>
 
-          <label className="inline-flex items-center gap-2 text-sm">
-            <select
-              className="bg-transparent text-sm px-2 py-1 rounded-md border"
-              value={gender ?? ""}
-              onChange={(e) => setGender((e.target.value as any) || null)}
-            >
-              <option value="">Cinsiyet</option>
-              <option value="female">Kız</option>
-              <option value="male">Erkek</option>
-              <option value="other">Diğer</option>
-            </select>
-          </label>
         </div>
       </div>
     </header>

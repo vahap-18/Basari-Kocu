@@ -5,29 +5,45 @@ import { pickDailyIndex, pickRandomAndStore } from "@/lib/daily";
 const STUDY_TECHNIQUES = [
   {
     title: "Spaced Repetition",
-    desc: "Bilginin kalıcılığı için tekrarları zamanla artırın. Anki gibi araçlarla küçük tekrarlar yapın.",
+    desc: "Bilginin kalıcılığı için tekrarları zamanla artırın. Anki gibi araçlarla küçük, hedefe yönelik tekrarlar yapın. Hangi kartların zorlandığını takip edin ve zorlanılan konuları sık tekrar edin. (Çakışma: yoğun tekrar, öğrenme tükenmesine yol açarsa mola ve varyasyon ekleyin.)",
   },
   {
     title: "Active Recall",
-    desc: "Notları pasif okumak yerine sorulara cevap vermeye çalışın. Sınav benzeri sorular hazırlayın.",
+    desc: "Bilgiyi hatırlamaya çalışarak öğrenin; notları pasif okumak yerine kendi sorularınızı yazın, cevaplayın ve yanlışları inceleyin. (Çakışma: sadece tekrar etmek yerine, anlamaya yönelik Feynman ile birleşince etkilidir.)",
   },
   {
     title: "Interleaving",
-    desc: "Farklı konuları karıştırarak çalışın; bu, transfer yeteneğini artırır.",
+    desc: "Benzer konuları karıştırarak çalışmak, farklı problemlere uyum yeteneğinizi geliştirir. Uygulamada farklı soru tiplerini birleştirin. (Çakışma: başlangıçta zorlayıcı olabilir; temel öğrenme sonrası uygulayın.)",
   },
   {
     title: "Dual Coding",
-    desc: "Metinleri grafiklerle eşleştirin (şemalar, tablolar) — iki kaynaktan öğrenme kalıcılığı artırır.",
+    desc: "Kavramları metin + görsel ile eşleştirin: şemalar, zaman çizelgeleri, tablolar. Bu, bilgiyi farklı yollarla kodlamanızı sağlar. (Tamamlayıcı: Active Recall ile birlikte güçlü sonuç verir.)",
   },
   {
     title: "Pomodoro",
-    desc: "Kısa odak seanslarıyla dikkat dağılımını azaltın. İşlemi tekrarlayıp aralıkları ayarlayın.",
+    desc: "Kısa odak seansları (25/5, 50/10 gibi) ile dikkat sürenizi artırın. Hedefe yönelik görevler belirleyip oturumları sayın. (Uyum: bazı kişiler daha uzun odak sürelerinde verimli olabilir.)",
   },
   {
     title: "Feynman Tekniği",
-    desc: "Konuyu basit bir dille birine anlatın; eksiklerinizi bu sayede keşfedin.",
+    desc: "Bir konuyu basit bir dille anlatmaya çalışın; kavramdaki boşlukları bu şekilde keşfedin. Öğretmek, en etkili öğrenme yöntemlerindendir.",
+  },
+  {
+    title: "Self-Explanation",
+    desc: "Çözerken her adımı kendinize açıklayın; bu zihinsel model kurmayı güçlendirir ve transferi destekler.",
+  },
+  {
+    title: "Practice Testing",
+    desc: "Gerçek sınav koşullarında düzenli denemeler yapın; sınav stratejileri, süre yönetimi ve yanlış analizine odaklanın.",
   },
 ];
+
+const LAWS = [
+  { name: "Murphy Kanunu", text: "Eğer yanlış gidebilecek bir şey varsa, yanlış gidecektir. Sınav hazırlığında yedek planınız olsun: ekstra materyal, yedek notlar, ve teknik aksaklıklara karşı çözümler." },
+  { name: "Parkinson Yasası", text: "İş, kendisine verilen zamanı doldurur. Süre sınırlamaları koyun, kısa ve net hedeflerle çalışın." },
+  { name: "Pareto (80/20)", text: "Genelde sonuçların %80'i çabalarınızın %20'sinden gelir. En yüksek getirili konuları önceleyin." },
+  { name: "Zeigarnik Etkisi", text: "Tamamlanmamış işler zihninizde daha çok yer edinir; küçük tamamlanabilir görevler yaratın ve bitirdikçe motivasyonunuz artar." },
+];
+
 
 const HISTORY_MAP: Record<string, string[]> = {
   "01-01": ["1801: Richard Trevithick ilk buhar lokomotifini icat etti."],
@@ -43,8 +59,11 @@ function getHistoryForToday() {
 
 function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={"p-4 rounded-2xl border bg-card shadow-sm transform transition-all hover:scale-[1.02] " + className}>
-      {children}
+    <div className={"p-4 rounded-2xl border bg-card shadow-md transform transition-all hover:scale-[1.02] " + className}>
+      <div className="flex items-start gap-3 mb-2">
+        <div className="text-2xl">✨</div>
+        <div className="flex-1">{children}</div>
+      </div>
     </div>
   );
 }
@@ -53,15 +72,27 @@ export const StudyTechniquesCard: React.FC = () => {
   return (
     <Card className="animate-pop">
       <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
-      <ul className="space-y-2 text-sm text-muted-foreground">
-        {STUDY_TECHNIQUES.slice(0, 4).map((s) => (
+      <ul className="space-y-3 text-sm text-muted-foreground">
+        {STUDY_TECHNIQUES.map((s) => (
           <li key={s.title} className="">
-            <div className="font-medium">{s.title}</div>
+            <div className="font-medium">• {s.title}</div>
             <div className="text-sm text-muted-foreground">{s.desc}</div>
           </li>
         ))}
       </ul>
-      <div className="mt-3 text-xs text-muted-foreground">Daha fazlası için Teknikler sayfasına gidin.</div>
+
+      <div className="mt-4">
+        <h4 className="font-semibold mb-2">Sınava Hazırlık Kanunları</h4>
+        <ul className="space-y-2 text-sm text-muted-foreground">
+          {LAWS.map((l) => (
+            <li key={l.name}>
+              <div className="font-medium">{l.name} — <span className="text-xs text-muted-foreground">{l.text}</span></div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-3 text-xs text-muted-foreground">Daha fazlası için Teknikler sayfasına gidin. 🎯</div>
     </Card>
   );
 };
