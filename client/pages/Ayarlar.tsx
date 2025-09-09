@@ -53,7 +53,7 @@ export default function AyarlarPage() {
       return null;
     }
   });
-  const [showTest, setShowTest] = React.useState(false);
+  const navigate = useNavigate();
 
   const [tests, setTests] = React.useState<Record<string, any>>(() => {
     try {
