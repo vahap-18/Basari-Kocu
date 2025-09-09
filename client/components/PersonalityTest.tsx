@@ -86,7 +86,7 @@ export const PersonalityTest: React.FC<{
       resilience:
         "Zorluklara karşı dirençlisin; zor konularda ısrar etmelisin. 💪",
       social:
-        "Grupla tartışarak öğrenme verimli; çalışma grupları faydalı olabilir. 🤝",
+        "Grupla tartışarak öğrenme verimli; çalışma grupları faydalı olabilir. ���",
       structure:
         "Planlı çalışıyorsun; liste ve programlar verimliliği artırır. 📋",
       curiosity:
@@ -151,15 +151,15 @@ export const PersonalityTest: React.FC<{
         </div>
 
         <div className="mb-4">
-          <div className="p-4 rounded-xl border bg-background">
-            <p className="font-medium text-lg">{q.text}</p>
-            <div className="flex gap-2 mt-3 text-sm">
+          <div className={"p-4 rounded-xl border " + (examMode ? 'bg-transparent' : 'bg-background')}>
+            <p className="font-medium text-lg text-center">{q.text}</p>
+            <div className={"flex gap-2 mt-3 text-sm " + (examMode ? 'justify-center' : '')}>
               {[1, 2, 3, 4, 5].map((v) => (
                 <button
                   key={v}
                   onClick={() => setAnswer(q.id, v)}
                   className={
-                    "flex-1 px-3 py-2 rounded-full border text-center " +
+                    "flex-1 px-4 py-3 rounded-lg border text-center mx-1 transition-colors " +
                     ((answers[q.id] ?? 3) === v
                       ? "bg-primary text-primary-foreground"
                       : "bg-background")
