@@ -42,7 +42,8 @@ const QUESTIONS: { id: string; text: string; direction: string }[] = [
 export const PersonalityTest: React.FC<{
   onComplete?: (p: PersonalityProfile) => void;
   onClose?: () => void;
-}> = ({ onComplete, onClose }) => {
+  examMode?: boolean;
+}> = ({ onComplete, onClose, examMode = false }) => {
   const [answers, setAnswers] = useState<Record<string, number>>(() => ({}));
   const [step, setStep] = useState(0);
   const [animClass, setAnimClass] = useState<string>("animate-pop");
