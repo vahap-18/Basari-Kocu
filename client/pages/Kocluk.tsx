@@ -10,6 +10,7 @@ import AdaptivePlan from "@/components/AdaptivePlan";
 import CoachCalendar from "@/components/CoachCalendar";
 import TasksManager from "@/components/TasksManager";
 import ProgressDetails from "@/components/ProgressDetails";
+import ProfileCharts from "@/components/ProfileCharts";
 
 const QUOTES = [
   "Bugün küçük bir adım, yarın büyük bir fark.",
@@ -639,7 +640,7 @@ function TestsSection() {
 
   // define 10-question sets and simple scoring for several tests
   const mbtiQuestions = [
-    "Sosyal etkinliklerde enerjinizi alır mısınız?",
+    "Sosyal etkinliklerde enerjinizi alır mıs��nız?",
     "Kararları mantıkla mı yoksa duygu ile mi verirsiniz?",
     "Yeni fikirlere açığımdır.",
     "Planlı ve düzenli çalışırım.",
