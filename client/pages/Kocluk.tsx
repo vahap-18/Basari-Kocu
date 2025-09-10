@@ -36,6 +36,17 @@ export default function KoclukPage() {
   const [inhale, setInhale] = useState(true);
   const [size, setSize] = useState(72);
   const [profile, setProfile] = useState<any>(null);
+
+  // debug mount indicator and remote log
+  React.useEffect(() => {
+    try {
+      fetch('/api/client-log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'kocluk-mounted', ts: Date.now(), ua: navigator.userAgent }),
+      }).catch(()=>{});
+    } catch {}
+  }, []);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(() =>
     localStorage.getItem("profile-photo"),
   );
