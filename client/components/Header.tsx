@@ -16,9 +16,13 @@ const themeOptions: { key: ThemeKey; label: string }[] = [
   { key: "erkek", label: "Sapphire" },
 ];
 
+import { useNavigate, useLocation } from "react-router-dom";
+
 export const Header: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   return (
     <header
@@ -30,6 +34,16 @@ export const Header: React.FC = () => {
     >
       <div className="mx-auto max-w-md px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
+          {!isHome && (
+            <button
+              onClick={() => navigate(-1)}
+              className="p-2 rounded-md mr-2"
+              aria-label="Geri"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+          )}
+
           <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-primary to-accent">
             <svg
               width="20"
