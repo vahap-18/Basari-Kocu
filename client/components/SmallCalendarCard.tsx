@@ -1,14 +1,29 @@
 import React from "react";
 
+import React, { useEffect, useMemo, useState } from "react";
+
 export default function SmallCalendarCard() {
-  const events = (() => {
+  const [events, setEvents] = useState<any[]>(() => {
     try {
       return JSON.parse(localStorage.getItem("coach-events") || "[]");
     } catch {
       return [];
     }
-  })();
-  const today = new Date().toISOString().slice(0, 10);
+  });
+
+  useEffect(() => {
+    const onUpdate = () => {
+      try {
+        setEvents(JSON.parse(localStorage.getItem("coach-events") || "[]"));
+      } catch {
+        setEvents([]);
+      }
+    };
+    window.addEventListener("coach-data-updated", onUpdate as EventListener);
+    return () => window.removeEventListener("coach-data-updated", onUpdate as EventListener);
+  }, []);
+
+  const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const upcoming = events.filter((e: any) => e.date >= today).slice(0, 3);
 
   return (
