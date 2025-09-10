@@ -277,7 +277,7 @@ const TECHNIQUES = [
     time: "Sürekli uygulama",
     story: "Hataları gelişme fırsatı olarak gören öğrenci zamanla gelişti.",
     what: "Yetenekler değişebilir; çaba ve strateji ile gelişme mümkündür.",
-    how: ["Hatalardan öğrenmeyi teşvik et.", "Çabay�� ve stratejiyi öne çıkar."],
+    how: ["Hatalardan öğrenmeyi teşvik et.", "Çabayı ve stratejiyi öne çıkar."],
     motivation: "Gelişim odaklı bakış, uzun vadeli başarı getirir.",
     visual: { icon: "🌱", color: "#84CC16", shape: "sprout" },
   },
@@ -382,7 +382,7 @@ const TECHNIQUES = [
     story: "Bir konuyu basitçe anlatan öğrenci gerçek boşlukları fark etti.",
     what: "Kavramı basitçe anlatma ve eksikleri bulma yöntemi.",
     how: ["Boş bir sayfaya anlat.", "Basit örnekler kullan."],
-    motivation: "Anlattıkça öğrenirsin — öğretmek en iyi sınavdır.",
+    motivation: "Anlattıkça öğrenirsin — ��ğretmek en iyi sınavdır.",
     visual: { icon: "🗣️", color: "#F59E0B", shape: "megaphone" },
   },
   {
@@ -408,7 +408,7 @@ const TECHNIQUES = [
     difficulty: "Orta",
     time: "Farkındalık çalışmaları",
     story: "Erteleme döngüsünü fark eden öğrenci küçük adımlarla kırdı.",
-    what: "Erteleme alışkanlığının döngüsel yapısı ve müdahale yollar��.",
+    what: "Erteleme alışkanlığının döngüsel yapısı ve müdahale yolları.",
     how: ["Farkındalık egzersizleri yap.", "Zaman blokları ile başla."],
     motivation: "Küçük ilk adım ertelemeyi kırar — bugün 5 dakika başla.",
     visual: { icon: "⏰", color: "#EF4444", shape: "loop" },
@@ -497,19 +497,8 @@ export default function TekniklerPage() {
                     ))}
                   </ul>
 
-                  <div className="font-medium">⚡ Zorluk</div>
-                  <div>{t.difficulty}</div>
-
                   <div className="font-medium">💡 Uygulama Notu</div>
                   <div>{t.motivation}</div>
-
-                  <div className="font-medium">🎨 Görsel</div>
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-md border" style={{ background: t.visual.color }} />
-                      <div className="text-sm">{t.visual.icon} • {t.visual.shape}</div>
-                    </div>
-                  </div>
                 </div>
               )}
             </article>
