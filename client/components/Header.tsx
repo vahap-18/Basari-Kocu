@@ -83,13 +83,6 @@ export const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* dynamic mobile menu loaded lazily to keep header small */}
-      {open && (
-        // lazy load component
-        <React.Suspense fallback={null}>
-          <MobileMenu open={open} onClose={() => setOpen(false)} />
-        </React.Suspense>
-      )}
     </header>
   );
 };
