@@ -10,6 +10,7 @@ import {
 } from "@/components/Cards";
 import SmallCalendarCard from "@/components/SmallCalendarCard";
 import TaskReminderCard from "@/components/TaskReminderCard";
+import CoachCalendar from "@/components/CoachCalendar";
 
 export default function Index() {
   const today = useMemo(
