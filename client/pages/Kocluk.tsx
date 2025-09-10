@@ -160,6 +160,8 @@ export default function KoclukPage() {
   return (
     <MobileLayout>
       <div className="space-y-6">
+        {/* DEBUG BANNER: should be visible when Koçluk mounts */}
+        <div className="fixed top-2 right-2 z-50 bg-red-500 text-white text-xs px-2 py-1 rounded">DEBUG: Koçluk mount</div>
         {showOnboard && (
           <CoachOnboarding
             onComplete={(p) => {
