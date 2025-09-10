@@ -1,13 +1,28 @@
 import React from "react";
 
+import React, { useEffect, useState } from "react";
+
 export default function TaskReminderCard() {
-  const tasks = (() => {
+  const [tasks, setTasks] = useState<any[]>(() => {
     try {
       return JSON.parse(localStorage.getItem("coach-tasks") || "[]");
     } catch {
       return [];
     }
-  })();
+  });
+
+  useEffect(() => {
+    const onUpdate = () => {
+      try {
+        setTasks(JSON.parse(localStorage.getItem("coach-tasks") || "[]"));
+      } catch {
+        setTasks([]);
+      }
+    };
+    window.addEventListener("coach-data-updated", onUpdate as EventListener);
+    return () => window.removeEventListener("coach-data-updated", onUpdate as EventListener);
+  }, []);
+
   const pending = tasks.filter((t: any) => !t.done).slice(0, 3);
 
   return (
