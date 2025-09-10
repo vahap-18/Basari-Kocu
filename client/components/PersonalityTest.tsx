@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import React, { useEffect, useMemo, useState } from "react";
+
 export type PersonalityProfile = {
   createdAt: string;
   scores: Record<string, number>;
@@ -122,7 +124,7 @@ export const PersonalityTest: React.FC<{
       resilience:
         "Zorluklara karşı dirençlisin; zor konularda ısrar etmelisin. 💪",
       social:
-        "Grupla tartışarak öğrenme verimli; çalışma grupları faydalı olabilir. 🤝",
+        "Grupla tartışarak ö��renme verimli; çalışma grupları faydalı olabilir. 🤝",
       structure:
         "Planlı çalışıyorsun; liste ve programlar verimliliği artırır. 📋",
       curiosity:
