@@ -28,15 +28,12 @@ const App = () => {
     function report(payload: any) {
       try {
         const body = JSON.stringify(payload);
-        if (navigator.sendBeacon) {
-          navigator.sendBeacon("/api/client-log", body);
-        } else {
-          fetch("/api/client-log", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body,
-          }).catch(() => {});
-        }
+        // always send JSON via fetch so server's express.json can parse it
+        fetch("/api/client-log", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body,
+        }).catch(() => {});
       } catch {}
     }
 
