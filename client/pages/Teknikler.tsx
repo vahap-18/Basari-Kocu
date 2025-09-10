@@ -357,7 +357,7 @@ const TECHNIQUES = [
     time: "Problem çözme",
     story: "Basit çözümü tercih eden öğrenci daha hızlı sonuca ulaştı.",
     what: "Gereksiz varsayımları eleyip en basit açıklamayı seçme ilkesi.",
-    how: ["Çözümü basitleştir.", "Önce temel nedenleri sorgula."],
+    how: ["��özümü basitleştir.", "Önce temel nedenleri sorgula."],
     motivation: "Basitlik genelde en etkili yoldur.",
     visual: { icon: "🪒", color: "#111827", shape: "line" },
   },
@@ -382,7 +382,7 @@ const TECHNIQUES = [
     story: "Bir konuyu basitçe anlatan öğrenci gerçek boşlukları fark etti.",
     what: "Kavramı basitçe anlatma ve eksikleri bulma yöntemi.",
     how: ["Boş bir sayfaya anlat.", "Basit örnekler kullan."],
-    motivation: "Anlattıkça öğrenirsin — ��ğretmek en iyi sınavdır.",
+    motivation: "Anlattıkça öğrenirsin — öğretmek en iyi sınavdır.",
     visual: { icon: "🗣️", color: "#F59E0B", shape: "megaphone" },
   },
   {
@@ -420,7 +420,7 @@ const TECHNIQUES = [
     difficulty: "Kolay",
     time: "Başlangıç odaklı",
     story:
-      "Başlayan öğrenci kısa sürede hız kazandı ve düzenli çalışmaya geçti.",
+      "Başlayan öğrenci kısa sürede hız kazandı ve düzenli çalışmaya ge��ti.",
     what: "Başlamak en zor, devam etmek momentum getirir.",
     how: ["Küçük başlangıç hedefleri koy.", "Sürekli aynı saatte çalış."],
     motivation: "Başlamak, başarıya giden en büyük adımdır.",
@@ -470,7 +470,7 @@ export default function TekniklerPage() {
                     {t.emoji} {t.title}
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Zorluk: {t.difficulty} • Süre: {t.time}
+                    Süre: {t.time}
                   </div>
                 </div>
                 <button
