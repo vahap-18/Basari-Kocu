@@ -84,4 +84,44 @@ const App = () => {
   );
 };
 
-createRoot(document.getElementById("root")!).render(<App />);
+class ErrorBoundary extends React.Component<any, { hasError: boolean; error?: any }>{
+  constructor(props:any){
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError(){
+    return { hasError: true };
+  }
+  componentDidCatch(error:any, info:any){
+    try{
+      const body = JSON.stringify({ error: String(error), info });
+      if(navigator && (navigator as any).sendBeacon){
+        (navigator as any).sendBeacon('/api/client-log', body);
+      } else {
+        fetch('/api/client-log', { method: 'POST', headers:{ 'Content-Type': 'application/json' }, body }).catch(()=>{});
+      }
+    }catch{}
+    // also log to console
+    console.error('ErrorBoundary caught', error, info);
+  }
+  render(){
+    if(this.state.hasError){
+      return (
+        <div className="min-h-screen flex items-center justify-center p-6">
+          <div className="max-w-md w-full text-center">
+            <h2 className="text-xl font-bold mb-3">Uygulama hata verdi</h2>
+            <p className="text-sm text-muted-foreground mb-4">Bir hata oluştu; konsolu kontrol edin veya bana hata mesajını gönderin.</p>
+            <button onclick={() => location.reload()} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground">Yeniden Yükle</button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+createRoot(document.getElementById("root")!).render(
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>
+);
