@@ -1,32 +1,56 @@
 import React from "react";
 
+import React, { useEffect, useState } from "react";
+
 export default function ProgressDetails() {
-  const tasks = (() => {
+  const [tasks, setTasks] = useState<any[]>(() => {
     try {
       return JSON.parse(localStorage.getItem("coach-tasks") || "[]");
     } catch {
       return [];
     }
-  })();
-  const completed = tasks.filter((t: any) => t.done).length;
-  const total = tasks.length;
-
-  const sessions = (() => {
+  });
+  const [sessions, setSessions] = useState<number>(() => {
     try {
-      const v = localStorage.getItem("pomodoro-sessions") || "0";
-      return Number(v) || 0;
+      return Number(localStorage.getItem("pomodoro-sessions") || "0") || 0;
     } catch {
       return 0;
     }
-  })();
-
-  const goals = (() => {
+  });
+  const [goals, setGoals] = useState<any[]>(() => {
     try {
       return JSON.parse(localStorage.getItem("goals") || "[]");
     } catch {
       return [];
     }
-  })();
+  });
+
+  useEffect(() => {
+    const onUpdate = () => {
+      try {
+        setTasks(JSON.parse(localStorage.getItem("coach-tasks") || "[]"));
+      } catch {
+        setTasks([]);
+      }
+      try {
+        setSessions(Number(localStorage.getItem("pomodoro-sessions") || "0") || 0);
+      } catch {
+        setSessions(0);
+      }
+      try {
+        setGoals(JSON.parse(localStorage.getItem("goals") || "[]"));
+      } catch {
+        setGoals([]);
+      }
+    };
+    window.addEventListener("coach-data-updated", onUpdate as EventListener);
+    // also run once
+    onUpdate();
+    return () => window.removeEventListener("coach-data-updated", onUpdate as EventListener);
+  }, []);
+
+  const completed = tasks.filter((t: any) => t.done).length;
+  const total = tasks.length;
 
   return (
     <div className="p-3 rounded-2xl border bg-card">
