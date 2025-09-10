@@ -19,6 +19,15 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  app.post('/api/client-log', express.json(), (req, res) => {
+    try {
+      console.error('[CLIENT LOG]', req.body);
+    } catch (e) {
+      console.error('[CLIENT LOG] parse error', e);
+    }
+    res.status(204).end();
+  });
+
   // AI adaptive plan proxy (server-side) - requires OPENAI_API_KEY env var
   app.post("/api/ai-plan", async (req, res) => {
     try {
