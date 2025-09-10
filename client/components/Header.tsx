@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme, type ThemeKey } from "@/components/ThemeProvider";
-import { Palette } from "lucide-react";
+import { Palette, ChevronLeft } from "lucide-react";
 
 const themeOptions: { key: ThemeKey; label: string }[] = [
   { key: "acik", label: "Açık" },
