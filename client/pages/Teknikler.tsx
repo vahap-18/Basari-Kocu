@@ -18,7 +18,7 @@ const TECHNIQUES = [
       "Aralıklı tekrar çizelgesi oluştur.",
     ],
     motivation:
-      "Küçük tekrarlar, büyük kazanç sağlar — hemen tekrar et ve unutmayı yavaşlat.",
+      "Kısa tekrarlar, uzun vadede fark yaratır — hemen bir tur daha göz at.",
     visual: { icon: "📉", color: "#FF6B6B", shape: "line-chart" },
   },
   {
@@ -36,7 +36,7 @@ const TECHNIQUES = [
       "Anki gibi araç kullan.",
     ],
     motivation:
-      "Az ama düzenli tekrar, unutmayı durdurur — küçük adımlarla kalıcı öğrenme.",
+      "Az ve düzenli tekrar, bilgiyi kalıcı hale getirir.",
     visual: { icon: "🔁", color: "#4F46E5", shape: "repeat" },
   },
   {
@@ -54,7 +54,7 @@ const TECHNIQUES = [
       "Gerçek sınav koşullarını taklit et.",
     ],
     motivation:
-      "Kendini test etmek, gerçek ilerlemeyi gösterir — hata yapmaktan korkma, onlardan öğren.",
+      "Kendini test etmek gerçek ilerlemeyi gösterir; hatalardan öğren.",
     visual: { icon: "🧪", color: "#059669", shape: "checklist" },
   },
   {
@@ -83,7 +83,7 @@ const TECHNIQUES = [
       "Uzun bilgi yığınlarını tek seferde anlamaya çalışmak zor olabilir; bilgiyi parçalara bölmek işleri kolaylaştırır.",
     what: "İnsanların kısa süreli belleğinin sınırlı olduğunu (yaklaşık 7±2 birim) öne süren kural.",
     how: [
-      "Bilgiyi küçük parçalara b��l (chunking).",
+      "Bilgiyi küçük parçalara böl (chunking).",
       "Tek bir seferde çok fazla bilgi verme.",
     ],
     motivation: "Parçala ve fethet — küçük adımlar büyük ilerleme getirir.",
@@ -277,7 +277,7 @@ const TECHNIQUES = [
     time: "Sürekli uygulama",
     story: "Hataları gelişme fırsatı olarak gören öğrenci zamanla gelişti.",
     what: "Yetenekler değişebilir; çaba ve strateji ile gelişme mümkündür.",
-    how: ["Hatalardan öğrenmeyi teşvik et.", "Çabayı ve stratejiyi öne çıkar."],
+    how: ["Hatalardan öğrenmeyi teşvik et.", "Çabay�� ve stratejiyi öne çıkar."],
     motivation: "Gelişim odaklı bakış, uzun vadeli başarı getirir.",
     visual: { icon: "🌱", color: "#84CC16", shape: "sprout" },
   },
@@ -399,7 +399,7 @@ const TECHNIQUES = [
     ],
     motivation:
       "Paylaşmak motivasyonu artırabilir — sorumlu tutulmak işe yarar.",
-    visual: { icon: "��", color: "#8B5CF6", shape: "eye" },
+    visual: { icon: "👀", color: "#8B5CF6", shape: "eye" },
   },
   {
     id: "procrastination",
@@ -408,7 +408,7 @@ const TECHNIQUES = [
     difficulty: "Orta",
     time: "Farkındalık çalışmaları",
     story: "Erteleme döngüsünü fark eden öğrenci küçük adımlarla kırdı.",
-    what: "Erteleme alışkanlığının döngüsel yapısı ve müdahale yolları.",
+    what: "Erteleme alışkanlığının döngüsel yapısı ve müdahale yollar��.",
     how: ["Farkındalık egzersizleri yap.", "Zaman blokları ile başla."],
     motivation: "Küçük ilk adım ertelemeyi kırar — bugün 5 dakika başla.",
     visual: { icon: "⏰", color: "#EF4444", shape: "loop" },
