@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme, type ThemeKey } from "@/components/ThemeProvider";
 import { Palette } from "lucide-react";
+import MobileMenu from "@/components/MobileMenu";
 
 const themeOptions: { key: ThemeKey; label: string }[] = [
   { key: "acik", label: "Açık" },
