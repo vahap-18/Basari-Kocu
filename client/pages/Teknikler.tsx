@@ -83,7 +83,7 @@ const TECHNIQUES = [
       "Uzun bilgi yığınlarını tek seferde anlamaya çalışmak zor olabilir; bilgiyi parçalara bölmek işleri kolaylaştırır.",
     what: "İnsanların kısa süreli belleğinin sınırlı olduğunu (yaklaşık 7±2 birim) öne süren kural.",
     how: [
-      "Bilgiyi küçük parçalara böl (chunking).",
+      "Bilgiyi küçük parçalara b��l (chunking).",
       "Tek bir seferde çok fazla bilgi verme.",
     ],
     motivation: "Parçala ve fethet — küçük adımlar büyük ilerleme getirir.",
@@ -220,7 +220,7 @@ const TECHNIQUES = [
     difficulty: "Kolay",
     time: "Kısa görevler",
     story:
-      "Yarım bırakılan işleri hatırlamak daha kolaydır; kü��ük tamamlamalar motivasyon sağlar.",
+      "Yarım bırakılan işleri hatırlamak daha kolaydır; küçük tamamlamalar motivasyon sağlar.",
     what: "Tamamlanmamış işleri zihnin daha çok hatırlaması etkisi.",
     how: [
       "Büyük işleri küçük parçalara böl.",
@@ -399,7 +399,7 @@ const TECHNIQUES = [
     ],
     motivation:
       "Paylaşmak motivasyonu artırabilir — sorumlu tutulmak işe yarar.",
-    visual: { icon: "👀", color: "#8B5CF6", shape: "eye" },
+    visual: { icon: "��", color: "#8B5CF6", shape: "eye" },
   },
   {
     id: "procrastination",
@@ -484,29 +484,31 @@ export default function TekniklerPage() {
               </div>
               {openTech[t.id] && (
                 <div className="mt-3 text-sm text-muted-foreground space-y-2">
-                  <div className="font-medium">📖 Hikâye Girişi</div>
+                  <div className="font-medium">📖 Kısa Özet</div>
                   <div>{t.story}</div>
 
-                  <div className="font-medium">🧠 Nedir?</div>
+                  <div className="font-medium">🧠 Ne işe yarar?</div>
                   <div>{t.what}</div>
 
-                  <div className="font-medium">✨ Nasıl Uygula?</div>
+                  <div className="font-medium">✨ Uygulama</div>
                   <ul className="list-disc pl-5">
                     {t.how.map((h: any, i: number) => (
                       <li key={i}>{h}</li>
                     ))}
                   </ul>
 
-                  <div className="font-medium">⚡ Zorluk Seviyesi</div>
+                  <div className="font-medium">⚡ Zorluk</div>
                   <div>{t.difficulty}</div>
 
-                  <div className="font-medium">💬 Motivasyon Mesajı</div>
+                  <div className="font-medium">💡 Uygulama Notu</div>
                   <div>{t.motivation}</div>
 
-                  <div className="font-medium">🎨 Görsel Öneri</div>
-                  <div className="text-sm text-muted-foreground">
-                    İkon: {t.visual.icon} • Renk: {t.visual.color} • Şekil:{" "}
-                    {t.visual.shape}
+                  <div className="font-medium">🎨 Görsel</div>
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-md border" style={{ background: t.visual.color }} />
+                      <div className="text-sm">{t.visual.icon} • {t.visual.shape}</div>
+                    </div>
                   </div>
                 </div>
               )}
