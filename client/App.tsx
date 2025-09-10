@@ -25,11 +25,13 @@ const App = () => {
       try {
         const isProd = import.meta.env && import.meta.env.PROD;
         if (isProd) {
-          navigator.serviceWorker.register('/sw.js').catch(()=>{});
+          navigator.serviceWorker.register("/sw.js").catch(() => {});
         } else {
-          navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+          navigator.serviceWorker
+            .getRegistrations()
+            .then((regs) => regs.forEach((r) => r.unregister()));
         }
-      } catch{}
+      } catch {}
     }
 
     // client-side global error reporter
@@ -89,34 +91,49 @@ const App = () => {
   );
 };
 
-class ErrorBoundary extends React.Component<any, { hasError: boolean; error?: any }>{
-  constructor(props:any){
+class ErrorBoundary extends React.Component<
+  any,
+  { hasError: boolean; error?: any }
+> {
+  constructor(props: any) {
     super(props);
     this.state = { hasError: false };
   }
-  static getDerivedStateFromError(){
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
-  componentDidCatch(error:any, info:any){
-    try{
+  componentDidCatch(error: any, info: any) {
+    try {
       const body = JSON.stringify({ error: String(error), info });
-      if(navigator && (navigator as any).sendBeacon){
-        (navigator as any).sendBeacon('/api/client-log', body);
+      if (navigator && (navigator as any).sendBeacon) {
+        (navigator as any).sendBeacon("/api/client-log", body);
       } else {
-        fetch('/api/client-log', { method: 'POST', headers:{ 'Content-Type': 'application/json' }, body }).catch(()=>{});
+        fetch("/api/client-log", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body,
+        }).catch(() => {});
       }
-    }catch{}
+    } catch {}
     // also log to console
-    console.error('ErrorBoundary caught', error, info);
+    console.error("ErrorBoundary caught", error, info);
   }
-  render(){
-    if(this.state.hasError){
+  render() {
+    if (this.state.hasError) {
       return (
         <div className="min-h-screen flex items-center justify-center p-6">
           <div className="max-w-md w-full text-center">
             <h2 className="text-xl font-bold mb-3">Uygulama hata verdi</h2>
-            <p className="text-sm text-muted-foreground mb-4">Bir hata oluştu; konsolu kontrol edin veya bana hata mesajını gönderin.</p>
-            <button onClick={() => location.reload()} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground">Yeniden Yükle</button>
+            <p className="text-sm text-muted-foreground mb-4">
+              Bir hata oluştu; konsolu kontrol edin veya bana hata mesajını
+              gönderin.
+            </p>
+            <button
+              onClick={() => location.reload()}
+              className="px-4 py-2 rounded-lg bg-primary text-primary-foreground"
+            >
+              Yeniden Yükle
+            </button>
           </div>
         </div>
       );
@@ -128,5 +145,5 @@ class ErrorBoundary extends React.Component<any, { hasError: boolean; error?: an
 createRoot(document.getElementById("root")!).render(
   <ErrorBoundary>
     <App />
-  </ErrorBoundary>
+  </ErrorBoundary>,
 );

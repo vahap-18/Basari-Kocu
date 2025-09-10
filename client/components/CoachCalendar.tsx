@@ -3,7 +3,15 @@ import React, { useEffect, useMemo, useState } from "react";
 type EventItem = { id: string; title: string; date: string; note?: string };
 
 // lightweight embedded calendar grid (no external CSS)
-function MonthGrid({ events, onSelect, selectedDate }: { events: EventItem[]; onSelect: (d: Date) => void; selectedDate?: string | null }) {
+function MonthGrid({
+  events,
+  onSelect,
+  selectedDate,
+}: {
+  events: EventItem[];
+  onSelect: (d: Date) => void;
+  selectedDate?: string | null;
+}) {
   const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth();
@@ -19,17 +27,36 @@ function MonthGrid({ events, onSelect, selectedDate }: { events: EventItem[]; on
 
   return (
     <div className="grid grid-cols-7 gap-1">
-      {['Pz', 'P', 'S', 'Ç', 'P', 'C', 'Ct'].map((h) => (
-        <div key={h} className="text-xs text-muted-foreground text-center">{h}</div>
+      {["Pz", "P", "S", "Ç", "P", "C", "Ct"].map((h) => (
+        <div key={h} className="text-xs text-muted-foreground text-center">
+          {h}
+        </div>
       ))}
-      {Array(first.getDay()).fill(0).map((_, i) => <div key={'pad-'+i} />)}
+      {Array(first.getDay())
+        .fill(0)
+        .map((_, i) => (
+          <div key={"pad-" + i} />
+        ))}
       {days.map((d) => {
-        const key = d.toISOString().slice(0,10);
+        const key = d.toISOString().slice(0, 10);
         const isSelected = selectedDate === key;
         return (
-          <button key={key} onClick={() => onSelect(d)} className={"p-2 rounded-md text-sm text-center " + (isSelected ? 'bg-primary text-primary-foreground' : 'hover:bg-muted/50')}>
+          <button
+            key={key}
+            onClick={() => onSelect(d)}
+            className={
+              "p-2 rounded-md text-sm text-center " +
+              (isSelected
+                ? "bg-primary text-primary-foreground"
+                : "hover:bg-muted/50")
+            }
+          >
             <div>{d.getDate()}</div>
-            {markers[key] ? <div className="text-[10px] text-muted-foreground">{markers[key]} etkinlik</div> : null}
+            {markers[key] ? (
+              <div className="text-[10px] text-muted-foreground">
+                {markers[key]} etkinlik
+              </div>
+            ) : null}
           </button>
         );
       })}
@@ -46,7 +73,9 @@ export default function CoachCalendar() {
     }
   });
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
+  const [date, setDate] = useState<string>(
+    new Date().toISOString().slice(0, 10),
+  );
 
   useEffect(() => {
     // listen for external changes
@@ -58,14 +87,22 @@ export default function CoachCalendar() {
       }
     };
     window.addEventListener("coach-data-updated", onUpdate as EventListener);
-    return () => window.removeEventListener("coach-data-updated", onUpdate as EventListener);
+    return () =>
+      window.removeEventListener(
+        "coach-data-updated",
+        onUpdate as EventListener,
+      );
   }, []);
 
   function persist(next: EventItem[]) {
     setEvents(next);
     localStorage.setItem("coach-events", JSON.stringify(next));
     try {
-      window.dispatchEvent(new CustomEvent("coach-data-updated", { detail: { type: "events", data: next } }));
+      window.dispatchEvent(
+        new CustomEvent("coach-data-updated", {
+          detail: { type: "events", data: next },
+        }),
+      );
     } catch {}
   }
 
@@ -91,28 +128,63 @@ export default function CoachCalendar() {
         <div className="text-xs text-muted-foreground">Yerel</div>
       </div>
 
-      <div className="mb-3 text-sm text-muted-foreground">Etkinlik ekleyin; senkronizasyon yok, cihaz üzerinde saklanır.</div>
+      <div className="mb-3 text-sm text-muted-foreground">
+        Etkinlik ekleyin; senkronizasyon yok, cihaz üzerinde saklanır.
+      </div>
 
       <div className="mb-3">
-        <MonthGrid events={events} onSelect={(d) => setDate(d.toISOString().slice(0,10))} selectedDate={date} />
+        <MonthGrid
+          events={events}
+          onSelect={(d) => setDate(d.toISOString().slice(0, 10))}
+          selectedDate={date}
+        />
       </div>
 
       <div className="flex gap-2 mb-3">
-        <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Etkinlik başlığı" className="flex-1 px-3 py-2 rounded-xl border bg-background" />
-        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="px-3 py-2 rounded-xl border bg-background" />
-        <button onClick={add} className="px-3 py-2 rounded-xl bg-primary text-primary-foreground">Ekle</button>
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Etkinlik başlığı"
+          className="flex-1 px-3 py-2 rounded-xl border bg-background"
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="px-3 py-2 rounded-xl border bg-background"
+        />
+        <button
+          onClick={add}
+          className="px-3 py-2 rounded-xl bg-primary text-primary-foreground"
+        >
+          Ekle
+        </button>
       </div>
 
       <div className="space-y-2">
-        {events.length === 0 && <div className="text-sm text-muted-foreground">Etkinlik yok.</div>}
+        {events.length === 0 && (
+          <div className="text-sm text-muted-foreground">Etkinlik yok.</div>
+        )}
         {events.map((e) => (
-          <div key={e.id} className={"p-2 rounded-lg border flex items-center justify-between"}>
+          <div
+            key={e.id}
+            className={
+              "p-2 rounded-lg border flex items-center justify-between"
+            }
+          >
             <div>
               <div className="font-medium">{e.title}</div>
-              <div className="text-xs text-muted-foreground">{e.date === todayStr ? "Bugün" : e.date}</div>
+              <div className="text-xs text-muted-foreground">
+                {e.date === todayStr ? "Bugün" : e.date}
+              </div>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => remove(e.id)} className="px-2 py-1 rounded-md border text-xs">Sil</button>
+              <button
+                onClick={() => remove(e.id)}
+                className="px-2 py-1 rounded-md border text-xs"
+              >
+                Sil
+              </button>
             </div>
           </div>
         ))}

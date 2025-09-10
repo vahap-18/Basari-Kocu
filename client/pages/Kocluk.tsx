@@ -40,11 +40,15 @@ export default function KoclukPage() {
   // debug mount indicator and remote log
   React.useEffect(() => {
     try {
-      fetch('/api/client-log', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'kocluk-mounted', ts: Date.now(), ua: navigator.userAgent }),
-      }).catch(()=>{});
+      fetch("/api/client-log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "kocluk-mounted",
+          ts: Date.now(),
+          ua: navigator.userAgent,
+        }),
+      }).catch(() => {});
     } catch {}
   }, []);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(() =>
@@ -161,7 +165,9 @@ export default function KoclukPage() {
     <MobileLayout>
       <div className="space-y-6">
         {/* DEBUG BANNER: should be visible when Koçluk mounts */}
-        <div className="fixed top-2 right-2 z-50 bg-red-500 text-white text-xs px-2 py-1 rounded">DEBUG: Koçluk mount</div>
+        <div className="fixed top-2 right-2 z-50 bg-red-500 text-white text-xs px-2 py-1 rounded">
+          DEBUG: Koçluk mount
+        </div>
         {showOnboard && (
           <CoachOnboarding
             onComplete={(p) => {
