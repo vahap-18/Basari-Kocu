@@ -25,7 +25,7 @@ export const BottomNav: React.FC = () => {
                     "flex flex-col items-center gap-0.5 px-3 py-2 rounded-lg text-xs transition-all duration-150",
                     isActive
                       ? "bg-primary/10 text-primary shadow-md scale-105"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
                   )
                 }
               >

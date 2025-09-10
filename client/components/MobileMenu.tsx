@@ -1,20 +1,33 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { X, Home, Clock, Lightbulb, Target, Settings, Palette } from "lucide-react";
+import {
+  X,
+  Home,
+  Clock,
+  Lightbulb,
+  Target,
+  Settings,
+  Palette,
+} from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 
-export const MobileMenu: React.FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
+export const MobileMenu: React.FC<{ open: boolean; onClose: () => void }> = ({
+  open,
+  onClose,
+}) => {
   const { theme, setTheme } = useTheme();
   return (
     <div
       className={
-        "fixed inset-0 z-50 pointer-events-none transition-all " + (open ? "pointer-events-auto" : "")
+        "fixed inset-0 z-50 pointer-events-none transition-all " +
+        (open ? "pointer-events-auto" : "")
       }
       aria-hidden={!open}
     >
       <div
         className={
-          "absolute inset-0 bg-black/40 backdrop-blur transition-opacity " + (open ? "opacity-100" : "opacity-0")
+          "absolute inset-0 bg-black/40 backdrop-blur transition-opacity " +
+          (open ? "opacity-100" : "opacity-0")
         }
         onClick={onClose}
       />
@@ -33,19 +46,54 @@ export const MobileMenu: React.FC<{ open: boolean; onClose: () => void }> = ({ o
         </div>
 
         <nav className="space-y-2">
-          <NavLink to="/" onClick={onClose} className={({ isActive }) => "flex items-center gap-3 px-3 py-2 rounded-md " + (isActive ? "bg-primary/10 text-primary" : "hover:bg-muted") }>
+          <NavLink
+            to="/"
+            onClick={onClose}
+            className={({ isActive }) =>
+              "flex items-center gap-3 px-3 py-2 rounded-md " +
+              (isActive ? "bg-primary/10 text-primary" : "hover:bg-muted")
+            }
+          >
             <Home className="w-5 h-5" /> Ana Sayfa
           </NavLink>
-          <NavLink to="/pomodoro" onClick={onClose} className={({ isActive }) => "flex items-center gap-3 px-3 py-2 rounded-md " + (isActive ? "bg-primary/10 text-primary" : "hover:bg-muted") }>
+          <NavLink
+            to="/pomodoro"
+            onClick={onClose}
+            className={({ isActive }) =>
+              "flex items-center gap-3 px-3 py-2 rounded-md " +
+              (isActive ? "bg-primary/10 text-primary" : "hover:bg-muted")
+            }
+          >
             <Clock className="w-5 h-5" /> Pomodoro
           </NavLink>
-          <NavLink to="/kocluk" onClick={onClose} className={({ isActive }) => "flex items-center gap-3 px-3 py-2 rounded-md " + (isActive ? "bg-primary/10 text-primary" : "hover:bg-muted") }>
+          <NavLink
+            to="/kocluk"
+            onClick={onClose}
+            className={({ isActive }) =>
+              "flex items-center gap-3 px-3 py-2 rounded-md " +
+              (isActive ? "bg-primary/10 text-primary" : "hover:bg-muted")
+            }
+          >
             <Lightbulb className="w-5 h-5" /> Koçluk
           </NavLink>
-          <NavLink to="/teknikler" onClick={onClose} className={({ isActive }) => "flex items-center gap-3 px-3 py-2 rounded-md " + (isActive ? "bg-primary/10 text-primary" : "hover:bg-muted") }>
+          <NavLink
+            to="/teknikler"
+            onClick={onClose}
+            className={({ isActive }) =>
+              "flex items-center gap-3 px-3 py-2 rounded-md " +
+              (isActive ? "bg-primary/10 text-primary" : "hover:bg-muted")
+            }
+          >
             <Target className="w-5 h-5" /> Teknikler
           </NavLink>
-          <NavLink to="/ayarlar" onClick={onClose} className={({ isActive }) => "flex items-center gap-3 px-3 py-2 rounded-md " + (isActive ? "bg-primary/10 text-primary" : "hover:bg-muted") }>
+          <NavLink
+            to="/ayarlar"
+            onClick={onClose}
+            className={({ isActive }) =>
+              "flex items-center gap-3 px-3 py-2 rounded-md " +
+              (isActive ? "bg-primary/10 text-primary" : "hover:bg-muted")
+            }
+          >
             <Settings className="w-5 h-5" /> Ayarlar
           </NavLink>
         </nav>

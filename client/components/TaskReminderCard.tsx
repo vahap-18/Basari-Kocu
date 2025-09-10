@@ -20,7 +20,11 @@ export default function TaskReminderCard() {
       }
     };
     window.addEventListener("coach-data-updated", onUpdate as EventListener);
-    return () => window.removeEventListener("coach-data-updated", onUpdate as EventListener);
+    return () =>
+      window.removeEventListener(
+        "coach-data-updated",
+        onUpdate as EventListener,
+      );
   }, []);
 
   const pending = tasks.filter((t: any) => !t.done).slice(0, 3);
@@ -35,7 +39,9 @@ export default function TaskReminderCard() {
       </div>
 
       <div className="text-sm">
-        {pending.length === 0 && <div className="text-muted-foreground">Bekleyen görev yok.</div>}
+        {pending.length === 0 && (
+          <div className="text-muted-foreground">Bekleyen görev yok.</div>
+        )}
         {pending.map((t: any) => (
           <div key={t.id} className="flex items-center justify-between py-1">
             <div className="text-sm">{t.title}</div>

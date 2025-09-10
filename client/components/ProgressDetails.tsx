@@ -33,7 +33,9 @@ export default function ProgressDetails() {
         setTasks([]);
       }
       try {
-        setSessions(Number(localStorage.getItem("pomodoro-sessions") || "0") || 0);
+        setSessions(
+          Number(localStorage.getItem("pomodoro-sessions") || "0") || 0,
+        );
       } catch {
         setSessions(0);
       }
@@ -46,7 +48,11 @@ export default function ProgressDetails() {
     window.addEventListener("coach-data-updated", onUpdate as EventListener);
     // also run once
     onUpdate();
-    return () => window.removeEventListener("coach-data-updated", onUpdate as EventListener);
+    return () =>
+      window.removeEventListener(
+        "coach-data-updated",
+        onUpdate as EventListener,
+      );
   }, []);
 
   const completed = tasks.filter((t: any) => t.done).length;
@@ -55,12 +61,16 @@ export default function ProgressDetails() {
   return (
     <div className="p-3 rounded-2xl border bg-card">
       <h4 className="font-semibold mb-2">Ayrıntılı İlerleme</h4>
-      <div className="text-sm text-muted-foreground mb-3">Görev tamamlama ve çalışma oturumlarına göre özet.</div>
+      <div className="text-sm text-muted-foreground mb-3">
+        Görev tamamlama ve çalışma oturumlarına göre özet.
+      </div>
 
       <div className="grid grid-cols-3 gap-3 mb-3">
         <div className="p-2 rounded-lg border text-center">
           <div className="text-xs text-muted-foreground">Görev</div>
-          <div className="font-semibold">{completed}/{total}</div>
+          <div className="font-semibold">
+            {completed}/{total}
+          </div>
         </div>
         <div className="p-2 rounded-lg border text-center">
           <div className="text-xs text-muted-foreground">Oturumlar</div>
@@ -74,7 +84,9 @@ export default function ProgressDetails() {
 
       <div className="text-sm">
         <div className="font-medium mb-1">Son etkinlik</div>
-        <div className="text-xs text-muted-foreground">Yerel veriler üzerinden hesaplandı.</div>
+        <div className="text-xs text-muted-foreground">
+          Yerel veriler üzerinden hesaplandı.
+        </div>
       </div>
     </div>
   );

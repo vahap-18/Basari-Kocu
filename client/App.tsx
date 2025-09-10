@@ -29,24 +29,35 @@ const App = () => {
       try {
         const body = JSON.stringify(payload);
         if (navigator.sendBeacon) {
-          navigator.sendBeacon('/api/client-log', body);
+          navigator.sendBeacon("/api/client-log", body);
         } else {
-          fetch('/api/client-log', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body }).catch(()=>{});
+          fetch("/api/client-log", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body,
+          }).catch(() => {});
         }
       } catch {}
     }
 
     const onErr = (evt: any) => {
-      report({ type: 'error', message: evt?.message || String(evt), filename: evt?.filename, lineno: evt?.lineno, colno: evt?.colno, stack: evt?.error?.stack });
+      report({
+        type: "error",
+        message: evt?.message || String(evt),
+        filename: evt?.filename,
+        lineno: evt?.lineno,
+        colno: evt?.colno,
+        stack: evt?.error?.stack,
+      });
     };
     const onRej = (evt: any) => {
-      report({ type: 'unhandledrejection', reason: String(evt?.reason) });
+      report({ type: "unhandledrejection", reason: String(evt?.reason) });
     };
-    window.addEventListener('error', onErr);
-    window.addEventListener('unhandledrejection', onRej);
+    window.addEventListener("error", onErr);
+    window.addEventListener("unhandledrejection", onRej);
     return () => {
-      window.removeEventListener('error', onErr);
-      window.removeEventListener('unhandledrejection', onRej);
+      window.removeEventListener("error", onErr);
+      window.removeEventListener("unhandledrejection", onRej);
     };
   }, []);
 

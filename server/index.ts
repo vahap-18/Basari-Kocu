@@ -19,11 +19,11 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
-  app.post('/api/client-log', express.json(), (req, res) => {
+  app.post("/api/client-log", express.json(), (req, res) => {
     try {
-      console.error('[CLIENT LOG]', req.body);
+      console.error("[CLIENT LOG]", req.body);
     } catch (e) {
-      console.error('[CLIENT LOG] parse error', e);
+      console.error("[CLIENT LOG] parse error", e);
     }
     res.status(204).end();
   });
@@ -32,7 +32,10 @@ export function createServer() {
   app.post("/api/ai-plan", async (req, res) => {
     try {
       const key = process.env.OPENAI_API_KEY || process.env.OPENAI_KEY;
-      if (!key) return res.status(400).json({ error: "OpenAI API key not configured on server." });
+      if (!key)
+        return res
+          .status(400)
+          .json({ error: "OpenAI API key not configured on server." });
       const body = req.body || {};
       const profile = body.profile || null;
       const goals = body.goals || [];
@@ -67,8 +70,10 @@ export function createServer() {
       // try to extract JSON block labeled ANALYSIS_JSON
       let analysis: any = null;
       try {
-        const m = content.match(/```json([\s\S]*?)```/i) || content.match(/ANALYSIS_JSON:\s*(\{[\s\S]*\})/i);
-        const jsonText = m ? (m[1] || m[2]) : null;
+        const m =
+          content.match(/```json([\s\S]*?)```/i) ||
+          content.match(/ANALYSIS_JSON:\s*(\{[\s\S]*\})/i);
+        const jsonText = m ? m[1] || m[2] : null;
         if (jsonText) {
           analysis = JSON.parse(jsonText);
         } else {

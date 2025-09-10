@@ -20,7 +20,11 @@ export default function SmallCalendarCard() {
       }
     };
     window.addEventListener("coach-data-updated", onUpdate as EventListener);
-    return () => window.removeEventListener("coach-data-updated", onUpdate as EventListener);
+    return () =>
+      window.removeEventListener(
+        "coach-data-updated",
+        onUpdate as EventListener,
+      );
   }, []);
 
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
@@ -36,7 +40,9 @@ export default function SmallCalendarCard() {
       </div>
 
       <div className="text-sm">
-        {upcoming.length === 0 && <div className="text-muted-foreground">Bugün etkinlik yok.</div>}
+        {upcoming.length === 0 && (
+          <div className="text-muted-foreground">Bugün etkinlik yok.</div>
+        )}
         {upcoming.map((e: any) => (
           <div key={e.id} className="flex items-center justify-between py-1">
             <div className="text-sm">{e.title}</div>
