@@ -898,7 +898,7 @@ function TestCatalog() {
       id: "iq",
       title: "IQ Testleri",
       emoji: "🧠",
-      desc: "Wechsler, Stanford-Binet gibi genel zekâ testleri.",
+      desc: "Wechsler, Stanford-Binet gibi genel zek�� testleri.",
     },
     {
       id: "raven",
@@ -975,9 +975,42 @@ function TestCatalog() {
     }
   }
 
+  const saved = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("scientific-tests") || "{}");
+    } catch {
+      return {};
+    }
+  })();
+
+  const keys = Object.keys(saved || {});
+
   return (
     <div className="space-y-2 mt-2">
       <h5 className="font-semibold">Test Kataloğu</h5>
+
+      {keys.length > 0 && (
+        <div className="mb-3">
+          <h6 className="font-medium mb-2">Sonuçlarınız</h6>
+          <div className="grid gap-2">
+            {keys.map((k) => {
+              const p = saved[k];
+              const label = deriveLabel(k, p);
+              return (
+                <div key={k} className="p-3 rounded-xl border bg-card flex items-center justify-between">
+                  <div>
+                    <div className="font-medium">{p.name}</div>
+                    <div className="text-xs text-muted-foreground">{p.scoreText} • {label.name}</div>
+                    <div className="text-sm mt-1">{p.interpretation}</div>
+                  </div>
+                  <div className="text-xs text-muted-foreground">{label.comment}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {tests.map((t) => (
         <div
           key={t.id}
