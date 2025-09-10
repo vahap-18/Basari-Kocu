@@ -32,9 +32,15 @@ export default function TasksManager() {
 
   useEffect(() => {
     localStorage.setItem("coach-tasks", JSON.stringify(tasks));
+    try {
+      window.dispatchEvent(new CustomEvent("coach-data-updated", { detail: { type: "tasks", data: tasks } }));
+    } catch {}
   }, [tasks]);
   useEffect(() => {
     localStorage.setItem("coach-templates", JSON.stringify(templates));
+    try {
+      window.dispatchEvent(new CustomEvent("coach-data-updated", { detail: { type: "templates", data: templates } }));
+    } catch {}
   }, [templates]);
 
   function addTemplate() {
