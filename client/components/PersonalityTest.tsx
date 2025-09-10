@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import React, { useEffect, useMemo, useState } from "react";
 
 export type PersonalityProfile = {
