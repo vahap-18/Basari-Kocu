@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MOTIVATIONS, UPLIFTINGS } from "@/data/quotes";
 import { pickDailyIndex, pickRandomAndStore } from "@/lib/daily";
