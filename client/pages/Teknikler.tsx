@@ -45,7 +45,7 @@ const TECHNIQUES = [
     visual: { icon: "🔁", color: "#4F46E5", shape: "repeat" },
     examples: [
       "Günlük 20 dakikalık hedef oturumları; zor konulara ekstra tekrar ayır.",
-      "Tekrar aralıklar��nı gün, 3 gün, 7 gün, 14 gün şeklinde planla."
+      "Tekrar aralıklarını gün, 3 gün, 7 gün, 14 gün şeklinde planla."
     ],
     evidence: "Aralıklı tekrar, uzun vadeli hatırlamayı güçlendirir (birçok çalışma destekler).",
   },
@@ -291,7 +291,7 @@ const TECHNIQUES = [
     story:
       "Önceliklendirme ile zamanın en verimli kullanılacağı işler seçildi.",
     what: "Acil/önemli ayrımına göre görevleri sınıflandırma matrisi.",
-    how: ["Görevleri 4 kutuya ay��r.", "Önceliklere göre zaman ayır."],
+    how: ["Görevleri 4 kutuya ayır.", "Önceliklere göre zaman ayır."],
     motivation: "Doğru işi doğru zamanda yap — verimli olmanın sırrı budur.",
     visual: { icon: "🗂️", color: "#8B5CF6", shape: "matrix" },
   },
@@ -539,6 +539,23 @@ export default function TekniklerPage() {
 
                   <div className="font-medium">💡 Uygulama Notu</div>
                   <div>{t.motivation}</div>
+
+                  {t.examples && t.examples.length > 0 && (
+                    <div>
+                      <div className="font-medium mt-2">📝 Örnekler</div>
+                      <ul className="list-disc pl-5">
+                        {t.examples.map((ex: string, i: number) => (
+                          <li key={i}>{ex}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {t.evidence && (
+                    <div className="text-xs text-muted-foreground mt-2">
+                      <strong>Kanıt:</strong> {t.evidence}
+                    </div>
+                  )}
                 </div>
               )}
             </article>
