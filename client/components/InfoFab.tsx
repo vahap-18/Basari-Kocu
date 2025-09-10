@@ -13,9 +13,9 @@ export const InfoFab: React.FC = () => {
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-black/40"
+            className="absolute inset-0 bg-black/40 backdrop-blur-lg"
             onClick={() => setOpen(false)}
           />
           <div className="relative w-full max-w-md bg-card rounded-2xl border p-4 z-10">
