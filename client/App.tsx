@@ -21,7 +21,15 @@ const queryClient = new QueryClient();
 const App = () => {
   React.useEffect(() => {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js").catch(() => {});
+      // register only in production build; in dev unregister to avoid cache issues
+      try {
+        const isProd = import.meta.env && import.meta.env.PROD;
+        if (isProd) {
+          navigator.serviceWorker.register('/sw.js').catch(()=>{});
+        } else {
+          navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+        }
+      } catch{}
     }
 
     // client-side global error reporter
