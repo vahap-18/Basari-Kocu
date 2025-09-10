@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { MobileLayout } from "@/components/MobileLayout";
 import { AICoach } from "@/components/AICoach";
 import { CoachOnboarding } from "@/components/CoachOnboarding";
