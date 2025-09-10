@@ -138,6 +138,11 @@ export default function Index() {
           <TaskReminderCard />
         </section>
 
+        <section className="mt-3 p-4 rounded-2xl border bg-card">
+          <h3 className="font-semibold mb-2">Takvim (Gömülü)</h3>
+          <CoachCalendar />
+        </section>
+
         <section>
           {/* Motivation card from shared data */}
           <div>
