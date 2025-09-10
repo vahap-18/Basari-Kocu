@@ -403,6 +403,9 @@ function DailyGoals() {
 
   useEffect(() => {
     localStorage.setItem("goals", JSON.stringify(goals));
+    try {
+      window.dispatchEvent(new CustomEvent("coach-data-updated", { detail: { type: "goals", data: goals } }));
+    } catch {}
   }, [goals]);
 
   return (
