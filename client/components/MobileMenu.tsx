@@ -26,7 +26,7 @@ export const MobileMenu: React.FC<{ open: boolean; onClose: () => void }> = ({
     >
       <div
         className={
-          "absolute inset-0 bg-black/40 backdrop-blur transition-opacity " +
+          "absolute inset-0 bg-black/40 backdrop-blur-xl transition-opacity " +
           (open ? "opacity-100" : "opacity-0")
         }
         onClick={onClose}
