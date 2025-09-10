@@ -108,7 +108,7 @@ class ErrorBoundary extends React.Component<any, { hasError: boolean; error?: an
           <div className="max-w-md w-full text-center">
             <h2 className="text-xl font-bold mb-3">Uygulama hata verdi</h2>
             <p className="text-sm text-muted-foreground mb-4">Bir hata oluştu; konsolu kontrol edin veya bana hata mesajını gönderin.</p>
-            <button onclick={() => location.reload()} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground">Yeniden Yükle</button>
+            <button onClick={() => location.reload()} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground">Yeniden Yükle</button>
           </div>
         </div>
       );
