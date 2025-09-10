@@ -22,9 +22,10 @@ const TECHNIQUES = [
     visual: { icon: "📉", color: "#FF6B6B", shape: "line-chart" },
     examples: [
       "İlk 24 saatte 10 dk özet, 3. gün 7 dk tekrar, 1 hafta sonra 5 dk gözden geçirme.",
-      "Flashcard ile 20-30 kısa soru hazırlayıp aralıklı olarak gözden geçir."
+      "Flashcard ile 20-30 kısa soru hazırlayıp aralıklı olarak gözden geçir.",
     ],
-    evidence: "Ebbinghaus’un çalışmaları, erken tekrarların unutmayı yavaşlattığını gösterir.",
+    evidence:
+      "Ebbinghaus’un çalışmaları, erken tekrarların unutmayı yavaşlattığını gösterir.",
   },
   {
     id: "spacing",
@@ -40,14 +41,14 @@ const TECHNIQUES = [
       "Zor konuları daha sık tekrarla.",
       "Anki gibi araç kullan.",
     ],
-    motivation:
-      "Az ve düzenli tekrar, bilgiyi kalıcı hale getirir.",
+    motivation: "Az ve düzenli tekrar, bilgiyi kalıcı hale getirir.",
     visual: { icon: "🔁", color: "#4F46E5", shape: "repeat" },
     examples: [
       "Günlük 20 dakikalık hedef oturumları; zor konulara ekstra tekrar ayır.",
-      "Tekrar aralıklarını gün, 3 gün, 7 gün, 14 gün şeklinde planla."
+      "Tekrar aralıklarını gün, 3 gün, 7 gün, 14 gün şeklinde planla.",
     ],
-    evidence: "Aralıklı tekrar, uzun vadeli hatırlamayı güçlendirir (birçok çalışma destekler).",
+    evidence:
+      "Aralıklı tekrar, uzun vadeli hatırlamayı güçlendirir (birçok çalışma destekler).",
   },
   {
     id: "testing_effect",
@@ -68,9 +69,10 @@ const TECHNIQUES = [
     visual: { icon: "🧪", color: "#059669", shape: "checklist" },
     examples: [
       "Kendi kısa quiz’lerini hazırla ve yanlışları aylık tekrar listesine ekle.",
-      "Eski sınavlardan rastgele 10 soru seçip zamanlayarak çöz."
+      "Eski sınavlardan rastgele 10 soru seçip zamanlayarak çöz.",
     ],
-    evidence: "Test etme etkisi; hatırlama pratiği uygulayan gruplar daha iyi performans gösterir.",
+    evidence:
+      "Test etme etkisi; hatırlama pratiği uygulayan gruplar daha iyi performans gösterir.",
   },
   {
     id: "primacy_recency",
@@ -89,9 +91,10 @@ const TECHNIQUES = [
     visual: { icon: "🧾", color: "#F59E0B", shape: "bookmark" },
     examples: [
       "Kritik konuları ders başına koy, özetleri ders sonunda tekrar et.",
-      "Kısa sunumlar hazırlayıp konuyu anlat; başta ve sonda vurgular yap."
+      "Kısa sunumlar hazırlayıp konuyu anlat; başta ve sonda vurgular yap.",
     ],
-    evidence: "Bilimsel olarak ilk ve son bilgilerin daha iyi hatırlandığı gözlemlenmiştir.",
+    evidence:
+      "Bilimsel olarak ilk ve son bilgilerin daha iyi hatırlandığı gözlemlenmiştir.",
   },
   {
     id: "miller",
@@ -110,9 +113,10 @@ const TECHNIQUES = [
     visual: { icon: "📦", color: "#EF4444", shape: "grid" },
     examples: [
       "Bir konuyu 5 alt başlığa böl ve her biri için 15-20 dakikalık çalışma planla.",
-      "Karmaşık formülleri adım adım örneklerle çözerek öğren."
+      "Karmaşık formülleri adım adım örneklerle çözerek öğren.",
     ],
-    evidence: "Çalışma belleğinin sınırları olması nedeniyle bilgiyi parçalara bölmek etkilidir.",
+    evidence:
+      "Çalışma belleğinin sınırları olması nedeniyle bilgiyi parçalara bölmek etkilidir.",
   },
   {
     id: "emotional_binding",
@@ -131,9 +135,10 @@ const TECHNIQUES = [
     visual: { icon: "❤️", color: "#EC4899", shape: "heart" },
     examples: [
       "Örnekleri kişisel deneyimlerle ilişkilendir; kendi vaka örneklerini yaz.",
-      "Öğrendiklerini yakın arkadaşına anlat ve tartışma pratiği yap."
+      "Öğrendiklerini yakın arkadaşına anlat ve tartışma pratiği yap.",
     ],
-    evidence: "Duygusal içerik öğrenme ve hatırlamayı güçlendirir; eğitim çalışmaları bunu destekler.",
+    evidence:
+      "Duygusal içerik öğrenme ve hatırlamayı güçlendirir; eğitim çalışmaları bunu destekler.",
   },
 
   // 7-12 Motivation & Performance
@@ -155,9 +160,10 @@ const TECHNIQUES = [
     visual: { icon: "⚖️", color: "#64748B", shape: "gauge" },
     examples: [
       "Deneme sınavları ile uygun uyarılma seviyesini test et; aşırıya kaçma.",
-      "Kısa gevşeme egzersizleri ile odak seviyeni dengele."
+      "Kısa gevşeme egzersizleri ile odak seviyeni dengele.",
     ],
-    evidence: "Yerkes–Dodson ilişkisinin sınav performansı üzerinde etkisi literatürde yer alır.",
+    evidence:
+      "Yerkes–Dodson ilişkisinin sınav performansı üzerinde etkisi literatürde yer alır.",
   },
   {
     id: "flow",
@@ -174,9 +180,10 @@ const TECHNIQUES = [
     visual: { icon: "🌊", color: "#06B6D4", shape: "wave" },
     examples: [
       "Zorluk-beceri eşleşmesi için görevleri seviyelendir; adım adım zorluk arttır.",
-      "Kesintisiz 25–50 dakikalık bloklar ile denemeler yap."
+      "Kesintisiz 25–50 dakikalık bloklar ile denemeler yap.",
     ],
-    evidence: "Flow durumunun üretkenliği artırdığı psikoloji çalışmalarıyla desteklenir.",
+    evidence:
+      "Flow durumunun üretkenliği artırdığı psikoloji çalışmalarıyla desteklenir.",
   },
   {
     id: "pareto",

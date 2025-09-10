@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-2">
           {!isHome && (
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
               className="p-2 rounded-md mr-2"
               aria-label="Geri"
             >
@@ -96,7 +96,6 @@ export const Header: React.FC = () => {
           </label>
         </div>
       </div>
-
     </header>
   );
 };

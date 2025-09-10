@@ -948,17 +948,57 @@ function TestCatalog() {
     const score = payload?.score ?? 0;
     switch (key) {
       case "mbti":
-        return score >= 4 ? { name: "Analitik", comment: "Dışa dönük ve karar odaklı görünüyorsunuz." } : score === 3 ? { name: "Dengeli", comment: "Dengeli özellikler sergiliyorsunuz." } : { name: "İçe Dönük", comment: "İçe dönük tercihleriniz baskın." };
+        return score >= 4
+          ? {
+              name: "Analitik",
+              comment: "Dışa dönük ve karar odaklı görünüyorsunuz.",
+            }
+          : score === 3
+            ? {
+                name: "Dengeli",
+                comment: "Dengeli özellikler sergiliyorsunuz.",
+              }
+            : { name: "İçe Dönük", comment: "İçe dönük tercihleriniz baskın." };
       case "bigfive":
-        return score >= 4 ? { name: "Yüksek Profil", comment: "Genel kişilik puanınız yüksek." } : score === 3 ? { name: "Orta Profil", comment: "Orta düzey profil." } : { name: "Düşük Profil", comment: "Bazı boyutlarda geliştirme fırsatları var." };
+        return score >= 4
+          ? { name: "Yüksek Profil", comment: "Genel kişilik puanınız yüksek." }
+          : score === 3
+            ? { name: "Orta Profil", comment: "Orta düzey profil." }
+            : {
+                name: "Düşük Profil",
+                comment: "Bazı boyutlarda geliştirme fırsatları var.",
+              };
       case "enneagram":
-        return { name: `Tip-${(score % 9) + 1}`, comment: "Enneagram eğiliminize göre yorumlanmıştır." };
+        return {
+          name: `Tip-${(score % 9) + 1}`,
+          comment: "Enneagram eğiliminize göre yorumlanmıştır.",
+        };
       case "disc":
-        return score >= 4 ? { name: "Dominant", comment: "Davranışta lider ve yönlendirici özellikler." } : { name: "Uyumlu", comment: "Daha uyumlu ve dengeli davranış eğilimleri." };
+        return score >= 4
+          ? {
+              name: "Dominant",
+              comment: "Davranışta lider ve yönlendirici özellikler.",
+            }
+          : {
+              name: "Uyumlu",
+              comment: "Daha uyumlu ve dengeli davranış eğilimleri.",
+            };
       case "eqi":
-        return score >= 4 ? { name: "Yüksek EQ", comment: "Duygusal zekâ güçlü." } : { name: "Geliştirilebilir EQ", comment: "Duygusal zekâ geliştirmeye açık." };
+        return score >= 4
+          ? { name: "Yüksek EQ", comment: "Duygusal zekâ güçlü." }
+          : {
+              name: "Geliştirilebilir EQ",
+              comment: "Duygusal zekâ geliştirmeye açık.",
+            };
       default:
-        return score >= 4 ? { name: "Güçlü", comment: "Bu alanda güçlü yönleriniz var." } : score === 3 ? { name: "Orta", comment: "Orta düzeyde performans." } : { name: "Geliştirilebilir", comment: "Bu alanda geliştirme yapılabilir." };
+        return score >= 4
+          ? { name: "Güçlü", comment: "Bu alanda güçlü yönleriniz var." }
+          : score === 3
+            ? { name: "Orta", comment: "Orta düzeyde performans." }
+            : {
+                name: "Geliştirilebilir",
+                comment: "Bu alanda geliştirme yapılabilir.",
+              };
     }
   }
 
@@ -997,13 +1037,20 @@ function TestCatalog() {
               const p = saved[k];
               const label = deriveLabel(k, p);
               return (
-                <div key={k} className="p-3 rounded-xl border bg-card flex items-center justify-between">
+                <div
+                  key={k}
+                  className="p-3 rounded-xl border bg-card flex items-center justify-between"
+                >
                   <div>
                     <div className="font-medium">{p.name}</div>
-                    <div className="text-xs text-muted-foreground">{p.scoreText} • {label.name}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {p.scoreText} • {label.name}
+                    </div>
                     <div className="text-sm mt-1">{p.interpretation}</div>
                   </div>
-                  <div className="text-xs text-muted-foreground">{label.comment}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {label.comment}
+                  </div>
                 </div>
               );
             })}
