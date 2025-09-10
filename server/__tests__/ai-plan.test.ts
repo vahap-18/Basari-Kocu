@@ -17,11 +17,17 @@ describe('POST /api/ai-plan', () => {
   it('returns plan and parsed analysis when OpenAI responds with JSON block', async () => {
     const fakeContent = "```json\n{\n  \"scores\": { \"focus\": 5, \"procrastinate\": 2 },\n  \"recommendedPomodoro\": { \"work\": 25, \"short\": 5, \"long\": 15 },\n  \"dominant\": \"focus\"\n}\n```\n\nSummary: This is a plan.";
 
-    globalThis.fetch = vi.fn(async (url: string, opts: any) => {
-      return {
-        ok: true,
-        json: async () => ({ choices: [{ message: { content: fakeContent } }] }),
-      } as any;
+    globalThis.fetch = vi.fn(async (url: any, opts: any) => {
+      const s = typeof url === 'string' ? url : String(url?.url || '');
+      if (s.includes('api.openai.com')) {
+        return {
+          ok: true,
+          json: async () => ({ choices: [{ message: { content: fakeContent } }] }),
+        } as any;
+      }
+      // forward other requests (like the test client -> server) to real fetch
+      if (originalFetch) return originalFetch(url, opts);
+      throw new Error('No original fetch to forward to');
     });
 
     const app = createServer();
