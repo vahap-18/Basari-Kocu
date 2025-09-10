@@ -21,16 +21,12 @@ const queryClient = new QueryClient();
 const App = () => {
   React.useEffect(() => {
     if ("serviceWorker" in navigator) {
-      // register only in production build; in dev unregister to avoid cache issues
+      // Always unregister existing service workers to avoid serving stale cached bundles
       try {
-        const isProd = import.meta.env && import.meta.env.PROD;
-        if (isProd) {
-          navigator.serviceWorker.register("/sw.js").catch(() => {});
-        } else {
-          navigator.serviceWorker
-            .getRegistrations()
-            .then((regs) => regs.forEach((r) => r.unregister()));
-        }
+        navigator.serviceWorker
+          .getRegistrations()
+          .then((regs) => regs.forEach((r) => r.unregister()))
+          .catch(() => {});
       } catch {}
     }
 
