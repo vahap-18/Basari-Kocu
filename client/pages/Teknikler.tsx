@@ -220,7 +220,7 @@ const TECHNIQUES = [
     difficulty: "Kolay",
     time: "Kısa görevler",
     story:
-      "Yarım bırakılan işleri hatırlamak daha kolaydır; küçük tamamlamalar motivasyon sağlar.",
+      "Yarım bırakılan işleri hatırlamak daha kolaydır; kü��ük tamamlamalar motivasyon sağlar.",
     what: "Tamamlanmamış işleri zihnin daha çok hatırlaması etkisi.",
     how: [
       "Büyük işleri küçük parçalara böl.",
@@ -450,10 +450,10 @@ export default function TekniklerPage() {
     <MobileLayout>
       <div className="space-y-4">
         <header className="p-3">
-          <h1 className="text-xl font-bold">Bilimsel Çalışma Teknikleri</h1>
+          <h1 className="text-xl font-bold">Çalışma Teknikleri</h1>
           <p className="text-sm text-muted-foreground">
-            Detaylı açıklamalar, kullanım önerileri, zorluk seviyeleri ve pratik
-            ipuçları. Her tekniği açarak detayları görün.
+            Kısa, pratik ve uygulaması kolay teknikler. Her birini açarak ne işe
+            yaradığını ve nasıl kullanabileceğini hızlıca görebilirsin.
           </p>
         </header>
 
