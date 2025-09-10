@@ -20,6 +20,11 @@ const TECHNIQUES = [
     motivation:
       "Kısa tekrarlar, uzun vadede fark yaratır — hemen bir tur daha göz at.",
     visual: { icon: "📉", color: "#FF6B6B", shape: "line-chart" },
+    examples: [
+      "İlk 24 saatte 10 dk özet, 3. gün 7 dk tekrar, 1 hafta sonra 5 dk gözden geçirme.",
+      "Flashcard ile 20-30 kısa soru hazırlayıp aralıklı olarak gözden geçir."
+    ],
+    evidence: "Ebbinghaus’un çalışmaları, erken tekrarların unutmayı yavaşlattığını gösterir.",
   },
   {
     id: "spacing",
@@ -38,6 +43,11 @@ const TECHNIQUES = [
     motivation:
       "Az ve düzenli tekrar, bilgiyi kalıcı hale getirir.",
     visual: { icon: "🔁", color: "#4F46E5", shape: "repeat" },
+    examples: [
+      "Günlük 20 dakikalık hedef oturumları; zor konulara ekstra tekrar ayır.",
+      "Tekrar aralıklar��nı gün, 3 gün, 7 gün, 14 gün şeklinde planla."
+    ],
+    evidence: "Aralıklı tekrar, uzun vadeli hatırlamayı güçlendirir (birçok çalışma destekler).",
   },
   {
     id: "testing_effect",
@@ -56,6 +66,11 @@ const TECHNIQUES = [
     motivation:
       "Kendini test etmek gerçek ilerlemeyi gösterir; hatalardan öğren.",
     visual: { icon: "🧪", color: "#059669", shape: "checklist" },
+    examples: [
+      "Kendi kısa quiz’lerini hazırla ve yanlışları aylık tekrar listesine ekle.",
+      "Eski sınavlardan rastgele 10 soru seçip zamanlayarak çöz."
+    ],
+    evidence: "Test etme etkisi; hatırlama pratiği uygulayan gruplar daha iyi performans gösterir.",
   },
   {
     id: "primacy_recency",
@@ -72,6 +87,11 @@ const TECHNIQUES = [
     ],
     motivation: "Doğru yerleştirme ile hatırlama şansını artırırsın.",
     visual: { icon: "🧾", color: "#F59E0B", shape: "bookmark" },
+    examples: [
+      "Kritik konuları ders başına koy, özetleri ders sonunda tekrar et.",
+      "Kısa sunumlar hazırlayıp konuyu anlat; başta ve sonda vurgular yap."
+    ],
+    evidence: "Bilimsel olarak ilk ve son bilgilerin daha iyi hatırlandığı gözlemlenmiştir.",
   },
   {
     id: "miller",
@@ -88,6 +108,11 @@ const TECHNIQUES = [
     ],
     motivation: "Parçala ve fethet — küçük adımlar büyük ilerleme getirir.",
     visual: { icon: "📦", color: "#EF4444", shape: "grid" },
+    examples: [
+      "Bir konuyu 5 alt başlığa böl ve her biri için 15-20 dakikalık çalışma planla.",
+      "Karmaşık formülleri adım adım örneklerle çözerek öğren."
+    ],
+    evidence: "Çalışma belleğinin sınırları olması nedeniyle bilgiyi parçalara bölmek etkilidir.",
   },
   {
     id: "emotional_binding",
@@ -104,6 +129,11 @@ const TECHNIQUES = [
     ],
     motivation: "Duyguyla bağlanınca öğrenme daha anlamlı olur.",
     visual: { icon: "❤️", color: "#EC4899", shape: "heart" },
+    examples: [
+      "Örnekleri kişisel deneyimlerle ilişkilendir; kendi vaka örneklerini yaz.",
+      "Öğrendiklerini yakın arkadaşına anlat ve tartışma pratiği yap."
+    ],
+    evidence: "Duygusal içerik öğrenme ve hatırlamayı güçlendirir; eğitim çalışmaları bunu destekler.",
   },
 
   // 7-12 Motivation & Performance
@@ -123,6 +153,11 @@ const TECHNIQUES = [
     motivation:
       "Orta düzeyde gerilim, seni en iyi performansa taşır — dengeyi bul.",
     visual: { icon: "⚖️", color: "#64748B", shape: "gauge" },
+    examples: [
+      "Deneme sınavları ile uygun uyarılma seviyesini test et; aşırıya kaçma.",
+      "Kısa gevşeme egzersizleri ile odak seviyeni dengele."
+    ],
+    evidence: "Yerkes–Dodson ilişkisinin sınav performansı üzerinde etkisi literatürde yer alır.",
   },
   {
     id: "flow",
@@ -137,6 +172,11 @@ const TECHNIQUES = [
     motivation:
       "Akış, derin öğrenme için ideal bir yoldur — hazır olduğunda ona gir.",
     visual: { icon: "🌊", color: "#06B6D4", shape: "wave" },
+    examples: [
+      "Zorluk-beceri eşleşmesi için görevleri seviyelendir; adım adım zorluk arttır.",
+      "Kesintisiz 25–50 dakikalık bloklar ile denemeler yap."
+    ],
+    evidence: "Flow durumunun üretkenliği artırdığı psikoloji çalışmalarıyla desteklenir.",
   },
   {
     id: "pareto",
@@ -251,7 +291,7 @@ const TECHNIQUES = [
     story:
       "Önceliklendirme ile zamanın en verimli kullanılacağı işler seçildi.",
     what: "Acil/önemli ayrımına göre görevleri sınıflandırma matrisi.",
-    how: ["Görevleri 4 kutuya ayır.", "Önceliklere göre zaman ayır."],
+    how: ["Görevleri 4 kutuya ay��r.", "Önceliklere göre zaman ayır."],
     motivation: "Doğru işi doğru zamanda yap — verimli olmanın sırrı budur.",
     visual: { icon: "🗂️", color: "#8B5CF6", shape: "matrix" },
   },
