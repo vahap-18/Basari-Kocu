@@ -116,32 +116,26 @@ function Card({
 
 export const StudyTechniquesCard: React.FC = () => {
   const flat = CATEGORIES.flatMap((c) => c.items);
-  const shown = flat.slice(0, 5);
+  const shown = flat.slice(0, 6);
   return (
     <Card className="animate-pop">
       <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
       <p className="text-sm text-muted-foreground mb-3">
-        Öne çıkan beş teknik — isme tıklayarak detay sayfasına atlayabilirsiniz.
+        Öne çıkan teknikler — isme tıklayarak detay sayfasına bakabilirsiniz.
       </p>
 
-      <ul className="space-y-2">
+      <div className="grid grid-cols-2 gap-2">
         {shown.map((it) => (
-          <li key={it.id} className="flex items-center justify-between">
-            <Link
-              to={`/teknikler#${it.id}`}
-              className="text-sm text-foreground hover:underline"
-            >
-              {it.title}
-            </Link>
-            <Link
-              to={`/teknikler#${it.id}`}
-              className="text-xs text-muted-foreground"
-            >
-              Detay
-            </Link>
-          </li>
+          <Link
+            key={it.id}
+            to={`/teknikler#${it.id}`}
+            className="p-2 rounded-lg border flex items-center justify-between hover:shadow-sm bg-background"
+          >
+            <div className="text-sm">{it.title}</div>
+            <div className="text-xs text-muted-foreground">Detay</div>
+          </Link>
         ))}
-      </ul>
+      </div>
 
       <div className="mt-3 flex items-center gap-2">
         <Link
