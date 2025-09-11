@@ -750,7 +750,7 @@ function TestsSection() {
               ? "Yüksek genel kişilik puanı (pozitif)."
               : avg === 3
                 ? "Orta düzeyde."
-                : "Düşük bazı kişilik boyutlar��.";
+                : "Düşük bazı kişilik boyutlarda.";
           return { score: avg, scoreText: `${avg}/5`, interpretation };
         }}
       />
@@ -892,7 +892,7 @@ function TestCatalog() {
       id: "msceit",
       title: "MSCEIT",
       emoji: "🧩",
-      desc: "Duyguları algılama, kullanma, anlama ve yönetme yeteneği testi.",
+      desc: "Duygular�� algılama, kullanma, anlama ve yönetme yeteneği testi.",
     },
     {
       id: "iq",
