@@ -516,9 +516,9 @@ function TestCatalog() {
         "Eğitim önerileri: düşük duygusal denge için stres azaltma teknikleri önerilir."
       ]
     },
-    { id: "enneagram", title: "Enneagram", emoji: "🔷", desc: "Motivasyon temelli 9 tip modeli.", long: "Enneagram, temel motivasyonları ve savunma mekanizmalarını ortaya koyar; kişisel farkındalık ve takım rolleri için içgörüler verir.", how: ["Kendi içgörünüzü yazılı örneklerle değerlendirin."] },
-    { id: "disc", title: "DISC Analizi", emoji: "🔶", desc: "Davranış profilleri ve iletişim eğilimleri.", long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.", how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."] },
-    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "EQ-i, duygusal farkındalık, empati ve duyguları düzenleme becerilerini değerlendirir. Sonuçlar, iletişim ve stres yönetimi için pratik öneriler sağlar.", how: ["Refleksiyon soruları içerir; 10–20 dk sürebilir."] },
+    { id: "enneagram", title: "Enneagram", emoji: "🔷", desc: "Motivasyon temelli 9 tip modeli.", long: "Enneagram, temel motivasyonları ve savunma mekanizmalarını ortaya koyar; kişisel farkındalık ve takım rolleri için içgörüler verir.", topics: ["Temel motivasyonlar", "Savunma mekanizmaları", "Takım rolleri"], how: ["Kendi içgörünüzü yazılı örneklerle değerlendirin."] },
+    { id: "disc", title: "DISC Analizi", emoji: "🔶", desc: "Davranış profilleri ve iletişim eğilimleri.", long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.", topics: ["Dominance (D)", "Influence (I)", "Steadiness (S)", "Conscientiousness (C)"], how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."] },
+    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "EQ-i, duygusal farkındalık, empati ve duyguları düzenleme becerilerini değerlendirir. Sonuçlar, iletişim ve stres yönetimi için pratik öneriler sağlar.", topics: ["Farkındalık", "Empati", "Duygu düzenleme", "Sosyal yetkinlik"], how: ["Refleksiyon soruları içerir; 10–20 dk sürebilir."] },
   ];
 
   function deriveLabel(key: string, payload: any) {
@@ -529,7 +529,7 @@ function TestCatalog() {
           ? { name: "Analitik", comment: "Dışa dönük ve karar odaklı görünüyorsunuz." }
           : score === 3
             ? { name: "Dengeli", comment: "Dengeli özellikler sergiliyorsunuz." }
-            : { name: "İçe Dönük", comment: "İçe d��nük tercihleriniz baskın." };
+            : { name: "İçe Dönük", comment: "İçe dönük tercihleriniz baskın." };
       case "bigfive":
         return score >= 4
           ? { name: "Yüksek Profil", comment: "Genel kişilik puanınız yüksek." }
