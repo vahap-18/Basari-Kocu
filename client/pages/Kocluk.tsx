@@ -124,7 +124,7 @@ export default function KoclukPage() {
       const g = tests["grit"];
       const e = tests["eqi"];
       if (p && p.score >= 4) setAvatarEmoji("😴");
-      else if (g && g.score >= 4) setAvatarEmoji("����");
+      else if (g && g.score >= 4) setAvatarEmoji("💪");
       else if (e && e.score >= 4) setAvatarEmoji("😊");
       else setAvatarEmoji("🙂");
     } catch {
@@ -509,6 +509,7 @@ function TestCatalog() {
       emoji: "🌐",
       desc: "Beş faktör model: kişilik profillerini ölçer.",
       long: "Big Five modeli (Açıklık, Sorumluluk, Dışadönüklük, Uyumluluk, Duygusal Denge) bireysel eğilimlerinizi detaylandırır. Bu çerçeve öğrenme stratejileri ve stres yönetimi için pratik öneriler sunar.",
+      topics: ["Açıklık", "Sorumluluk", "Dışadönüklük", "Uyumluluk", "Duygusal Denge"],
       how: [
         "Değerlendirme: 10–15 dakika.",
         "Her boyuta göre günlük davranış örnekleriyle yorum yapılır.",
@@ -528,7 +529,7 @@ function TestCatalog() {
           ? { name: "Analitik", comment: "Dışa dönük ve karar odaklı görünüyorsunuz." }
           : score === 3
             ? { name: "Dengeli", comment: "Dengeli özellikler sergiliyorsunuz." }
-            : { name: "İçe Dönük", comment: "İçe dönük tercihleriniz baskın." };
+            : { name: "İçe Dönük", comment: "İçe d��nük tercihleriniz baskın." };
       case "bigfive":
         return score >= 4
           ? { name: "Yüksek Profil", comment: "Genel kişilik puanınız yüksek." }
