@@ -11,6 +11,33 @@ import TasksManager from "@/components/TasksManager";
 import ProgressDetails from "@/components/ProgressDetails";
 import ProfileCharts from "@/components/ProfileCharts";
 
+// Small runtime-safe wrapper to prevent an entire page crash when a child component throws in production
+class SafeRender extends React.Component<{ name: string; children: React.ReactNode }>{
+  state = { hasError: false, error: null as any };
+  static getDerivedStateFromError(err: any) {
+    return { hasError: true, error: err };
+  }
+  componentDidCatch(error: any, info: any) {
+    try {
+      fetch('/api/client-log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'safe-render-error', name: this.props.name, error: String(error), info }),
+      }).catch(()=>{});
+    } catch {}
+  }
+  render() {
+    if ((this.state as any).hasError) {
+      return (
+        <div className="p-3 rounded-xl border bg-red-50 text-red-700">
+          {`Bir bileşen yüklenirken hata oluştu (${this.props.name}).`}
+        </div>
+      );
+    }
+    return this.props.children as any;
+  }
+}
+
 const QUOTES = [
   "Bugün küçük bir adım, yarın büyük bir fark.",
   "Disiplin, özgürlüğün en kısa yoludur.",
@@ -510,7 +537,7 @@ function TestCatalog() {
     {
       id: "bigfive",
       title: "Big Five (OCEAN)",
-      emoji: "🌐",
+      emoji: "����",
       desc: "Beş faktör model: kişilik profillerini ölçer.",
       long: "Big Five modeli (Açıklık, Sorumluluk, Dışadönüklük, Uyumluluk, Duygusal Denge) bireysel eğilimlerinizi detaylandırır. Bu çerçeve öğrenme stratejileri ve stres yönetimi için pratik öneriler sunar.",
       topics: ["Açıklık", "Sorumluluk", "Dışadönüklük", "Uyumluluk", "Duygusal Denge"],
