@@ -432,10 +432,10 @@ export default function KoclukPage() {
 
           <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
             <div>
-              <AdaptivePlan profile={profile} />
+              <SafeRender name="AdaptivePlan"><AdaptivePlan profile={profile} /></SafeRender>
             </div>
             <div>
-              <TasksManager />
+              <SafeRender name="TasksManager"><TasksManager /></SafeRender>
             </div>
           </section>
 
