@@ -355,7 +355,7 @@ export default function KoclukPage() {
               <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                 <li>En zor konuları sabah saatlerine koyun.</li>
                 <li>Pomodoro sürelerini profilinize göre ayarlayın.</li>
-                <li>Günlük hedeflerinizi 2-3 maddede sın��rlayın.</li>
+                <li>Günlük hedeflerinizi 2-3 maddede sınırlayın.</li>
                 <li>
                   Nefes egzersizleriyle dikkat toplama süresini %20
                   artırabilirsiniz.
@@ -536,7 +536,7 @@ function TestCatalog() {
             : { name: "Düşük Profil", comment: "Bazı boyutlarda geliştirme fırsatları var." };
       default:
         return score >= 4
-          ? { name: "Güçlü", comment: "Bu alanda güçlü y��nleriniz var." }
+          ? { name: "Güçlü", comment: "Bu alanda güçlü yönleriniz var." }
           : score === 3
             ? { name: "Orta", comment: "Orta düzeyde performans." }
             : { name: "Geliştirilebilir", comment: "Bu alanda geliştirme yapılabilir." };
