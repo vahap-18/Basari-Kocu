@@ -487,392 +487,6 @@ function DailyGoals() {
   );
 }
 
-function TestsSection() {
-  const [open, setOpen] = useState<Record<string, boolean>>({});
-  const [testsState, setTestsState] = useState<Record<string, any>>(() => {
-    try {
-      return JSON.parse(localStorage.getItem("scientific-tests") || "{}");
-    } catch {
-      return {};
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem("scientific-tests", JSON.stringify(testsState));
-    try {
-      window.dispatchEvent(
-        new CustomEvent("tests-updated", {
-          detail: { type: "scientific-tests", data: testsState },
-        }),
-      );
-    } catch {}
-  }, [testsState]);
-
-  useEffect(() => {
-    const onOpen = (e: Event) => {
-      try {
-        const id = (e as CustomEvent).detail?.id;
-        if (id) setOpen((o) => ({ ...o, [id]: true }));
-      } catch {}
-    };
-    window.addEventListener("open-test", onOpen as EventListener);
-    return () =>
-      window.removeEventListener("open-test", onOpen as EventListener);
-  }, []);
-
-  function saveTest(key: string, payload: any) {
-    setTestsState((s) => ({
-      ...s,
-      [key]: { ...payload, updatedAt: new Date().toISOString() },
-    }));
-  }
-
-  // Generic 10-question test component
-  function TenQuestionTest({ id, title, questions, calcResult }: any) {
-    const isOpen = !!open[id];
-    const [answers, setAnswers] = useState<number[]>(() =>
-      Array(questions.length).fill(0),
-    );
-    const [index, setIndex] = useState(0);
-
-    function submit() {
-      // ensure all answered
-      if (answers.some((v) => v === 0)) return;
-      const result = calcResult(answers);
-      saveTest(id, {
-        name: title,
-        ...result,
-        createdAt: new Date().toISOString(),
-      });
-      setOpen((o) => ({ ...o, [id]: false }));
-      try {
-        window.dispatchEvent(
-          new CustomEvent("tests-updated", {
-            detail: {
-              type: "scientific-tests",
-              data: JSON.parse(
-                localStorage.getItem("scientific-tests") || "{}",
-              ),
-            },
-          }),
-        );
-      } catch {}
-    }
-
-    const autoAdvanceRef = React.useRef<number | null>(null as any);
-
-    React.useEffect(() => {
-      if (isOpen) {
-        setAnswers(Array(questions.length).fill(0));
-        setIndex(0);
-      }
-      return () => {
-        if ((autoAdvanceRef as any).current)
-          window.clearTimeout((autoAdvanceRef as any).current);
-      };
-    }, [isOpen, questions.length]);
-
-    const answeredCount = answers.filter(Boolean).length;
-
-    return (
-      <div className="p-3 rounded-2xl border bg-card">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="font-semibold">{title}</div>
-          </div>
-          <button
-            onClick={() => setOpen((o) => ({ ...o, [id]: !o[id] }))}
-            className="px-3 py-1 rounded-xl border"
-          >
-            {isOpen ? "Gizle" : "Başlat"}
-          </button>
-        </div>
-
-        {isOpen && (
-          <div className="mt-3">
-            <div className="animate-pop p-4 rounded-xl bg-gradient-to-br from-primary/5 to-card shadow-md">
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-sm text-muted-foreground">
-                  Soru {index + 1} / {questions.length}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Cevaplanan: {answeredCount}
-                </div>
-              </div>
-
-              <div className="text-center py-6">
-                <div className="text-lg font-semibold mb-3 leading-tight">
-                  {questions[index]}
-                </div>
-
-                <div className="grid grid-cols-5 gap-2 mt-4">
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <button
-                      key={n}
-                      onClick={() => {
-                        setAnswers((a) => {
-                          const na = [...a];
-                          na[index] = n;
-                          return na;
-                        });
-                        // auto-advance after brief delay; if last question, submit
-                        window.clearTimeout((autoAdvanceRef as any).current);
-                        if (index < questions.length - 1) {
-                          (autoAdvanceRef as any).current = window.setTimeout(
-                            () =>
-                              setIndex((i) =>
-                                Math.min(questions.length - 1, i + 1),
-                              ),
-                            220,
-                          );
-                        } else {
-                          (autoAdvanceRef as any).current = window.setTimeout(
-                            () => submit(),
-                            220,
-                          );
-                        }
-                      }}
-                      className={
-                        "py-4 rounded-xl text-lg font-semibold border transition-colors " +
-                        (answers[index] === n
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-background")
-                      }
-                    >
-                      {n}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="flex items-center justify-between mt-6">
-                  <button
-                    disabled={index === 0}
-                    onClick={() => setIndex((i) => Math.max(0, i - 1))}
-                    className="px-4 py-2 rounded-xl border"
-                  >
-                    Geri
-                  </button>
-                  {index < questions.length - 1 ? (
-                    <button
-                      onClick={() =>
-                        setIndex((i) => Math.min(questions.length - 1, i + 1))
-                      }
-                      className="px-4 py-2 rounded-xl bg-primary text-primary-foreground"
-                    >
-                      Sonraki
-                    </button>
-                  ) : (
-                    <button
-                      onClick={submit}
-                      className="px-4 py-2 rounded-xl bg-primary text-primary-foreground"
-                    >
-                      Tamamla
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  // define 10-question sets and simple scoring for several tests
-  const mbtiQuestions = [
-    "Sosyal etkinliklerde enerji toplar mısınız?",
-    "Kararları mantıkla mı yoksa duygularla mı verirsiniz?",
-    "Yeni fikirlere açıksınızdır.",
-    "Planlı ve sistematik çalışırım.",
-    "Detaylara dikkat ederim.",
-    "İnsanlarla kolay iletişim kurarım.",
-    "Sezgilerime güvenirim.",
-    "Soyut fikirleri düşünmeyi severim.",
-    "Rutin tercihlerim vardır.",
-    "Yeni deneyimler ararım.",
-  ];
-
-  const bigFiveQuestions = [
-    "Genelde dışa dönük biriyim.",
-    "Sorumluluk sahibiyim ve düzenliyim.",
-    "Diğerleriyle kolay anlaşırım.",
-    "Çabuk endişelenirim.",
-    "Yeni deneyimlere açığım.",
-    "Sosyal ortamlarda enerjik hissederim.",
-    "Görevleri zamanında tamamlama eğilimindeyim.",
-    "Empati yeteneğim yüksek.",
-    "Duygusal iniş çıkışlarım olur.",
-    "Yaratıcı fikirler üretmeyi severim.",
-  ];
-
-  const enneagramQuestions = Array.from({ length: 10 }).map(
-    (_, i) => `Enneagram soru ${i + 1} (kendinizi değerlendirin).`,
-  );
-  const discQuestions = Array.from({ length: 10 }).map(
-    (_, i) => `DISC soru ${i + 1} (duruma göre 1-5 değerlendirin).`,
-  );
-  const eqQuestions = Array.from({ length: 10 }).map(
-    (_, i) => `Duygusal zeka sorusu ${i + 1}.`,
-  );
-  const nbackQuestions = Array.from({ length: 10 }).map(
-    (_, i) => `İşlem belleği sorusu ${i + 1} (eşleşme var mı?).`,
-  );
-  const stroopQuestions = Array.from({ length: 10 }).map(
-    (_, i) => `Stroop testi maddesi ${i + 1} (renk/kelime uyumu).`,
-  );
-  const varkQuestions = Array.from({ length: 10 }).map(
-    (_, i) => `Öğrenme stili soru ${i + 1}.`,
-  );
-  const kolbQuestions = Array.from({ length: 10 }).map(
-    (_, i) => `Kolb soru ${i + 1}.`,
-  );
-  const honeyQuestions = Array.from({ length: 10 }).map(
-    (_, i) => `Honey & Mumford soru ${i + 1}.`,
-  );
-
-  return (
-    <div className="space-y-3">
-      <TenQuestionTest
-        id="mbti"
-        title="MBTI (Kısa)"
-        questions={mbtiQuestions}
-        calcResult={(answers: number[]) => {
-          const avg = Math.round(
-            answers.reduce((a, b) => a + b, 0) / answers.length,
-          );
-          const interpretation =
-            avg >= 4
-              ? "Dışadönük ve karar odaklı."
-              : avg === 3
-                ? "Dengeli özellikler."
-                : "İçe dönük yapılar daha baskın.";
-          return { score: avg, scoreText: `${avg}/5`, interpretation };
-        }}
-      />
-
-      <TenQuestionTest
-        id="bigfive"
-        title="Big Five (Kısa)"
-        questions={bigFiveQuestions}
-        calcResult={(answers: number[]) => {
-          const avg = Math.round(
-            answers.reduce((a, b) => a + b, 0) / answers.length,
-          );
-          const interpretation =
-            avg >= 4
-              ? "Yüksek genel kişilik puanı (pozitif)."
-              : avg === 3
-                ? "Orta düzeyde."
-                : "Düşük bazı kişilik boyutlarda.";
-          return { score: avg, scoreText: `${avg}/5`, interpretation };
-        }}
-      />
-
-      <TenQuestionTest
-        id="enneagram"
-        title="Enneagram (Kısa)"
-        questions={enneagramQuestions}
-        calcResult={(answers: number[]) => {
-          const avg = Math.round(
-            answers.reduce((a, b) => a + b, 0) / answers.length,
-          );
-          return {
-            score: avg,
-            scoreText: `${avg}/5`,
-            interpretation: "Enneagram tarzı eğilimleriniz gösterildi.",
-          };
-        }}
-      />
-
-      <TenQuestionTest
-        id="disc"
-        title="DISC (Kısa)"
-        questions={discQuestions}
-        calcResult={(answers: number[]) => ({
-          score: Math.round(
-            answers.reduce((a, b) => a + b, 0) / answers.length,
-          ),
-          scoreText: `${Math.round(answers.reduce((a, b) => a + b, 0) / answers.length)}/5`,
-          interpretation: "Davranış eğilimleri gösterildi.",
-        })}
-      />
-
-      <TenQuestionTest
-        id="eqi"
-        title="EQ-i (Kısa)"
-        questions={eqQuestions}
-        calcResult={(answers: number[]) => ({
-          score: Math.round(
-            answers.reduce((a, b) => a + b, 0) / answers.length,
-          ),
-          scoreText: `${Math.round(answers.reduce((a, b) => a + b, 0) / answers.length)}/5`,
-          interpretation: "Duygusal zekâ profili.",
-        })}
-      />
-
-      <TenQuestionTest
-        id="nback"
-        title="N-Back (Kısa)"
-        questions={nbackQuestions}
-        calcResult={(answers: number[]) => ({
-          score: answers.filter(Boolean).length,
-          scoreText: `${answers.filter(Boolean).length}/${answers.length}`,
-          interpretation: "Çalışma belleği performansınız.",
-        })}
-      />
-
-      <TenQuestionTest
-        id="stroop"
-        title="Stroop (Kısa)"
-        questions={stroopQuestions}
-        calcResult={(answers: number[]) => ({
-          score: answers.filter(Boolean).length,
-          scoreText: `${answers.filter(Boolean).length}/${answers.length}`,
-          interpretation: "Dikkat ve bilişsel kontrol seviyesi.",
-        })}
-      />
-
-      <TenQuestionTest
-        id="vark"
-        title="VARK"
-        questions={varkQuestions}
-        calcResult={(answers: number[]) => ({
-          score: Math.round(
-            answers.reduce((a, b) => a + b, 0) / answers.length,
-          ),
-          scoreText: `${Math.round(answers.reduce((a, b) => a + b, 0) / answers.length)}/5`,
-          interpretation: "Tercih ettiğiniz öğrenme stilleri gösterildi.",
-        })}
-      />
-
-      <TenQuestionTest
-        id="kolb"
-        title="Kolb"
-        questions={kolbQuestions}
-        calcResult={(answers: number[]) => ({
-          score: Math.round(
-            answers.reduce((a, b) => a + b, 0) / answers.length,
-          ),
-          scoreText: `${Math.round(answers.reduce((a, b) => a + b, 0) / answers.length)}/5`,
-          interpretation: "Kolb öğrenme stiliniz değerlendirildi.",
-        })}
-      />
-
-      <TenQuestionTest
-        id="honey"
-        title="Honey & Mumford"
-        questions={honeyQuestions}
-        calcResult={(answers: number[]) => ({
-          score: Math.round(
-            answers.reduce((a, b) => a + b, 0) / answers.length,
-          ),
-          scoreText: `${Math.round(answers.reduce((a, b) => a + b, 0) / answers.length)}/5`,
-          interpretation: "Öğrenme tercihleriniz özetlendi.",
-        })}
-      />
-    </div>
-  );
-}
 
 function TestCatalog() {
   const tests = [
@@ -881,7 +495,7 @@ function TestCatalog() {
       title: "MBTI",
       emoji: "🧭",
       desc: "Myers-Briggs Type Indicator: 16 kişilik tipi sağlar.",
-      long: "MBTI (Myers-Briggs), bireylerin bilgi alma, karar verme, enerji kaynakları ve dünya ile ilişki kurma biçimlerini ölçen dört ikili ölçekten oluşur. Bu ölçekler birleşerek 16 farklı kişilik tipine işaret eder. Sonuçlar iletişim, öğrenme tercihi ve takım rollerine dair ipuçları sunar. Bu özet rehberlik amaçlıdır ve klinik tanı yerine tercihlerinizi göstermektedir.",
+      long: "MBTI (Myers-Briggs), bireylerin bilgi alma, karar verme, enerji kaynakları ve dünya ile ilişki kurma biçimlerini ölçen dört ikili ölçekten oluşur. Bu ölçekler birleşerek 16 farklı kişilik tipine işaret eder. Sonuçlar iletişim, öğrenme tercihi ve takım rolleri hakkında uygulanabilir içgörüler verir.",
       how: [
         "Kısa uygulama: 10-30 dakika arası sürer.",
         "Sonuçlar tercihleri gösterir; profesyonel değerlendirme yerine rehberlik amaçlı kullanılmalıdır.",
@@ -893,102 +507,16 @@ function TestCatalog() {
       title: "Big Five (OCEAN)",
       emoji: "🌐",
       desc: "Beş faktör model: kişilik profillerini ölçer.",
-      long: "Big Five modeli (Açıklık, Sorumluluk, Dışadönüklük, Uyumluluk, Duygusal Denge) bireysel eğilimlerinizi detaylandırır. Bu model, öğrenme stratejileri, görev yönetimi ve stres yönetimi için pratik öneriler sunar. Örneğin yüksek sorumluluk düzen ve planlama, yüksek açıklık ise yaratıcı öğrenme aktiviteleriyle iyi sonuç verir.",
+      long: "Big Five modeli (Açıklık, Sorumluluk, Dışadönüklük, Uyumluluk, Duygusal Denge) bireysel eğilimlerinizi detaylandırır. Bu çerçeve öğrenme stratejileri ve stres yönetimi için pratik öneriler sunar.",
       how: [
         "Değerlendirme: 10–15 dakika.",
         "Her boyuta göre günlük davranış örnekleriyle yorum yapılır.",
         "Eğitim önerileri: düşük duygusal denge için stres azaltma teknikleri önerilir."
       ]
     },
-    {
-      id: "enneagram",
-      title: "Enneagram",
-      emoji: "🔷",
-      desc: "9 kişilik tipi; motivasyon temelli bir model.",
-      long: "Enneagram, temel motivasyonları ve savunma mekanizmalarını ortaya koyar; takım dinamiklerinde faydalı içgörüler verir.",
-      how: ["Kendi içgörünüzü yazılı örneklerle değerlendirin."]
-    },
-    {
-      id: "disc",
-      title: "DISC Analizi",
-      emoji: "🔶",
-      desc: "Davranış profilleri ve iletişim eğilimleri.",
-      long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.",
-      how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."]
-    },
-    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "EQ-i, duygusal farkındalık, empati, duyguları düzenleme ve sosyal yetkinlik gibi alanlarda beceri profili sağlar. Sonuçlar, iletişim tarzınızı geliştirmek, stresle başa çıkma stratejileri oluşturmak ve empati temelli iletişimi güçlendirmek için kullanılabilir.", how: ["Refleksiyon soruları içerir; 10–20 dk sürebilir.", "Sonuçlar pratik önerilerle desteklenmelidir."] },
-    {
-      id: "msceit",
-      title: "MSCEIT",
-      emoji: "🧩",
-      desc: "Duyguları algılama ve yönetme testi.",
-      long: "MSCEIT, duygu tanıma ve işleme becerilerini ölçer; empati ve sosyal karar verme yeteneklerini değerlendirir.",
-      how: ["Görev tabanlı puanlama."]
-    },
-    {
-      id: "iq",
-      title: "IQ Testleri",
-      emoji: "🧠",
-      desc: "Genel zekâ testleri örnekleri.",
-      long: "IQ testleri mantık, sözel ve uzamsal yetenekleri ölçer; öğrenme kapasitesine dair ipuçları verir.",
-      how: ["Zaman sınırlı görevler içerir."]
-    },
-    {
-      id: "raven",
-      title: "Raven's Matrices",
-      emoji: "🔳",
-      desc: "Soyut akıl yürütme.",
-      long: "Görsel desen tamamlama yoluyla akıl yürütmeyi ölçer; eğitim bağlamında analitik düşünceyi gösterir.",
-      how: ["Görsel mantık soruları içerir."]
-    },
-    {
-      id: "nback",
-      title: "N-Back (Çalışma Belleği)",
-      emoji: "🔁",
-      desc: "Çalışma belleğini test eder.",
-      long: "N-Back, kısa süreli belleği ve güncel bilgiyi tutma becerisini ölçer; antrenmanla gelişebilir.",
-      how: ["Kısa versiyon 2-3 dakika."]
-    },
-    {
-      id: "stroop",
-      title: "Stroop Testi",
-      emoji: "🎨",
-      desc: "Dikkat ve bilişsel kontrol testi.",
-      long: "Stroop, otomatik tepkileri bastırma ve dikkat kontrolünü ölçer; dikkat eğitimlerinde referans alınır.",
-      how: ["Renk/kelime uyumsuzluğu görevleri içerir."]
-    },
-    {
-      id: "wcst",
-      title: "WCST",
-      emoji: "🃏",
-      desc: "Problem çözme ve esneklik.",
-      long: "Wisconsin Kart Eşleme Testi, kavramsal esnekliği ve kural değiştirme yeteneğini ölçer.",
-      how: ["Görev akışı içinde strateji değişikliği gerektirir."]
-    },
-    {
-      id: "vark",
-      title: "VARK",
-      emoji: "👁️",
-      desc: "Öğrenme tercihlerini belirler.",
-      long: "VARK, hangi duyusal modalitelerin öğrenmede baskın olduğunu gösterir; çalışma önerileri sunar.",
-      how: ["Kısa tercih anketi."]
-    },
-    {
-      id: "kolb",
-      title: "Kolb Öğrenme Stilleri",
-      emoji: "🔄",
-      desc: "Deneyimsel öğrenme tipleri.",
-      long: "Kolb, öğrenme sürecini deneyim, yorum, kavramsallaştırma ve uygulamaya ayırır; kişisel yaklaşımı belirler.",
-      how: ["Kendi deneyimlerinizi sınıflandırın."]
-    },
-    {
-      id: "honey",
-      title: "Honey & Mumford",
-      emoji: "📚",
-      desc: "��ğrenme stilleri uyumu.",
-      long: "Honey & Mumford, öğrenme tercihlerini dört kategoride inceler ve eğitim tasarımına yardımcı olur.",
-      how: ["Kısa stil anketi."]
-    },
+    { id: "enneagram", title: "Enneagram", emoji: "🔷", desc: "Motivasyon temelli 9 tip modeli.", long: "Enneagram, temel motivasyonları ve savunma mekanizmalarını ortaya koyar; kişisel farkındalık ve takım rolleri için içgörüler verir.", how: ["Kendi içgörünüzü yazılı örneklerle değerlendirin."] },
+    { id: "disc", title: "DISC Analizi", emoji: "🔶", desc: "Davranış profilleri ve iletişim eğilimleri.", long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.", how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."] },
+    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "EQ-i, duygusal farkındalık, empati ve duyguları düzenleme becerilerini değerlendirir. Sonuçlar, iletişim ve stres yönetimi için pratik öneriler sağlar.", how: ["Refleksiyon soruları içerir; 10–20 dk sürebilir."] },
   ];
 
   function deriveLabel(key: string, payload: any) {
@@ -996,69 +524,22 @@ function TestCatalog() {
     switch (key) {
       case "mbti":
         return score >= 4
-          ? {
-              name: "Analitik",
-              comment: "Dışa dönük ve karar odaklı görünüyorsunuz.",
-            }
+          ? { name: "Analitik", comment: "Dışa dönük ve karar odaklı görünüyorsunuz." }
           : score === 3
-            ? {
-                name: "Dengeli",
-                comment: "Dengeli özellikler sergiliyorsunuz.",
-              }
+            ? { name: "Dengeli", comment: "Dengeli özellikler sergiliyorsunuz." }
             : { name: "İçe Dönük", comment: "İçe dönük tercihleriniz baskın." };
       case "bigfive":
         return score >= 4
           ? { name: "Yüksek Profil", comment: "Genel kişilik puanınız yüksek." }
           : score === 3
             ? { name: "Orta Profil", comment: "Orta düzey profil." }
-            : {
-                name: "Düşük Profil",
-                comment: "Bazı boyutlarda geliştirme fırsatları var.",
-              };
-      case "enneagram":
-        return {
-          name: `Tip-${(score % 9) + 1}`,
-          comment: "Enneagram eğiliminize göre yorumlanmıştır.",
-        };
-      case "disc":
-        return score >= 4
-          ? {
-              name: "Dominant",
-              comment: "Davranışta lider ve yönlendirici özellikler.",
-            }
-          : {
-              name: "Uyumlu",
-              comment: "Daha uyumlu ve dengeli davranış eğilimleri.",
-            };
-      case "eqi":
-        return score >= 4
-          ? { name: "Yüksek EQ", comment: "Duygusal zekâ güçlü." }
-          : {
-              name: "Geliştirilebilir EQ",
-              comment: "Duygusal zekâ geliştirmeye açık.",
-            };
+            : { name: "Düşük Profil", comment: "Bazı boyutlarda geliştirme fırsatları var." };
       default:
         return score >= 4
-          ? { name: "Güçlü", comment: "Bu alanda güçlü yönleriniz var." }
+          ? { name: "Güçlü", comment: "Bu alanda güçlü y��nleriniz var." }
           : score === 3
             ? { name: "Orta", comment: "Orta düzeyde performans." }
-            : {
-                name: "Geliştirilebilir",
-                comment: "Bu alanda geliştirme yapılabilir.",
-              };
-    }
-  }
-
-  function startTest(t: any) {
-    try {
-      // request to open the detailed 10-question test for this id
-      try {
-        window.dispatchEvent(
-          new CustomEvent("open-test", { detail: { id: t.id } }),
-        );
-      } catch {}
-    } catch (e) {
-      console.error(e);
+            : { name: "Geliştirilebilir", comment: "Bu alanda geliştirme yapılabilir." };
     }
   }
 
@@ -1069,8 +550,13 @@ function TestCatalog() {
       return {};
     }
   })();
-
   const keys = Object.keys(saved || {});
+
+  const [openMap, setOpenMap] = useState<Record<string, boolean>>({});
+  const heightsRef = React.useRef<Record<string, number>>({});
+  const setDetailRef = (id: string) => (el: HTMLDivElement | null) => {
+    if (el) heightsRef.current[id] = el.scrollHeight;
+  };
 
   return (
     <div className="space-y-2 mt-2">
@@ -1084,20 +570,13 @@ function TestCatalog() {
               const p = saved[k];
               const label = deriveLabel(k, p);
               return (
-                <div
-                  key={k}
-                  className="p-3 rounded-xl border bg-card flex items-center justify-between"
-                >
+                <div key={k} className="p-3 rounded-xl border bg-card flex items-center justify-between">
                   <div>
                     <div className="font-medium">{p.name}</div>
-                    <div className="text-xs text-muted-foreground">
-                      {p.scoreText} • {label.name}
-                    </div>
+                    <div className="text-xs text-muted-foreground">{p.scoreText} • {label.name}</div>
                     <div className="text-sm mt-1">{p.interpretation}</div>
                   </div>
-                  <div className="text-xs text-muted-foreground">
-                    {label.comment}
-                  </div>
+                  <div className="text-xs text-muted-foreground">{label.comment}</div>
                 </div>
               );
             })}
@@ -1105,352 +584,50 @@ function TestCatalog() {
         </div>
       )}
 
-      {tests.map((t) => (
-        <div
-          key={t.id}
-          className="p-3 rounded-xl border bg-background flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
-        >
-          <div className="flex-1">
-            <div className="font-medium">
-              {t.emoji} {t.title}
-            </div>
-            <div className="text-xs text-muted-foreground mt-1">{t.desc}</div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => {
-                // open detail inline
-                const el = document.getElementById(`test-detail-${t.id}`);
-                if (el) {
-                  el.classList.toggle("hidden");
-                }
-              }}
-              className="px-3 py-1 rounded-md border text-sm"
-            >
-              Detay
-            </button>
-          </div>
-
-          <div id={`test-detail-${t.id}`} className="hidden mt-3 w-full p-3 rounded-md bg-card border">
-            <div className="font-medium">{t.title} — Detaylar</div>
-            <div className="text-xs text-muted-foreground mt-1">{t.long ?? t.desc}</div>
-            {t.how && (
-              <div className="mt-2">
-                <div className="text-sm font-medium mb-1">Nasıl çalışır</div>
-                <ul className="list-disc pl-5 text-sm text-muted-foreground">
-                  {t.how.map((h: string, i: number) => (
-                    <li key={i}>{h}</li>
-                  ))}
-                </ul>
+      {tests.map((t) => {
+        const isOpen = !!openMap[t.id];
+        const maxH = isOpen ? `${heightsRef.current[t.id] || 400}px` : "0px";
+        return (
+          <div key={t.id} className="p-3 rounded-xl border bg-background transition-shadow hover:shadow-md">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1">
+                <div className="font-medium">{t.emoji} {t.title}</div>
+                <div className="text-xs text-muted-foreground mt-1">{t.desc}</div>
               </div>
-            )}
-            <div className="mt-3">
-              <div className="text-sm font-medium mb-1">İpuçları</div>
-              <div className="text-xs text-muted-foreground">Bu testi tamamlarken rahat bir ortam seçin; sonuçlar rehberlik amaçlıdır.</div>
-            </div>
-            <div className="mt-3 flex justify-end">
-              <div className="text-xs text-muted-foreground">Test özelliği bu sayfada devre dışı bırakıldı; sadece detaylar görüntülenir.</div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function TestCRT({ open, setOpen, saveTest }: any) {
-  const key = "crt";
-  const [answers, setAnswers] = useState<Record<number, string>>({});
-  const questions = [
-    {
-      q: "Bir beyzbol sopası ve top toplam 1.10 TL tutuyorsa ve sopa topdan 1 TL daha pahalıysa, top kaç TL'dir?",
-      a: "0.05",
-    },
-    {
-      q: "Bir gölette nilüferler her gün iki katına çıkıyor. Tamamı 48 günde doluyorsa, yarısı kaçıncı günde doludur?",
-      a: "47",
-    },
-    {
-      q: "Bir makine 5 dakikada 5 parça yapıyorsa, 100 makine 100 dakikada kaç parça yapar?",
-      a: "100",
-    },
-  ];
-
-  function submit() {
-    let score = 0;
-    for (let i = 0; i < questions.length; i++) {
-      if ((answers[i] || "").trim() === questions[i].a) score++;
-    }
-    const interpretation =
-      score === 3
-        ? "Yüksek analitik düşünce."
-        : score === 2
-          ? "İyi seviyede bilişsel refleks."
-          : "Daha analitik düşünce egzersizleri faydalı olabilir.";
-    saveTest(key, {
-      name: "Bilişsel Yansıtma Testi (CRT)",
-      score,
-      scoreText: `${score}/${questions.length}`,
-      interpretation,
-      createdAt: new Date().toISOString(),
-    });
-    setOpen((o: any) => ({ ...o, [key]: false }));
-  }
-
-  return (
-    <div className="p-3 rounded-2xl border bg-card">
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="font-semibold">Cognitive Reflection Test (CRT)</div>
-          <div className="text-sm text-muted-foreground">
-            Kısa üç soruluk refleks testi.
-          </div>
-        </div>
-        <button
-          onClick={() => setOpen((o: any) => ({ ...o, [key]: !o[key] }))}
-          className="px-3 py-1 rounded-xl border"
-        >
-          {open[key] ? "Gizle" : "Başlat"}
-        </button>
-      </div>
-      {open[key] && (
-        <div className="mt-3 space-y-2">
-          {questions.map((qq, i) => (
-            <div key={i}>
-              <div className="text-sm font-medium">
-                {i + 1}. {qq.q}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setOpenMap((o) => ({ ...o, [t.id]: !o[t.id] }))}
+                  className="px-3 py-1 rounded-md border text-sm"
+                >
+                  Detay
+                </button>
               </div>
-              <input
-                value={answers[i] || ""}
-                onChange={(e) =>
-                  setAnswers((a) => ({ ...a, [i]: e.target.value }))
-                }
-                className="w-full mt-1 px-3 py-2 rounded-md border bg-background"
-              />
             </div>
-          ))}
-          <div className="flex justify-end">
-            <button
-              onClick={submit}
-              className="px-4 py-2 rounded-xl bg-primary text-primary-foreground"
-            >
-              Gönder
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
-function TestGrit({ open, setOpen, saveTest }: any) {
-  const key = "grit";
-  const items = [
-    "Uzun vadeli hedefler için gayret gösteririm.",
-    "Hedeflerime ulaşmak için sabırlıyım.",
-    "Zorluklar karşısında pes etmem.",
-  ];
-  const [answers, setAnswers] = useState<Record<number, number>>({});
-  function submit() {
-    const vals = Object.values(answers).map((v: any) => Number(v) || 1);
-    const avg = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
-    const interpretation =
-      avg >= 4
-        ? "Yüksek grit: hedef odaklı ve ısrarcı."
-        : avg === 3
-          ? "Orta seviye grit."
-          : "Daha fazla kararlılık çalışması faydalı olabilir.";
-    saveTest(key, {
-      name: "Grit Ölçeği (Kısa)",
-      score: avg,
-      scoreText: `${avg}/5`,
-      interpretation,
-      createdAt: new Date().toISOString(),
-    });
-    setOpen((o: any) => ({ ...o, [key]: false }));
-  }
-  return (
-    <div className="p-3 rounded-2xl border bg-card">
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="font-semibold">Grit Scale (Kısa)</div>
-          <div className="text-sm text-muted-foreground">
-            Kararlılık ve ısrar ölçümü (Likert 1-5).
-          </div>
-        </div>
-        <button
-          onClick={() => setOpen((o: any) => ({ ...o, [key]: !o[key] }))}
-          className="px-3 py-1 rounded-xl border"
-        >
-          {open[key] ? "Gizle" : "Başlat"}
-        </button>
-      </div>
-      {open[key] && (
-        <div className="mt-3 space-y-2">
-          {items.map((it, i) => (
-            <div key={i}>
-              <div className="text-sm">{it}</div>
-              <select
-                value={answers[i] || 3}
-                onChange={(e) =>
-                  setAnswers((a) => ({ ...a, [i]: Number(e.target.value) }))
-                }
-                className="w-full mt-1 px-3 py-2 rounded-md border bg-background"
-              >
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
-              </select>
+            <div ref={setDetailRef(t.id)} style={{ maxHeight: maxH, overflow: 'hidden', transition: 'max-height 320ms ease, opacity 240ms ease', opacity: isOpen ? 1 : 0 }} className="mt-3 w-full">
+              <div className="w-full p-3 rounded-md bg-card border">
+                <div className="font-medium">{t.title} — Detaylar</div>
+                <div className="text-xs text-muted-foreground mt-1">{t.long ?? t.desc}</div>
+                {t.how && (
+                  <div className="mt-2">
+                    <div className="text-sm font-medium mb-1">Nasıl çalışır</div>
+                    <ul className="list-disc pl-5 text-sm text-muted-foreground">
+                      {t.how.map((h: string, i: number) => (
+                        <li key={i}>{h}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <div className="mt-3">
+                  <div className="text-sm font-medium mb-1">İpuçları</div>
+                  <div className="text-xs text-muted-foreground">Bu test açıklamaları rehberlik amaçlıdır ve doğruluk garanti edilmez.</div>
+                </div>
+                <div className="mt-3 text-right text-xs text-muted-foreground">Test özelliği bu sayfada devre dışı bırakıldı; sadece detaylar görüntülenir.</div>
+              </div>
             </div>
-          ))}
-          <div className="flex justify-end">
-            <button
-              onClick={submit}
-              className="px-4 py-2 rounded-xl bg-primary text-primary-foreground"
-            >
-              Tamamla
-            </button>
           </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function Test2Back({ open, setOpen, saveTest }: any) {
-  const key = "2back";
-  const sequence = ["A", "B", "A", "C", "A"]; // 2-back: positions matching 2 before: index2=A matches index0 A, index4=A matches index2 A => 2 targets
-  const [answers, setAnswers] = useState<Record<number, boolean>>({});
-  function submit() {
-    let correct = 0;
-    for (let i = 0; i < sequence.length; i++) {
-      const target = i >= 2 && sequence[i] === sequence[i - 2];
-      if ((answers[i] ? true : false) === target) correct++;
-    }
-    const interpretation =
-      correct >= 4
-        ? "Çok iyi çalışma belleği performansı."
-        : correct >= 2
-          ? "Orta seviye çalışma belleği."
-          : "Çalışma belleğini güçlendirecek oyunlar faydalı.";
-    saveTest(key, {
-      name: "2-Back (Kısa)",
-      score: correct,
-      scoreText: `${correct}/${sequence.length}`,
-      interpretation,
-      createdAt: new Date().toISOString(),
-    });
-    setOpen((o: any) => ({ ...o, [key]: false }));
-  }
-  return (
-    <div className="p-3 rounded-2xl border bg-card">
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="font-semibold">Çalışma Belleği (2-Back)</div>
-          <div className="text-sm text-muted-foreground">
-            Basit 2-back görevi — doğru eşleşmeleri işaretleyin.
-          </div>
-        </div>
-        <button
-          onClick={() => setOpen((o: any) => ({ ...o, [key]: !o[key] }))}
-          className="px-3 py-1 rounded-xl border"
-        >
-          {open[key] ? "Gizle" : "Başlat"}
-        </button>
-      </div>
-      {open[key] && (
-        <div className="mt-3 space-y-2">
-          <div className="text-sm text-muted-foreground">
-            Sıra: {sequence.join(" - ")}
-          </div>
-          <div>
-            {sequence.map((s, i) => (
-              <label key={i} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={!!answers[i]}
-                  onChange={(e) =>
-                    setAnswers((a) => ({ ...a, [i]: e.target.checked }))
-                  }
-                />
-                <span>
-                  {i + 1}. {s}
-                </span>
-              </label>
-            ))}
-          </div>
-          <div className="flex justify-end">
-            <button
-              onClick={submit}
-              className="px-4 py-2 rounded-xl bg-primary text-primary-foreground"
-            >
-              Tamamla
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function TestProcrastination({ open, setOpen, saveTest }: any) {
-  const key = "procrast";
-  const [val, setVal] = useState<number>(3);
-  function submit() {
-    const interpretation =
-      val >= 4
-        ? "Yüksek erteleme eğilimi; mikrotask ve zaman sınırlaması faydalı."
-        : val === 3
-          ? "Orta seviye."
-          : "Düşük erteleme eğilimi.";
-    saveTest(key, {
-      name: "Erteleme Ölçeği (Kısa)",
-      score: val,
-      scoreText: `${val}/5`,
-      interpretation,
-      createdAt: new Date().toISOString(),
-    });
-    setOpen((o: any) => ({ ...o, [key]: false }));
-  }
-  return (
-    <div className="p-3 rounded-2xl border bg-card">
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="font-semibold">Erteleme Ölçeği (Kısa)</div>
-          <div className="text-sm text-muted-foreground">
-            Genel erteleme eğiliminizi değerlendirin (1-5).
-          </div>
-        </div>
-        <button
-          onClick={() => setOpen((o: any) => ({ ...o, [key]: !o[key] }))}
-          className="px-3 py-1 rounded-xl border"
-        >
-          {open[key] ? "Gizle" : "Başlat"}
-        </button>
-      </div>
-      {open[key] && (
-        <div className="mt-3 space-y-2">
-          <div className="text-sm">Genelde görevleri son ana bırakırım.</div>
-          <input
-            type="range"
-            min={1}
-            max={5}
-            value={val}
-            onChange={(e) => setVal(Number(e.target.value))}
-            className="w-full"
-          />
-          <div className="flex justify-end">
-            <button
-              onClick={submit}
-              className="px-4 py-2 rounded-xl bg-primary text-primary-foreground"
-            >
-              Kaydet
-            </button>
-          </div>
-        </div>
-      )}
+        );
+      })}
     </div>
   );
 }
