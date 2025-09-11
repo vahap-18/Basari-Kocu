@@ -294,12 +294,18 @@ export default function KoclukPage() {
             </div>
             <div className="text-xs text-muted-foreground">Rahatla</div>
           </div>
+
           <div className="flex items-center justify-center py-6">
-            <div
-              style={{ width: size, height: size }}
-              className="rounded-full bg-primary/20 border-2 border-primary transition-all duration-700 shadow-inner"
-            />
+            <div className="w-40 h-40 rounded-xl bg-background/50 border border-muted flex items-center justify-center">
+              <div
+                className="rounded-full bg-primary/30 border-2 border-primary shadow-inner transition-transform duration-[4000ms]"
+                style={{ width: 96, height: 96, transform: inhale ? "scale(1)" : "scale(0.6)" }}
+                aria-hidden
+              />
+            </div>
           </div>
+
+          <div className="text-center text-sm text-muted-foreground">{inhale ? "Nefes al" : "Nefes ver"}</div>
         </section>
 
         {/* Coaching insights with visuals */}
@@ -1345,7 +1351,7 @@ function TestProcrastination({ open, setOpen, saveTest }: any) {
         <div>
           <div className="font-semibold">Erteleme Ölçeği (Kısa)</div>
           <div className="text-sm text-muted-foreground">
-            Genel erteleme eğiliminizi değerlendirin (1-5).
+            Genel erteleme eğiliminizi de��erlendirin (1-5).
           </div>
         </div>
         <button
