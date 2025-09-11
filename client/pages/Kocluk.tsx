@@ -355,7 +355,7 @@ export default function KoclukPage() {
               <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                 <li>En zor konuları sabah saatlerine koyun.</li>
                 <li>Pomodoro sürelerini profilinize göre ayarlayın.</li>
-                <li>Günlük hedeflerinizi 2-3 maddede sınırlayın.</li>
+                <li>Günlük hedeflerinizi 2-3 maddede sın��rlayın.</li>
                 <li>
                   Nefes egzersizleriyle dikkat toplama süresini %20
                   artırabilirsiniz.
@@ -389,7 +389,6 @@ export default function KoclukPage() {
 
               <div className="mt-3" />
 
-              <TestsSection />
             </div>
           </div>
         </section>
@@ -882,16 +881,24 @@ function TestCatalog() {
       title: "MBTI",
       emoji: "🧭",
       desc: "Myers-Briggs Type Indicator: 16 kişilik tipi sağlar.",
-      long: "MBTI, bireylerin tercihlerini ölçer ve dört ikili ölçek üzerinden kişilik tipleri oluşturur. İşbirliği, iletişim ve çalışma tercihlerini anlamak için faydalıdır.",
-      how: ["20-30 dakikada tamamlanır.", "Sonuçlar yönlendirme amaçlı kullanılmalıdır."]
+      long: "MBTI (Myers-Briggs), bireylerin bilgi alma, karar verme, enerji kaynakları ve dünya ile ilişki kurma biçimlerini ölçen dört ikili ölçekten oluşur. Bu ölçekler birleşerek 16 farklı kişilik tipine işaret eder. Sonuçlar iletişim, öğrenme tercihi ve takım rollerine dair ipuçları sunar. Bu özet rehberlik amaçlıdır ve klinik tanı yerine tercihlerinizi göstermektedir.",
+      how: [
+        "Kısa uygulama: 10-30 dakika arası sürer.",
+        "Sonuçlar tercihleri gösterir; profesyonel değerlendirme yerine rehberlik amaçlı kullanılmalıdır.",
+        "Öneriler: Dışadönükler grup çalışmasına, içedönükler bireysel çalışmaya daha iyi yanıt verebilir."
+      ]
     },
     {
       id: "bigfive",
       title: "Big Five (OCEAN)",
       emoji: "🌐",
       desc: "Beş faktör model: kişilik profillerini ölçer.",
-      long: "Big Five, davranışsal eğilimleri beş temel boyutta değerlendirir. Eğitim ve çalışma tarzı önerileri için güvenilir bir çerçevedir.",
-      how: ["Kısa versiyon 10–15 dk.", "Günlük davranış örnekleriyle karşılaştırma yapılabilir."]
+      long: "Big Five modeli (Açıklık, Sorumluluk, Dışadönüklük, Uyumluluk, Duygusal Denge) bireysel eğilimlerinizi detaylandırır. Bu model, öğrenme stratejileri, görev yönetimi ve stres yönetimi için pratik öneriler sunar. Örneğin yüksek sorumluluk düzen ve planlama, yüksek açıklık ise yaratıcı öğrenme aktiviteleriyle iyi sonuç verir.",
+      how: [
+        "Değerlendirme: 10–15 dakika.",
+        "Her boyuta göre günlük davranış örnekleriyle yorum yapılır.",
+        "Eğitim önerileri: düşük duygusal denge için stres azaltma teknikleri önerilir."
+      ]
     },
     {
       id: "enneagram",
@@ -909,7 +916,7 @@ function TestCatalog() {
       long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.",
       how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."]
     },
-    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "Duygusal farkındalık ve düzenleme becerilerini ölçer.", how: ["Yansıtmalı sorular içerir."] },
+    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "EQ-i, duygusal farkındalık, empati, duyguları düzenleme ve sosyal yetkinlik gibi alanlarda beceri profili sağlar. Sonuçlar, iletişim tarzınızı geliştirmek, stresle başa çıkma stratejileri oluşturmak ve empati temelli iletişimi güçlendirmek için kullanılabilir.", how: ["Refleksiyon soruları içerir; 10–20 dk sürebilir.", "Sonuçlar pratik önerilerle desteklenmelidir."] },
     {
       id: "msceit",
       title: "MSCEIT",
@@ -978,7 +985,7 @@ function TestCatalog() {
       id: "honey",
       title: "Honey & Mumford",
       emoji: "📚",
-      desc: "Öğrenme stilleri uyumu.",
+      desc: "��ğrenme stilleri uyumu.",
       long: "Honey & Mumford, öğrenme tercihlerini dört kategoride inceler ve eğitim tasarımına yardımcı olur.",
       how: ["Kısa stil anketi."]
     },
@@ -1122,12 +1129,6 @@ function TestCatalog() {
             >
               Detay
             </button>
-            <button
-              onClick={() => startTest(t)}
-              className="px-2 py-1 rounded-md bg-primary text-primary-foreground text-sm"
-            >
-              Test Et
-            </button>
           </div>
 
           <div id={`test-detail-${t.id}`} className="hidden mt-3 w-full p-3 rounded-md bg-card border">
@@ -1148,7 +1149,7 @@ function TestCatalog() {
               <div className="text-xs text-muted-foreground">Bu testi tamamlarken rahat bir ortam seçin; sonuçlar rehberlik amaçlıdır.</div>
             </div>
             <div className="mt-3 flex justify-end">
-              <button onClick={() => startTest(t)} className="px-3 py-1 rounded-md bg-primary text-primary-foreground">Hemen Test Et</button>
+              <div className="text-xs text-muted-foreground">Test özelliği bu sayfada devre dışı bırakıldı; sadece detaylar görüntülenir.</div>
             </div>
           </div>
         </div>
