@@ -140,22 +140,22 @@ export default function CoachCalendar() {
         />
       </div>
 
-      <div className="flex gap-2 mb-3">
+      <div className="flex gap-2 mb-3 flex-wrap items-center">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Etkinlik başlığı"
-          className="flex-1 px-3 py-2 rounded-xl border bg-background"
+          className="flex-1 min-w-0 px-3 py-2 rounded-xl border bg-background"
         />
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="px-3 py-2 rounded-xl border bg-background"
+          className="px-3 py-2 rounded-xl border bg-background w-40"
         />
         <button
           onClick={add}
-          className="px-3 py-2 rounded-xl bg-primary text-primary-foreground"
+          className="px-3 py-2 rounded-xl bg-primary text-primary-foreground flex-shrink-0"
         >
           Ekle
         </button>
