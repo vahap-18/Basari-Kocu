@@ -116,25 +116,30 @@ function Card({
 
 export const StudyTechniquesCard: React.FC = () => {
   const flat = CATEGORIES.flatMap((c) => c.items);
-  const shown = flat.slice(0, 6);
+  const shown = flat.slice(0, 8);
   return (
     <Card className="animate-pop">
       <h3 className="font-semibold mb-2">Bilimsel Çalışma Teknikleri</h3>
       <p className="text-sm text-muted-foreground mb-3">
-        Öne çıkan teknikler — isme tıklayarak detay sayfasına bakabilirsiniz.
+        Öne çıkan teknikler — detaylar sayfasında her birine daha geniş bakabilirsiniz.
       </p>
 
-      <div className="grid grid-cols-2 gap-2">
-        {shown.map((it) => (
-          <Link
-            key={it.id}
-            to={`/teknikler#${it.id}`}
-            className="p-2 rounded-lg border flex items-center justify-between hover:shadow-sm bg-background"
-          >
-            <div className="text-sm">{it.title}</div>
-            <div className="text-xs text-muted-foreground">Detay</div>
-          </Link>
-        ))}
+      <div className="w-full overflow-hidden rounded-lg border">
+        <div className="grid grid-cols-12 bg-muted/40 text-xs text-muted-foreground">
+          <div className="col-span-8 px-3 py-2">Teknik</div>
+          <div className="col-span-4 px-3 py-2 text-right">Aksiyon</div>
+        </div>
+        <div className="divide-y bg-background">
+          {shown.map((it) => (
+            <div key={it.id} className="grid grid-cols-12 items-center px-3 py-3">
+              <div className="col-span-8 text-sm">{it.title}</div>
+              <div className="col-span-4 text-right">
+                <Link to={`/teknikler#${it.id}`} className="text-xs text-muted-foreground mr-3">Detay</Link>
+                <Link to={`/teknikler#${it.id}`} className="px-2 py-1 rounded-md border text-xs">Görüntüle</Link>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="mt-3 flex items-center gap-2">
