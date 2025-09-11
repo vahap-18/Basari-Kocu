@@ -634,7 +634,6 @@ function TestCatalog() {
                   <div className="text-sm font-medium mb-1">İpuçları</div>
                   <div className="text-xs text-muted-foreground">Bu test açıklamaları rehberlik amaçlıdır ve doğruluk garanti edilmez.</div>
                 </div>
-                <div className="mt-3 text-right text-xs text-muted-foreground">Test özelliği bu sayfada devre dışı bırakıldı; sadece detaylar görüntülenir.</div>
               </div>
             </div>
           </div>
