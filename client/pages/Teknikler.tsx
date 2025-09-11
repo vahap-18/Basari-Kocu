@@ -159,7 +159,7 @@ const TECHNIQUES = [
       "Orta düzeyde gerilim, seni en iyi performansa taşır — dengeyi bul.",
     visual: { icon: "⚖️", color: "#64748B", shape: "gauge" },
     examples: [
-      "Deneme sınavları ile uygun uyar��lma seviyesini test et; aşırıya kaçma.",
+      "Deneme sınavları ile uygun uyarılma seviyesini test et; aşırıya kaçma.",
       "Kısa gevşeme egzersizleri ile odak seviyeni dengele.",
     ],
     evidence:
@@ -467,7 +467,7 @@ const TECHNIQUES = [
     difficulty: "Kolay",
     time: "Başlangıç odaklı",
     story:
-      "Başlayan öğrenci kısa sürede hız kazandı ve düzenli çalışmaya ge��ti.",
+      "Başlayan öğrenci kısa sürede hız kazandı ve düzenli çalışmaya geçti.",
     what: "Başlamak en zor, devam etmek momentum getirir.",
     how: ["Küçük başlangıç hedefleri koy.", "Sürekli aynı saatte çalış."],
     motivation: "Başlamak, başarıya giden en büyük adımdır.",
