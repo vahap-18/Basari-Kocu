@@ -341,7 +341,7 @@ export default function KoclukPage() {
               <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                 <li>En zor konuları sabah saatlerine koyun.</li>
                 <li>Pomodoro sürelerini profilinize göre ayarlayın.</li>
-                <li>Günlük hedeflerinizi 2��3 maddede sınırlayın.</li>
+                <li>Günlük hedeflerinizi 2-3 maddede sınırlayın.</li>
                 <li>
                   Nefes egzersizleriyle dikkat toplama süresini %20
                   artırabilirsiniz.
@@ -667,15 +667,15 @@ function TestsSection() {
 
   // define 10-question sets and simple scoring for several tests
   const mbtiQuestions = [
-    "Sosyal etkinliklerde enerjinizi alır mıs��nız?",
-    "Kararları mantıkla mı yoksa duygu ile mi verirsiniz?",
-    "Yeni fikirlere açığımdır.",
-    "Planlı ve düzenli çalışırım.",
+    "Sosyal etkinliklerde enerji toplar mısınız?",
+    "Kararları mantıkla mı yoksa duygularla mı verirsiniz?",
+    "Yeni fikirlere açıksınızdır.",
+    "Planlı ve sistematik çalışırım.",
     "Detaylara dikkat ederim.",
     "İnsanlarla kolay iletişim kurarım.",
-    "Hızlı karar verirken sezgilere güvenirim.",
+    "Sezgilerime güvenirim.",
     "Soyut fikirleri düşünmeyi severim.",
-    "Rutin tercihlerim vard��r.",
+    "Rutin tercihlerim vardır.",
     "Yeni deneyimler ararım.",
   ];
 
@@ -867,7 +867,7 @@ function TestCatalog() {
       id: "mbti",
       title: "MBTI",
       emoji: "🧭",
-      desc: "Myers-Briggs Type Indicator: 16 kişilik tipi sağlar. Karakterizi anlamaya yardımcı.",
+      desc: "Myers-Briggs Type Indicator: 16 kişilik tipi sağlar. Kişiliğinizi anlamanıza yardımcı olur.",
     },
     {
       id: "bigfive",
@@ -898,7 +898,7 @@ function TestCatalog() {
       id: "iq",
       title: "IQ Testleri",
       emoji: "🧠",
-      desc: "Wechsler, Stanford-Binet gibi genel zek�� testleri.",
+      desc: "Wechsler, Stanford-Binet gibi genel zekâ testleri.",
     },
     {
       id: "raven",
@@ -1113,7 +1113,7 @@ function TestCRT({ open, setOpen, saveTest }: any) {
           ? "İyi seviyede bilişsel refleks."
           : "Daha analitik düşünce egzersizleri faydalı olabilir.";
     saveTest(key, {
-      name: "Cognitive Reflection Test",
+      name: "Bilişsel Yansıtma Testi (CRT)",
       score,
       scoreText: `${score}/${questions.length}`,
       interpretation,
@@ -1186,7 +1186,7 @@ function TestGrit({ open, setOpen, saveTest }: any) {
           ? "Orta seviye grit."
           : "Daha fazla kararlılık çalışması faydalı olabilir.";
     saveTest(key, {
-      name: "Grit (Kısa)",
+      name: "Grit Ölçeği (Kısa)",
       score: avg,
       scoreText: `${avg}/5`,
       interpretation,
@@ -1261,7 +1261,7 @@ function Test2Back({ open, setOpen, saveTest }: any) {
           ? "Orta seviye çalışma belleği."
           : "Çalışma belleğini güçlendirecek oyunlar faydalı.";
     saveTest(key, {
-      name: "2-Back Kısa",
+      name: "2-Back (Kısa)",
       score: correct,
       scoreText: `${correct}/${sequence.length}`,
       interpretation,
@@ -1331,7 +1331,7 @@ function TestProcrastination({ open, setOpen, saveTest }: any) {
           ? "Orta seviye."
           : "Düşük erteleme eğilimi.";
     saveTest(key, {
-      name: "Procrastination (Kısa)",
+      name: "Erteleme Ölçeği (Kısa)",
       score: val,
       scoreText: `${val}/5`,
       interpretation,
