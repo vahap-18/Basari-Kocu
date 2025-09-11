@@ -441,10 +441,10 @@ export default function KoclukPage() {
 
           <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
             <div>
-              <CoachCalendar />
+              <SafeRender name="CoachCalendar"><CoachCalendar /></SafeRender>
             </div>
             <div>
-              <ProgressDetails />
+              <SafeRender name="ProgressDetails"><ProgressDetails /></SafeRender>
             </div>
           </section>
         </div>
@@ -663,7 +663,7 @@ function TestCatalog() {
                 )}
                 <div className="mt-3">
                   <div className="text-sm font-medium mb-1">İpuçları</div>
-                  <div className="text-xs text-muted-foreground">Bu test açıklamaları rehberlik amaçlıdır ve doğruluk garanti edilmez.</div>
+                  <div className="text-xs text-muted-foreground">Bu test açıklamaları rehberlik amaçlıdır ve do��ruluk garanti edilmez.</div>
                 </div>
               </div>
             </div>
