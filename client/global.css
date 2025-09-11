@@ -328,6 +328,17 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+
+  img, svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  input, select, button, textarea {
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   body {
