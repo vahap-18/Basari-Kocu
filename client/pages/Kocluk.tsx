@@ -610,6 +610,16 @@ function TestCatalog() {
               <div className="w-full p-3 rounded-md bg-card border">
                 <div className="font-medium">{t.title} — Detaylar</div>
                 <div className="text-xs text-muted-foreground mt-1">{t.long ?? t.desc}</div>
+                {t.topics && (
+                  <div className="mt-2">
+                    <div className="text-sm font-medium mb-1">Konu Başlıkları</div>
+                    <ul className="list-disc pl-5 text-sm text-muted-foreground">
+                      {t.topics.map((topic: string, idx: number) => (
+                        <li key={idx}>{topic}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 {t.how && (
                   <div className="mt-2">
                     <div className="text-sm font-medium mb-1">Nasıl çalışır</div>
