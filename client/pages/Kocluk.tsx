@@ -873,80 +873,106 @@ function TestCatalog() {
       id: "mbti",
       title: "MBTI",
       emoji: "🧭",
-      desc: "Myers-Briggs Type Indicator: 16 kişilik tipi sağlar. Kişiliğinizi anlamanıza yardımcı olur.",
+      desc: "Myers-Briggs Type Indicator: 16 kişilik tipi sağlar.",
+      long: "MBTI, bireylerin tercihlerini ölçer ve dört ikili ölçek üzerinden kişilik tipleri oluşturur. İşbirliği, iletişim ve çalışma tercihlerini anlamak için faydalıdır.",
+      how: ["20-30 dakikada tamamlanır.", "Sonuçlar yönlendirme amaçlı kullanılmalıdır."]
     },
     {
       id: "bigfive",
       title: "Big Five (OCEAN)",
       emoji: "🌐",
-      desc: "Beş faktör model: Dışadönüklük, Sorumluluk, Uyumluluk, Duygusal Denge, Deneyime Açıklık.",
+      desc: "Beş faktör model: kişilik profillerini ölçer.",
+      long: "Big Five, davranışsal eğilimleri beş temel boyutta değerlendirir. Eğitim ve çalışma tarzı önerileri için güvenilir bir çerçevedir.",
+      how: ["Kısa versiyon 10–15 dk.", "Günlük davranış örnekleriyle karşılaştırma yapılabilir."]
     },
     {
       id: "enneagram",
       title: "Enneagram",
       emoji: "🔷",
       desc: "9 kişilik tipi; motivasyon temelli bir model.",
+      long: "Enneagram, temel motivasyonları ve savunma mekanizmalarını ortaya koyar; takım dinamiklerinde faydalı içgörüler verir.",
+      how: ["Kendi içgörünüzü yazılı örneklerle değerlendirin."]
     },
     {
       id: "disc",
       title: "DISC Analizi",
       emoji: "🔶",
-      desc: "Dominance, Influence, Steadiness, Conscientiousness; davranış profilleri.",
+      desc: "Davranış profilleri ve iletişim eğilimleri.",
+      long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.",
+      how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."]
     },
-    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri." },
+    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "Duygusal fark��ndalık ve düzenleme becerilerini ölçer.", how: ["Yansıtmalı sorular içerir."] },
     {
       id: "msceit",
       title: "MSCEIT",
       emoji: "🧩",
-      desc: "Duygular�� algılama, kullanma, anlama ve yönetme yeteneği testi.",
+      desc: "Duyguları algılama ve yönetme testi.",
+      long: "MSCEIT, duygu tanıma ve işleme becerilerini ölçer; empati ve sosyal karar verme yeteneklerini değerlendirir.",
+      how: ["Görev tabanlı puanlama."]
     },
     {
       id: "iq",
       title: "IQ Testleri",
       emoji: "🧠",
-      desc: "Wechsler, Stanford-Binet gibi genel zekâ testleri.",
+      desc: "Genel zekâ testleri örnekleri.",
+      long: "IQ testleri mantık, sözel ve uzamsal yetenekleri ölçer; öğrenme kapasitesine dair ipuçları verir.",
+      how: ["Zaman sınırlı görevler içerir."]
     },
     {
       id: "raven",
       title: "Raven's Matrices",
       emoji: "🔳",
-      desc: "Soyut akıl yürütme ve deseni tamamlama.",
+      desc: "Soyut akıl yürütme.",
+      long: "Görsel desen tamamlama yoluyla akıl yürütmeyi ölçer; eğitim bağlamında analitik düşünceyi gösterir.",
+      how: ["Görsel mantık soruları içerir."]
     },
     {
       id: "nback",
       title: "N-Back (Çalışma Belleği)",
       emoji: "🔁",
-      desc: "Çalışma belleği kapasitesi testleri.",
+      desc: "Çalışma belleğini test eder.",
+      long: "N-Back, kısa süreli belleği ve güncel bilgiyi tutma becerisini ölçer; antrenmanla gelişebilir.",
+      how: ["Kısa versiyon 2-3 dakika."]
     },
     {
       id: "stroop",
       title: "Stroop Testi",
       emoji: "🎨",
       desc: "Dikkat ve bilişsel kontrol testi.",
+      long: "Stroop, otomatik tepkileri bastırma ve dikkat kontrolünü ölçer; dikkat eğitimlerinde referans alınır.",
+      how: ["Renk/kelime uyumsuzluğu görevleri içerir."]
     },
     {
       id: "wcst",
       title: "WCST",
       emoji: "🃏",
-      desc: "Esneklik ve problem çözme yeteneği.",
+      desc: "Problem çözme ve esneklik.",
+      long: "Wisconsin Kart Eşleme Testi, kavramsal esnekliği ve kural değiştirme yeteneğini ölçer.",
+      how: ["Görev akışı içinde strateji değişikliği gerektirir."]
     },
     {
       id: "vark",
       title: "VARK",
       emoji: "👁️",
-      desc: "Görsel, İşitsel, Okuma/Yazma, Kinestetik öğrenme tercihleri.",
+      desc: "Öğrenme tercihlerini belirler.",
+      long: "VARK, hangi duyusal modalitelerin öğrenmede baskın olduğunu gösterir; çalışma önerileri sunar.",
+      how: ["Kısa tercih anketi."]
     },
     {
       id: "kolb",
       title: "Kolb Öğrenme Stilleri",
       emoji: "🔄",
-      desc: "Deneyimsel öğrenme tipleri: Diverger, Assimilator, Converger, Accommodator.",
+      desc: "Deneyimsel öğrenme tipleri.",
+      long: "Kolb, öğrenme sürecini deneyim, yorum, kavramsallaştırma ve uygulamaya ayırır; kişisel yaklaşımı belirler.",
+      how: ["Kendi deneyimlerinizi sınıflandırın."]
     },
     {
       id: "honey",
       title: "Honey & Mumford",
       emoji: "📚",
-      desc: "Aktivist, Teorisyen, Pragmatist, Yansıtıcı öğrenme stilleri.",
+      desc: "Öğrenme stilleri uyumu.",
+      long: "Honey & Mumford, öğrenme tercihlerini dört kategoride inceler ve eğitim tasarımına yardımcı olur.",
+      how: ["Kısa stil anketi."]
     },
   ];
 
