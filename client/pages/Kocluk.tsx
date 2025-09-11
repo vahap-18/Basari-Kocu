@@ -124,7 +124,7 @@ export default function KoclukPage() {
       const g = tests["grit"];
       const e = tests["eqi"];
       if (p && p.score >= 4) setAvatarEmoji("😴");
-      else if (g && g.score >= 4) setAvatarEmoji("��");
+      else if (g && g.score >= 4) setAvatarEmoji("💪");
       else if (e && e.score >= 4) setAvatarEmoji("😊");
       else setAvatarEmoji("🙂");
     } catch {
@@ -909,7 +909,7 @@ function TestCatalog() {
       long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.",
       how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."]
     },
-    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "Duygusal fark��ndalık ve düzenleme becerilerini ölçer.", how: ["Yansıtmalı sorular içerir."] },
+    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "Duygusal farkındalık ve düzenleme becerilerini ölçer.", how: ["Yansıtmalı sorular içerir."] },
     {
       id: "msceit",
       title: "MSCEIT",
