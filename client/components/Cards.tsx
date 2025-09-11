@@ -135,7 +135,6 @@ export const StudyTechniquesCard: React.FC = () => {
               <div className="col-span-8 text-sm">{it.title}</div>
               <div className="col-span-4 text-right">
                 <Link to={`/teknikler#${it.id}`} className="text-xs text-muted-foreground mr-3">Detay</Link>
-                <Link to={`/teknikler#${it.id}`} className="px-2 py-1 rounded-md border text-xs">Görüntüle</Link>
               </div>
             </div>
           ))}
