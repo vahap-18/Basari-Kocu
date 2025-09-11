@@ -124,7 +124,7 @@ export default function KoclukPage() {
       const g = tests["grit"];
       const e = tests["eqi"];
       if (p && p.score >= 4) setAvatarEmoji("😴");
-      else if (g && g.score >= 4) setAvatarEmoji("💪");
+      else if (g && g.score >= 4) setAvatarEmoji("��");
       else if (e && e.score >= 4) setAvatarEmoji("😊");
       else setAvatarEmoji("🙂");
     } catch {
@@ -1074,7 +1074,7 @@ function TestCatalog() {
               {t.emoji} {t.title}
             </div>
             <div className="text-xs text-muted-foreground mt-1">{t.desc}</div>
-            <div className="text-sm text-muted-foreground mt-2">{t.desc ?? "Bu test kısa ve hızlıd��r. Sonuçlar yerel olarak saklanır."}</div>
+            <div className="text-sm text-muted-foreground mt-2">{t.desc ?? "Bu test kısa ve hızlıdır. Sonuçlar yerel olarak saklanır."}</div>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -1100,7 +1100,7 @@ function TestCatalog() {
           <div id={`test-detail-${t.id}`} className="hidden mt-3 w-full p-3 rounded-md bg-card border">
             <div className="font-medium">{t.title} — Detaylar</div>
             <div className="text-xs text-muted-foreground mt-1">{t.desc}</div>
-            <div className="text-sm mt-2">{t.long ?? "Bu test bilişsel yeteneklerinizi hızlıca değerlendirmeye yardımcı olur. Tamamlanması birkaç dakikanızı alır."}</div>
+            <div className="text-sm mt-2">{t.desc ?? "Bu test bilişsel yeteneklerinizi hızlıca değerlendirmeye yardımcı olur. Tamamlanması birkaç dakikanızı alır."}</div>
             <div className="mt-2">
               <button onClick={() => startTest(t)} className="px-3 py-1 rounded-md bg-primary text-primary-foreground">Hemen Test Et</button>
             </div>
