@@ -125,23 +125,23 @@ export default function TasksManager() {
         Tekrar eden görevler ve şablonlar oluşturun.
       </div>
 
-      <div className="flex gap-2 mb-3">
+      <div className="flex gap-2 mb-3 flex-wrap items-center">
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Görev başlığı"
-          className="flex-1 px-3 py-2 rounded-xl border bg-background"
+          className="flex-1 min-w-0 px-3 py-2 rounded-xl border bg-background"
         />
         <input
           type="date"
           value={due}
           onChange={(e) => setDue(e.target.value)}
-          className="px-3 py-2 rounded-xl border bg-background"
+          className="px-3 py-2 rounded-xl border bg-background w-40 flex-shrink-0"
         />
         <select
           value={rec}
           onChange={(e) => setRec(e.target.value)}
-          className="px-3 py-2 rounded-xl border bg-background"
+          className="px-3 py-2 rounded-xl border bg-background w-36 flex-shrink-0"
         >
           <option value="">Tek seferlik</option>
           <option value="daily">Günlük</option>
@@ -149,7 +149,7 @@ export default function TasksManager() {
         </select>
         <button
           onClick={addTask}
-          className="px-3 py-2 rounded-xl bg-primary text-primary-foreground"
+          className="px-3 py-2 rounded-xl bg-primary text-primary-foreground flex-shrink-0"
         >
           Ekle
         </button>
