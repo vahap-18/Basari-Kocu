@@ -1067,21 +1067,43 @@ function TestCatalog() {
       {tests.map((t) => (
         <div
           key={t.id}
-          className="p-3 rounded-xl border bg-background flex items-start justify-between"
+          className="p-3 rounded-xl border bg-background flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
         >
-          <div>
+          <div className="flex-1">
             <div className="font-medium">
               {t.emoji} {t.title}
             </div>
-            <div className="text-xs text-muted-foreground">{t.desc}</div>
+            <div className="text-xs text-muted-foreground mt-1">{t.desc}</div>
+            <div className="text-sm text-muted-foreground mt-2">{t.info ?? "Bu test kısa ve hızlıdır. Sonuçlar yerel olarak saklanır."}</div>
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => startTest(t)}
-              className="px-3 py-1 rounded-xl bg-primary text-primary-foreground"
+              onClick={() => {
+                // open detail inline
+                const el = document.getElementById(`test-detail-${t.id}`);
+                if (el) {
+                  el.classList.toggle("hidden");
+                }
+              }}
+              className="px-3 py-1 rounded-md border text-sm"
             >
-              Beni Test Et
+              Detay
             </button>
+            <button
+              onClick={() => startTest(t)}
+              className="px-2 py-1 rounded-md bg-primary text-primary-foreground text-sm"
+            >
+              Test Et
+            </button>
+          </div>
+
+          <div id={`test-detail-${t.id}`} className="hidden mt-3 w-full p-3 rounded-md bg-card border">
+            <div className="font-medium">{t.title} — Detaylar</div>
+            <div className="text-xs text-muted-foreground mt-1">{t.desc}</div>
+            <div className="text-sm mt-2">{t.long ?? "Bu test bilişsel yeteneklerinizi hızlıca değerlendirmeye yardımcı olur. Tamamlanması birkaç dakikanızı alır."}</div>
+            <div className="mt-2">
+              <button onClick={() => startTest(t)} className="px-3 py-1 rounded-md bg-primary text-primary-foreground">Hemen Test Et</button>
+            </div>
           </div>
         </div>
       ))}
@@ -1098,7 +1120,7 @@ function TestCRT({ open, setOpen, saveTest }: any) {
       a: "0.05",
     },
     {
-      q: "Bir gölette nilüferler her gün iki katına çıkıyor. Tamamı 48 günde doluyorsa, yarısı kaçıncı günde doludur?",
+      q: "Bir gölette nilüferler her gün iki katına çıkıyor. Tamamı 48 günde doluyorsa, yarısı kaçınc�� günde doludur?",
       a: "47",
     },
     {
@@ -1351,7 +1373,7 @@ function TestProcrastination({ open, setOpen, saveTest }: any) {
         <div>
           <div className="font-semibold">Erteleme Ölçeği (Kısa)</div>
           <div className="text-sm text-muted-foreground">
-            Genel erteleme eğiliminizi de��erlendirin (1-5).
+            Genel erteleme eğiliminizi değerlendirin (1-5).
           </div>
         </div>
         <button
