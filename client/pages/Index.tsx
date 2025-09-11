@@ -197,11 +197,11 @@ export default function Index() {
 
             <div className="grid grid-cols-1 gap-3">
               <StudyTechniquesCard />
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                <div className="md:col-span-1">
+              <div className="grid grid-cols-1 gap-3">
+                <div>
                   <HistoryTodayCard />
                 </div>
-                <div className="md:col-span-1">
+                <div>
                   <UpliftingCard />
                 </div>
               </div>
