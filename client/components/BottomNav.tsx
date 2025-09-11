@@ -32,7 +32,7 @@ export const BottomNav: React.FC = () => {
                 <div className="w-7 h-7 flex items-center justify-center">
                   <Icon className="h-5 w-5" />
                 </div>
-                <span className="text-[11px]">{label}</span>
+                <span className="sr-only">{label}</span>
               </NavLink>
             </li>
           ))}
