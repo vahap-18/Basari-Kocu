@@ -1124,9 +1124,22 @@ function TestCatalog() {
 
           <div id={`test-detail-${t.id}`} className="hidden mt-3 w-full p-3 rounded-md bg-card border">
             <div className="font-medium">{t.title} — Detaylar</div>
-            <div className="text-xs text-muted-foreground mt-1">{t.desc}</div>
-            <div className="text-sm mt-2">{t.desc ?? "Bu test bilişsel yeteneklerinizi hızlıca değerlendirmeye yardımcı olur. Tamamlanması birkaç dakikanızı alır."}</div>
-            <div className="mt-2">
+            <div className="text-xs text-muted-foreground mt-1">{t.long ?? t.desc}</div>
+            {t.how && (
+              <div className="mt-2">
+                <div className="text-sm font-medium mb-1">Nasıl çalışır</div>
+                <ul className="list-disc pl-5 text-sm text-muted-foreground">
+                  {t.how.map((h: string, i: number) => (
+                    <li key={i}>{h}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div className="mt-3">
+              <div className="text-sm font-medium mb-1">İpuçları</div>
+              <div className="text-xs text-muted-foreground">Bu testi tamamlarken rahat bir ortam seçin; sonuçlar rehberlik amaçlıdır.</div>
+            </div>
+            <div className="mt-3 flex justify-end">
               <button onClick={() => startTest(t)} className="px-3 py-1 rounded-md bg-primary text-primary-foreground">Hemen Test Et</button>
             </div>
           </div>
