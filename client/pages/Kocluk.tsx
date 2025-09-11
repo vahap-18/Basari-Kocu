@@ -1100,7 +1100,6 @@ function TestCatalog() {
               {t.emoji} {t.title}
             </div>
             <div className="text-xs text-muted-foreground mt-1">{t.desc}</div>
-            <div className="text-sm text-muted-foreground mt-2">{t.desc ?? "Bu test kısa ve hızlıdır. Sonuçlar yerel olarak saklanır."}</div>
           </div>
           <div className="flex items-center gap-2">
             <button
