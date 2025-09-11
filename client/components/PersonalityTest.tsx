@@ -122,7 +122,7 @@ export const PersonalityTest: React.FC<{
       resilience:
         "Zorluklara karşı dirençlisin; zor konularda ısrar etmelisin. 💪",
       social:
-        "Grupla tartışarak ö��renme verimli; çalışma grupları faydalı olabilir. 🤝",
+        "Grupla tartışarak öğrenme verimli; çalışma grupları faydalı olabilir. 🤝",
       structure:
         "Planlı çalışıyorsun; liste ve programlar verimliliği artırır. 📋",
       curiosity:
