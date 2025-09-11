@@ -124,7 +124,7 @@ export default function KoclukPage() {
       const g = tests["grit"];
       const e = tests["eqi"];
       if (p && p.score >= 4) setAvatarEmoji("😴");
-      else if (g && g.score >= 4) setAvatarEmoji("💪");
+      else if (g && g.score >= 4) setAvatarEmoji("����");
       else if (e && e.score >= 4) setAvatarEmoji("😊");
       else setAvatarEmoji("🙂");
     } catch {
@@ -496,6 +496,7 @@ function TestCatalog() {
       emoji: "🧭",
       desc: "Myers-Briggs Type Indicator: 16 kişilik tipi sağlar.",
       long: "MBTI (Myers-Briggs), bireylerin bilgi alma, karar verme, enerji kaynakları ve dünya ile ilişki kurma biçimlerini ölçen dört ikili ölçekten oluşur. Bu ölçekler birleşerek 16 farklı kişilik tipine işaret eder. Sonuçlar iletişim, öğrenme tercihi ve takım rolleri hakkında uygulanabilir içgörüler verir.",
+      topics: ["Dışa dönüklük / İçe dönüklük", "Algılama / Sezgi", "Düşünce / Hissetme", "Yargılama / Algılama"],
       how: [
         "Kısa uygulama: 10-30 dakika arası sürer.",
         "Sonuçlar tercihleri gösterir; profesyonel değerlendirme yerine rehberlik amaçlı kullanılmalıdır.",
