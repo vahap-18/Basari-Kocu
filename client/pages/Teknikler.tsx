@@ -159,7 +159,7 @@ const TECHNIQUES = [
       "Orta düzeyde gerilim, seni en iyi performansa taşır — dengeyi bul.",
     visual: { icon: "⚖️", color: "#64748B", shape: "gauge" },
     examples: [
-      "Deneme sınavları ile uygun uyarılma seviyesini test et; aşırıya kaçma.",
+      "Deneme sınavları ile uygun uyar��lma seviyesini test et; aşırıya kaçma.",
       "Kısa gevşeme egzersizleri ile odak seviyeni dengele.",
     ],
     evidence:
@@ -404,7 +404,7 @@ const TECHNIQUES = [
     time: "Problem çözme",
     story: "Basit çözümü tercih eden öğrenci daha hızlı sonuca ulaştı.",
     what: "Gereksiz varsayımları eleyip en basit açıklamayı seçme ilkesi.",
-    how: ["��özümü basitleştir.", "Önce temel nedenleri sorgula."],
+    how: ["Çözümü basitleştir.", "Önce temel nedenleri sorgula."],
     motivation: "Basitlik genelde en etkili yoldur.",
     visual: { icon: "🪒", color: "#111827", shape: "line" },
   },
