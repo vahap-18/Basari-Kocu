@@ -27,8 +27,8 @@ function MonthGrid({
 
   return (
     <div className="grid grid-cols-7 gap-1">
-      {["Pz", "P", "S", "Ç", "P", "C", "Ct"].map((h) => (
-        <div key={h} className="text-xs text-muted-foreground text-center">
+      {["Pz", "P", "S", "Ç", "P", "C", "Ct"].map((h, i) => (
+        <div key={`${h}-${i}`} className="text-xs text-muted-foreground text-center">
           {h}
         </div>
       ))}
