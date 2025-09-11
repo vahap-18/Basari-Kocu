@@ -18,7 +18,13 @@
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+
+    "native:init": "npx @capacitor/cli@latest init 'Basari Kocu' com.vahap.basarikocu --web-dir=dist/spa",
+    "native:add-android": "npx @capacitor/cli@latest add android",
+    "native:sync": "npx @capacitor/cli@latest sync android",
+    "native:open-android": "npx @capacitor/cli@latest open android",
+    "native:build-apk": "npm run build && npx @capacitor/cli@latest copy android && npx @capacitor/cli@latest open android"
   },
   "dependencies": {
     "dotenv": "^17.2.1",
