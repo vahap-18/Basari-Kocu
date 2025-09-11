@@ -298,8 +298,16 @@ export default function KoclukPage() {
           <div className="flex items-center justify-center py-6">
             <div className="w-40 h-40 rounded-xl bg-background/50 border border-muted flex items-center justify-center">
               <div
-                className="rounded-full bg-primary/30 border-2 border-primary shadow-inner transition-transform duration-[4000ms]"
-                style={{ width: 96, height: 96, transform: inhale ? "scale(1)" : "scale(0.6)" }}
+                className="rounded-full border-2 border-primary shadow-inner"
+                style={{
+                  width: 96,
+                  height: 96,
+                  transform: inhale ? "scale(1)" : "scale(0.6)",
+                  transition: "transform 4000ms ease-in-out, background 2000ms ease",
+                  background: inhale
+                    ? "radial-gradient(circle at 30% 30%, rgba(99,102,241,0.9), rgba(96,165,250,0.6))"
+                    : "radial-gradient(circle at 70% 70%, rgba(236,72,153,0.9), rgba(249,115,22,0.6))",
+                }}
                 aria-hidden
               />
             </div>
