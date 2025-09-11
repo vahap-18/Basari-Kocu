@@ -1,0 +1,6 @@
+{
+  "appId": "com.vahap.basarikocu",
+  "appName": "Başarı Kulübü",
+  "webDir": "dist/spa",
+  "bundledWebRuntime": false
+}
