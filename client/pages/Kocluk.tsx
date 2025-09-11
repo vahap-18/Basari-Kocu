@@ -1074,7 +1074,7 @@ function TestCatalog() {
               {t.emoji} {t.title}
             </div>
             <div className="text-xs text-muted-foreground mt-1">{t.desc}</div>
-            <div className="text-sm text-muted-foreground mt-2">{t.info ?? "Bu test kısa ve hızlıdır. Sonuçlar yerel olarak saklanır."}</div>
+            <div className="text-sm text-muted-foreground mt-2">{t.desc ?? "Bu test kısa ve hızlıd��r. Sonuçlar yerel olarak saklanır."}</div>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -1120,7 +1120,7 @@ function TestCRT({ open, setOpen, saveTest }: any) {
       a: "0.05",
     },
     {
-      q: "Bir gölette nilüferler her gün iki katına çıkıyor. Tamamı 48 günde doluyorsa, yarısı kaçınc�� günde doludur?",
+      q: "Bir gölette nilüferler her gün iki katına çıkıyor. Tamamı 48 günde doluyorsa, yarısı kaçıncı günde doludur?",
       a: "47",
     },
     {
