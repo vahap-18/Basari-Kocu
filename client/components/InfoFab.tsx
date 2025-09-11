@@ -6,7 +6,7 @@ export const InfoFab: React.FC = () => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="fixed right-4 bottom-20 z-50 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg"
+        className="fixed right-4 bottom-20 z-50 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg text-sm"
         aria-label="Bilgi"
       >
         ℹ️
