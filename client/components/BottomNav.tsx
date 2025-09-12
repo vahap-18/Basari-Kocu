@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Clock, Home, Lightbulb, Settings, Target } from "lucide-react";
+import { Clock, Home, Lightbulb, Settings, Target, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
