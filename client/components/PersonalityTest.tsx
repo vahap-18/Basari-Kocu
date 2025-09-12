@@ -1,4 +1,87 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useTheme } from "@/components/ThemeProvider";
+
+export type PersonalityProfile = {
+  createdAt: string;
+  scores: Record<string, number>;
+  dominant: string;
+  summary: string;
+  recommendedPomodoro: { work: number; short: number; long: number };
+};
+
+type Step =
+  | { id: string; kind: "text"; label: string }
+  | { id: string; kind: "single"; label: string; options: string[] };
+
+const STEPS: Step[] = [
+  { id: "displayName", kind: "text", label: "Adını nasıl görmek istersin?" },
+  {
+    id: "addressing",
+    kind: "single",
+    label: "Sana nasıl hitap edelim?",
+    options: ["Sen / Samimi", "Siz / Resmi", "Dostum", "Kardeşim", "Arkadaşım"],
+  },
+  {
+    id: "identity",
+    kind: "single",
+    label: "Kendini hangi kelimeyle tanımlıyorsun?",
+    options: ["Sabırlı", "Cesur", "Girişimci", "Samimi", "Bilge", "Lider"],
+  },
+  {
+    id: "exam",
+    kind: "single",
+    label: "Hangi sınava hazırlanıyorsun?",
+    options: ["YKS / LGS", "KPSS", "Üniversite içi sınav", "Yabancı dil sınavı", "Diğer"],
+  },
+  {
+    id: "goal",
+    kind: "single",
+    label: "Hedefin nedir?",
+    options: ["Bölüm / okul kazanmak", "Derece yapmak (ilk 1000, yüksek sıralama)", "Sadece geçmek", "Kendimi geliştirmek"],
+  },
+  {
+    id: "dailyHours",
+    kind: "single",
+    label: "Günlük çalışma hedefin nedir?",
+    options: ["1-2 saat", "3-4 saat", "5-6 saat", "7+ saat"],
+  },
+  {
+    id: "style",
+    kind: "single",
+    label: "Çalışma stilin nasıl?",
+    options: ["Sessizlikte tek başıma", "Grup halinde", "Kısa ama sık molalar", "Uzun süre odak, az mola"],
+  },
+  {
+    id: "challenge",
+    kind: "single",
+    label: "En çok zorlandığın nokta nedir?",
+    options: ["Dikkat dağınıklığı", "Erteleme alışkanlığı", "Motivasyon kaybı", "Disiplin eksikliği", "Kaygı/stres"],
+  },
+  {
+    id: "bestTime",
+    kind: "single",
+    label: "En verimli çalıştığın zaman dilimi hangisi?",
+    options: ["Sabah erken", "Öğle saatleri", "Akşam", "Gece geç saatler"],
+  },
+  {
+    id: "tools",
+    kind: "single",
+    label: "Çalışırken hangi araçlar seni daha çok destekler?",
+    options: ["Pomodoro tekniği", "Görev listeleri / checklist", "Zaman bloklama (time blocking)", "Günlük not alma", "Hatırlatıcı bildirimler"],
+  },
+  {
+    id: "motivation",
+    kind: "single",
+    label: "Seni daha çok motive eden şey nedir?",
+    options: ["İlham verici başarı hikâyeleri", "Kısa ama güçlü motivasyon sözleri", "Görsel motivasyon (posterler, renkler)", "Video/animasyon tarzı motivasyon", "Günlük küçük hatırlatmalar"],
+  },
+  {
+    id: "expectation",
+    kind: "single",
+    label: "Sınav sürecinde senden en çok ne beklenmeli?",
+    options: ["İstikrarlı ve sabırlı olman", "Zorluklara rağmen cesur kalman", "Liderlik edip çevreni motive etmen", "Bilgeliğinle stratejik davranman", "Samimiyetinle yolculuğu keyifli hale getirmen"],
+  },
+];
 
 export type PersonalityProfile = {
   createdAt: string;
