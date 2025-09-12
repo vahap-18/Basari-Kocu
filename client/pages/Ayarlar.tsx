@@ -198,6 +198,9 @@ export default function AyarlarPage() {
         )}
       </section>
 
+      <section className="mb-4">
+        <SettingsInsights profile={profile} />
+      </section>
 
       <section>
         <h2 className="text-lg font-bold mb-3">Tema</h2>
