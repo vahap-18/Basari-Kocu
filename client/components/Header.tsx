@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme, type ThemeKey } from "@/components/ThemeProvider";
 import { Palette, ChevronLeft } from "lucide-react";
+import { motion } from "framer-motion";
 
 const themeOptions: { key: ThemeKey; label: string }[] = [
   { key: "acik", label: "Açık" },
@@ -25,7 +26,10 @@ export const Header: React.FC = () => {
   const isHome = location.pathname === "/";
 
   return (
-    <header
+    <motion.header
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.28, ease: "easeOut" }}
       className="sticky top-0 z-40 border-b bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/60"
       style={{
         background:
@@ -35,16 +39,18 @@ export const Header: React.FC = () => {
       <div className="mx-auto max-w-md px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           {!isHome && (
-            <button
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => navigate("/")}
               className="p-2 rounded-md mr-2"
               aria-label="Geri"
             >
               <ChevronLeft className="w-5 h-5" />
-            </button>
+            </motion.button>
           )}
 
-          <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-primary to-accent">
+          <motion.div whileHover={{ scale: 1.02 }} className="h-8 w-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-primary to-accent">
             <svg
               width="20"
               height="20"
@@ -71,18 +77,19 @@ export const Header: React.FC = () => {
               />
               <circle cx="12" cy="16" r="1.6" fill="white" />
             </svg>
-          </div>
+          </motion.div>
           <div>
-            <h1 className="text-base font-bold leading-tight">Başarı Kulübü</h1>
-            <p className="text-xs text-muted-foreground leading-tight">
+            <motion.h1 layout className="text-base font-bold leading-tight">Başarı Kulübü</motion.h1>
+            <motion.p layout className="text-xs text-muted-foreground leading-tight">
               Sınav hazırlık koçun
-            </p>
+            </motion.p>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <label className="inline-flex items-center gap-2 text-sm">
             <Palette className="h-4 w-4" />
-            <select
+            <motion.select
+              whileTap={{ scale: 0.98 }}
               className="bg-transparent text-sm px-2 py-1 rounded-md border"
               value={theme}
               onChange={(e) => setTheme(e.target.value as any)}
@@ -92,10 +99,10 @@ export const Header: React.FC = () => {
                   {t.label}
                 </option>
               ))}
-            </select>
+            </motion.select>
           </label>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 };
