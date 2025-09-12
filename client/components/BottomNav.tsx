@@ -10,6 +10,7 @@ const items = [
   { to: "/kocluk", label: "Koçluk", icon: Lightbulb },
   { to: "/teknikler", label: "Teknikler", icon: Target },
   { to: "/ayarlar", label: "Ayarlar", icon: Settings },
+  { to: "/profil", label: "Profil", icon: User },
 ] as const;
 
 export const BottomNav: React.FC = () => {
