@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useTheme } from "@/components/ThemeProvider";
+import { useTheme, type ThemeKey } from "@/components/ThemeProvider";
 
 export type PersonalityProfile = {
   createdAt: string;
@@ -83,226 +83,169 @@ const STEPS: Step[] = [
   },
 ];
 
-export type PersonalityProfile = {
-  createdAt: string;
-  scores: Record<string, number>;
-  dominant: string;
-  summary: string;
-  recommendedPomodoro: { work: number; short: number; long: number };
-};
-
-const QUESTIONS: { id: string; text: string; direction: string }[] = [
-  { id: "focus", text: "Uzun süre tek bir işe odaklanırım.", direction: "pos" },
-  { id: "procrastinate", text: "Çalışmayı ertelerim.", direction: "neg" },
-  {
-    id: "resilience",
-    text: "Zorluklarla karşılaştığımda tekrar denerim.",
-    direction: "pos",
-  },
-  {
-    id: "social",
-    text: "Çalışmayı arkadaşlarımla tartışmak isterim.",
-    direction: "pos",
-  },
-  { id: "structure", text: "Planlı ve programlı çalışırım.", direction: "pos" },
-  {
-    id: "curiosity",
-    text: "Merakım beni ekstra araştırmaya iter.",
-    direction: "pos",
-  },
-  {
-    id: "stress",
-    text: "Sınav kaygım performansımı etkiler.",
-    direction: "neg",
-  },
-  {
-    id: "leadership",
-    text: "Sorumluluk almaktan hoşlanırım.",
-    direction: "pos",
-  },
-];
-
 export const PersonalityTest: React.FC<{
   onComplete?: (p: PersonalityProfile) => void;
   onClose?: () => void;
   examMode?: boolean;
   onStepChange?: (step: number, total: number) => void;
 }> = ({ onComplete, onClose, examMode = false, onStepChange }) => {
-  const [answers, setAnswers] = useState<Record<string, number>>(() => ({}));
+  const [values, setValues] = useState<Record<string, string>>(() => {
+    try {
+      const v = localStorage.getItem("onboarding-data");
+      return v ? JSON.parse(v) : {};
+    } catch {
+      return {};
+    }
+  });
   const [step, setStep] = useState(0);
   const [animClass, setAnimClass] = useState<string>("animate-pop");
+  const { setTheme } = useTheme();
 
-  function setAnswer(id: string, value: number) {
-    setAnswers((s) => ({ ...s, [id]: value }));
-    // auto advance in exam mode
-    if (examMode) {
+  useEffect(() => onStepChange?.(step, STEPS.length), [step, onStepChange]);
+
+  useEffect(() => {
+    const ref = setTimeout(() => setAnimClass(""), 400);
+    return () => clearTimeout(ref);
+  }, [step]);
+
+  function setValue(id: string, v: string) {
+    setValues((s) => {
+      const next = { ...s, [id]: v };
+      try {
+        localStorage.setItem("onboarding-data", JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  }
+
+  function selectOption(id: string, option: string) {
+    setValue(id, option);
+    // auto advance for single selections
+    if (step < STEPS.length - 1) {
       setAnimClass("animate-slide-left");
-      setTimeout(() => {
-        if (step < QUESTIONS.length - 1) setStep((s) => s + 1);
-        else finish();
-      }, 220);
-      setTimeout(() => setAnimClass(""), 500);
+      setTimeout(() => setStep((s) => s + 1), 160);
     }
   }
 
   function next() {
-    if (step < QUESTIONS.length - 1) {
+    if (step < STEPS.length - 1) {
       setAnimClass("animate-slide-left");
       setStep((s) => s + 1);
-      setTimeout(() => setAnimClass(""), 500);
     }
   }
   function prev() {
     if (step > 0) {
       setAnimClass("animate-slide-right");
       setStep((s) => s - 1);
-      setTimeout(() => setAnimClass(""), 500);
     }
   }
 
-  // expose step changes
-  React.useEffect(() => {
-    onStepChange?.(step, QUESTIONS.length);
-  }, [step, onStepChange]);
-
-  // keep a ref for step to avoid re-registering keyboard listener on every render
-  const stepRef = React.useRef(step);
-  React.useEffect(() => {
-    stepRef.current = step;
-  }, [step]);
-
-  // keyboard navigation for exam mode (stable listener)
-  React.useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
-      if (/^[1-5]$/.test(e.key)) {
-        const v = Number(e.key);
-        const q = QUESTIONS[stepRef.current];
-        if (q) setAnswer(q.id, v);
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
   function finish() {
-    const scores: Record<string, number> = {};
-    for (const q of QUESTIONS) {
-      const v = answers[q.id] ?? 3;
-      const val = q.direction === "pos" ? v : 6 - v;
-      scores[q.id] = val;
-    }
+    // create a simple personality profile derived from identity and answers
+    const identity = values["identity"] || "Bilge";
+    const displayName = values["displayName"] || "Sen";
 
-    const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-    const dominant = sorted[0][0];
+    const identityToDominant: Record<string, string> = {
+      Sabırlı: "resilience",
+      Cesur: "resilience",
+      Girişimci: "curiosity",
+      Samimi: "social",
+      Bilge: "focus",
+      Lider: "leadership",
+    };
 
-    const summary = {
-      focus:
-        "Odaklı, uzun süre konsantre olabilirsin. Uzun çalışma blokları senin için etkili olabilir. 🧠",
-      procrastinate:
-        "Erteleme eğilimi var; küçük hedefler ve zaman sınırlamaları işe yarar. ⏳",
-      resilience:
-        "Zorluklara karşı dirençlisin; zor konularda ısrar etmelisin. 💪",
-      social:
-        "Grupla tartışarak öğrenme verimli; çalışma grupları faydalı olabilir. 🤝",
-      structure:
-        "Planlı çalışıyorsun; liste ve programlar verimliliği artırır. 📋",
-      curiosity:
-        "Meraklısın; keşfetme ve derinlemesine araştırma seni besler. 🔎",
-      stress:
-        "Kaygı sınav performansını etkileyebilir; nefes çalışmaları ve simülasyon sınavları yardımcı olur. 🌬️",
-      leadership:
-        "Sorumluluk almaktan hoşlanıyorsun; grup liderliği ve öğretme seni motive eder. 🌟",
-    } as Record<string, string>;
+    const dominant = identityToDominant[identity] ?? "focus";
 
-    const profileSummary = summary[dominant] ?? `Öne çıkan: ${dominant}`;
+    const summary = `${displayName} — ${identity} bir yolcusun, vazgeçme!`;
 
-    const focusScore = scores["focus"] ?? 3;
+    const daily = values["dailyHours"] || "3-4 saat";
     const recommendedPomodoro =
-      focusScore >= 4
+      daily === "7+ saat"
+        ? { work: 50, short: 10, long: 30 }
+        : daily === "5-6 saat"
         ? { work: 50, short: 10, long: 25 }
-        : focusScore === 3
-          ? { work: 25, short: 5, long: 15 }
-          : { work: 20, short: 5, long: 10 };
+        : { work: 25, short: 5, long: 15 };
+
+    const scores: Record<string, number> = {};
+    scores[dominant] = 5;
 
     const profile: PersonalityProfile = {
       createdAt: new Date().toISOString(),
       scores,
       dominant,
-      summary: profileSummary,
+      summary,
       recommendedPomodoro,
     };
 
     try {
       localStorage.setItem("personality-profile", JSON.stringify(profile));
       localStorage.setItem("personality-completed", "1");
+      localStorage.setItem("onboarding-data", JSON.stringify(values));
       try {
-        window.dispatchEvent(
-          new CustomEvent("personality-updated", { detail: profile }),
-        );
+        window.dispatchEvent(new CustomEvent("personality-updated", { detail: profile }));
       } catch {}
-    } catch (e) {}
+    } catch {}
+
+    // set theme based on chosen identity
+    const identityToTheme: Record<string, ThemeKey> = {
+      Sabırlı: "sabir",
+      Cesur: "cesur",
+      Girişimci: "girisimci",
+      Samimi: "samimi",
+      Bilge: "bilge",
+      Lider: "lider",
+    };
+
+    const chosen = identityToTheme[identity];
+    if (chosen) setTheme(chosen);
 
     onComplete?.(profile);
   }
 
-  const q = QUESTIONS[step];
+  const s = STEPS[step];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-black/40 to-transparent p-4">
-      <div
-        className={
-          "w-full max-w-lg bg-card rounded-3xl p-5 border shadow-lg " +
-          (animClass || "animate-pop")
-        }
-      >
+      <div className={"w-full max-w-lg bg-card rounded-3xl p-5 border shadow-lg " + (animClass || "animate-pop")}>
         <div className="flex items-center justify-between mb-3">
           <div>
-            <h3 className="text-xl font-bold">
-              {examMode
-                ? `Sınav — ${step + 1}/${QUESTIONS.length}`
-                : `Kişilik Testi — ${step + 1}/${QUESTIONS.length} ✨`}
-            </h3>
-            {!examMode && (
-              <p className="text-sm text-muted-foreground">
-                Her soru ayrı kartta — kısa ve animasyonlu. Tamamlandığında
-                kişisel stratejin hazırlanır.
-              </p>
-            )}
+            <h3 className="text-xl font-bold">{`Giriş Ekranı — ${step + 1}/${STEPS.length}`}</h3>
+            <p className="text-sm text-muted-foreground">Bilgilerin uygulama deneyimini kişiselleştirmek için kullanılacaktır.</p>
           </div>
-          <div className="text-sm text-muted-foreground">
-            {new Array(step).fill(0).map((_, i) => "•")}
-          </div>
+          <div className="text-sm text-muted-foreground">{new Array(step).fill(0).map((_, i) => "•")}</div>
         </div>
 
         <div className="mb-4">
-          <div
-            className={
-              "p-4 rounded-xl border " +
-              (examMode ? "bg-transparent" : "bg-background")
-            }
-          >
-            <p className="font-medium text-lg text-center">{q.text}</p>
-            <div
-              className={
-                "flex gap-2 mt-3 text-sm " + (examMode ? "justify-center" : "")
-              }
-            >
-              {[1, 2, 3, 4, 5].map((v) => (
-                <button
-                  key={v}
-                  onClick={() => setAnswer(q.id, v)}
-                  className={
-                    "flex-1 px-4 py-3 rounded-lg border text-center mx-1 transition-colors " +
-                    ((answers[q.id] ?? 3) === v
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-background")
-                  }
-                >
-                  {v}
-                </button>
-              ))}
+          <div className={"p-4 rounded-xl border bg-background"}>
+            <p className="font-medium text-lg text-center">{s.label}</p>
+
+            <div className="mt-3">
+              {s.kind === "text" ? (
+                <input
+                  value={values[s.id] ?? ""}
+                  onChange={(e) => setValue(s.id, e.target.value)}
+                  placeholder={s.label}
+                  className="w-full px-3 py-2 rounded-xl border bg-background"
+                />
+              ) : (
+                <div className="grid grid-cols-1 gap-2">
+                  {s.options.map((opt) => {
+                    const selected = values[s.id] === opt;
+                    return (
+                      <button
+                        key={opt}
+                        onClick={() => selectOption(s.id, opt)}
+                        className={
+                          "w-full text-left px-4 py-3 rounded-lg border transition-colors " +
+                          (selected ? "bg-primary text-primary-foreground" : "bg-background")
+                        }
+                      >
+                        {opt}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -310,37 +253,18 @@ export const PersonalityTest: React.FC<{
         <div className="flex items-center justify-between">
           <div>
             {step > 0 && (
-              <button
-                onClick={prev}
-                className="px-3 py-2 rounded-lg border mr-2"
-              >
-                ← Geri
-              </button>
+              <button onClick={prev} className="px-3 py-2 rounded-lg border mr-2">← Geri</button>
             )}
-            {!examMode && step < QUESTIONS.length - 1 && (
-              <button
-                onClick={next}
-                className="px-4 py-2 rounded-lg bg-primary text-primary-foreground"
-              >
-                İleri →
-              </button>
+            {s.kind === "text" && step < STEPS.length - 1 && (
+              <button onClick={next} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground">İleri →</button>
             )}
           </div>
+
           <div>
-            {step === QUESTIONS.length - 1 && (
+            {step === STEPS.length - 1 && (
               <>
-                <button
-                  onClick={onClose}
-                  className="px-3 py-2 rounded-lg border mr-2"
-                >
-                  Kapat
-                </button>
-                <button
-                  onClick={finish}
-                  className="px-4 py-2 rounded-lg bg-primary text-primary-foreground"
-                >
-                  {examMode ? "Tamamla" : "Testi Tamamla ✅"}
-                </button>
+                <button onClick={onClose} className="px-3 py-2 rounded-lg border mr-2">Kapat</button>
+                <button onClick={finish} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground">Tamamla ✅</button>
               </>
             )}
           </div>
