@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function AdaptivePlan({ profile }: { profile: any }) {
   const [loading, setLoading] = useState(false);
