@@ -28,6 +28,13 @@ export function createServer() {
     res.status(204).end();
   });
 
+  // AI status endpoint - reports whether server has OpenAI key configured
+  app.get("/api/ai-status", (_req, res) => {
+    const key = process.env.OPENAI_API_KEY || process.env.OPENAI_KEY;
+    if (!key) return res.json({ available: false, reason: "OpenAI API key not configured on server." });
+    return res.json({ available: true });
+  });
+
   // AI adaptive plan proxy (server-side) - requires OPENAI_API_KEY env var
   app.post("/api/ai-plan", async (req, res) => {
     try {
