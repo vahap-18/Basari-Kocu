@@ -534,7 +534,7 @@ function TestCatalog() {
     {
       id: "bigfive",
       title: "Big Five (OCEAN)",
-      emoji: "����",
+      emoji: "🌐",
       desc: "Beş faktör model: kişilik profillerini ölçer.",
       long: "Big Five modeli (Açıklık, Sorumluluk, Dışadönüklük, Uyumluluk, Duygusal Denge) bireysel eğilimlerinizi detaylandırır. Bu çerçeve öğrenme stratejileri ve stres yönetimi için pratik öneriler sunar.",
       topics: ["Açıklık", "Sorumluluk", "Dışadönüklük", "Uyumluluk", "Duygusal Denge"],
