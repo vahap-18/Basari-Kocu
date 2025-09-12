@@ -430,16 +430,13 @@ export default function KoclukPage() {
             <SafeRender name="AICoach"><AICoach /></SafeRender>
           </section>
 
-          <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
+          <section className="grid grid-cols-1 gap-3">
             <div>
               <SafeRender name="AdaptivePlan"><AdaptivePlan profile={profile} /></SafeRender>
             </div>
             <div>
               <SafeRender name="TasksManager"><TasksManager /></SafeRender>
             </div>
-          </section>
-
-          <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
             <div>
               <SafeRender name="CoachCalendar"><CoachCalendar /></SafeRender>
             </div>
