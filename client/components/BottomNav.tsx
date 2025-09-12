@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Clock, Home, Lightbulb, Settings, Target } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const items = [
   { to: "/", label: "Ana Sayfa", icon: Home },
@@ -18,21 +19,26 @@ export const BottomNav: React.FC = () => {
         <ul className="flex justify-between items-center gap-2">
           {items.map(({ to, label, icon: Icon }, idx) => (
             <li key={to} className="flex-1">
-              <NavLink
-                to={to}
-                className={({ isActive }) =>
-                  cn(
+              <NavLink to={to} className={({ isActive }) => cn(
                     "flex flex-col items-center gap-0.5 px-3 py-2 rounded-lg text-xs transition-all duration-150 justify-center",
                     isActive
-                      ? "bg-primary/10 text-primary shadow-md scale-105"
+                      ? "bg-primary/10 text-primary shadow-md"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
-                  )
-                }
-              >
-                <div className="w-7 h-7 flex items-center justify-center">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <span className="sr-only">{label}</span>
+                  )}>
+                {({ isActive }) => (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: isActive ? -4 : 0, scale: isActive ? 1.05 : 1 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                    className="flex flex-col items-center gap-0.5 px-3 py-2 rounded-lg text-xs justify-center"
+                  >
+                    <div className="w-7 h-7 flex items-center justify-center">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span className="sr-only">{label}</span>
+                  </motion.div>
+                )}
               </NavLink>
             </li>
           ))}
