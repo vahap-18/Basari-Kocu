@@ -11,17 +11,22 @@ function loadProfile(): PersonalityProfile | null {
 function generateAdvice(profile: PersonalityProfile | null) {
   if (!profile) return ["Kişilik testini tamamla, sana özel tavsiyeler burada görünecek."];
   const adv: string[] = [];
-  const s = profile.scores;
-  if (s.focus >= 4) adv.push("Uzun odak seanslarında başarılısın — 50 dk çalışma + 10 dk mola deneyebilirsin.");
-  else if (s.focus === 3) adv.push("Orta seviye odak; 25 dk çalışma + 5 dk mola iyi gelir.");
+  const s = (profile.scores || {}) as Record<string, any>;
+  const focus = Number(s.focus ?? 0);
+  const procrastinate = Number(s.procrastinate ?? 3);
+  const resilience = Number(s.resilience ?? 3);
+  const curiosity = Number(s.curiosity ?? 3);
+
+  if (focus >= 4) adv.push("Uzun odak seanslarında başarılısın — 50 dk çalışma + 10 dk mola deneyebilirsin.");
+  else if (focus === 3) adv.push("Orta seviye odak; 25 dk çalışma + 5 dk mola iyi gelir.");
   else adv.push("Kısa ve sık seanslar (20 dk) verimli olabilir. Dikkat dağılması için çevrenizi düzenleyin.");
 
-  if (s.procrastinate <= 2) adv.push("Erteleme eğilimlerin düşük; hedeflerini büyütebilirsin.");
-  else if (s.procrastinate <= 4) adv.push("Bazen erteleme oluyor; Pomodoro başlangıcında 1 küçük ödül belirle.");
+  if (procrastinate <= 2) adv.push("Erteleme eğilimlerin düşük; hedeflerini büyütebilirsin.");
+  else if (procrastinate <= 4) adv.push("Bazen erteleme oluyor; Pomodoro başlangıcında 1 küçük ödül belirle.");
   else adv.push("Erteleme yüksek; günlük küçük görevlerle (2–3) başla ve başarı hissini kullan.");
 
-  if (s.resilience >= 4) adv.push("Zorluklara karşı dayanıklısın; zor konuları sabah saatlerine koy.");
-  if (s.curiosity >= 4) adv.push("Merakın güçlü; konuları sorgulayarak not al ve bağlantılar kur.");
+  if (resilience >= 4) adv.push("Zorluklara karşı dayanıklısın; zor konuları sabah saatlerine koy.");
+  if (curiosity >= 4) adv.push("Merakın güçlü; konuları sorgulayarak not al ve bağlantılar kur.");
 
   return adv;
 }
