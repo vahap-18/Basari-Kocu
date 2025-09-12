@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 export default function AdaptivePlan({ profile }: { profile: any }) {
-  const [loading, setLoading] = useState(false);
-  const [plan, setPlan] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [aiAvailable, setAiAvailable] = useState<boolean | null>(null);
+  const [loading, setLoading] = React.useState(false);
+  const [plan, setPlan] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
+  const [aiAvailable, setAiAvailable] = React.useState<boolean | null>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     let mounted = true;
     fetch('/api/ai-status')
       .then((r) => r.json())
