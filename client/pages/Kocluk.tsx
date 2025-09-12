@@ -425,9 +425,6 @@ export default function KoclukPage() {
 
         {/* AI Coach + new coach features */}
         <div className="grid grid-cols-1 gap-3">
-          <section className="p-4 rounded-2xl border">
-            <SafeRender name="AICoach"><AICoach /></SafeRender>
-          </section>
 
           <section className="grid grid-cols-1 gap-3">
             <div>
