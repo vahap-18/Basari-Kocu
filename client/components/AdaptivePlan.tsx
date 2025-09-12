@@ -4,6 +4,22 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [aiAvailable, setAiAvailable] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    fetch('/api/ai-status')
+      .then((r) => r.json())
+      .then((j) => {
+        if (!mounted) return;
+        setAiAvailable(!!j?.available);
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setAiAvailable(false);
+      });
+    return () => { mounted = false; };
+  }, []);
 
   async function generate() {
     setError(null);
@@ -16,8 +32,17 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error(`Server responded ${res.status}`);
-      const data = await res.json();
+      const text = await res.text();
+      // try parse JSON
+      let data: any = null;
+      try { data = JSON.parse(text); } catch { data = { plan: text }; }
+
+      if (!res.ok) {
+        const serverMsg = data?.error || data?.message || data?.detail || `Server responded ${res.status}`;
+        setError(`Servis hatası: ${serverMsg}`);
+        return;
+      }
+
       setPlan(data.plan ?? String(data));
 
       // if the server returned structured analysis, persist as personality-profile and dispatch update
@@ -51,7 +76,7 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
     <div className="p-3 rounded-2xl border bg-card">
       <div className="flex items-center justify-between mb-2">
         <h4 className="font-semibold">Adaptif Çalışma Planı</h4>
-        <div className="text-xs text-muted-foreground">OpenAI ile oluşturulur</div>
+        <div className="text-xs text-muted-foreground">{aiAvailable === false ? "AI servis kapalı" : "OpenAI ile oluşturulur"}</div>
       </div>
 
       <div className="mb-3 text-sm text-muted-foreground">
@@ -61,7 +86,7 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
       <div className="flex gap-2 mb-3">
         <button
           onClick={generate}
-          disabled={loading}
+          disabled={loading || aiAvailable === false}
           className="px-3 py-2 rounded-xl bg-primary text-primary-foreground"
         >
           {loading ? "Oluşturuluyor..." : "Plan Oluştur"}
