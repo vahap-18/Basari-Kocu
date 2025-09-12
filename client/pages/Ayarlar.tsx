@@ -210,30 +210,40 @@ export default function AyarlarPage() {
           <div
             className="p-4 rounded-2xl border"
             style={{
-              background: "linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)))",
+              background:
+                "linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)))",
               color: "hsl(var(--foreground))",
             }}
           >
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-muted-foreground">Aktif Tema</div>
-                <div className="font-semibold">{themes.find((t) => t.key === theme)?.label}</div>
+                <div className="font-semibold">
+                  {themes.find((t) => t.key === theme)?.label}
+                </div>
               </div>
               <div className="text-right">
                 <div className="inline-flex items-center gap-2">
                   <div
                     className="w-10 h-10 rounded-md"
-                    style={{ background: "hsl(var(--primary) / 0.16)", border: "1px solid hsl(var(--primary))" }}
+                    style={{
+                      background: "hsl(var(--primary) / 0.16)",
+                      border: "1px solid hsl(var(--primary))",
+                    }}
                   />
                   <div
                     className="w-10 h-10 rounded-md"
-                    style={{ background: "hsl(var(--accent) / 0.16)", border: "1px solid hsl(var(--accent))" }}
+                    style={{
+                      background: "hsl(var(--accent) / 0.16)",
+                      border: "1px solid hsl(var(--accent))",
+                    }}
                   />
                 </div>
               </div>
             </div>
             <div className="mt-3 text-sm text-muted-foreground">
-              Bu alanda seçili temanın arka planı ve vurgu renkleri canlı olarak görünür.
+              Bu alanda seçili temanın arka planı ve vurgu renkleri canlı olarak
+              görünür.
             </div>
           </div>
         </div>

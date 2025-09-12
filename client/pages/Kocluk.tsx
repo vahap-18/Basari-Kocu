@@ -11,18 +11,26 @@ import ProgressDetails from "@/components/ProgressDetails";
 import ProfileCharts from "@/components/ProfileCharts";
 
 // Small runtime-safe wrapper to prevent an entire page crash when a child component throws in production
-class SafeRender extends React.Component<{ name: string; children: React.ReactNode }>{
+class SafeRender extends React.Component<{
+  name: string;
+  children: React.ReactNode;
+}> {
   state = { hasError: false, error: null as any };
   static getDerivedStateFromError(err: any) {
     return { hasError: true, error: err };
   }
   componentDidCatch(error: any, info: any) {
     try {
-      fetch('/api/client-log', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'safe-render-error', name: this.props.name, error: String(error), info }),
-      }).catch(()=>{});
+      fetch("/api/client-log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "safe-render-error",
+          name: this.props.name,
+          error: String(error),
+          info,
+        }),
+      }).catch(() => {});
     } catch {}
   }
   render() {
@@ -333,7 +341,8 @@ export default function KoclukPage() {
                   width: 96,
                   height: 96,
                   transform: inhale ? "scale(1)" : "scale(0.6)",
-                  transition: "transform 4000ms ease-in-out, background 2000ms ease",
+                  transition:
+                    "transform 4000ms ease-in-out, background 2000ms ease",
                   background: inhale
                     ? "radial-gradient(circle at 30% 30%, rgba(99,102,241,0.9), rgba(96,165,250,0.6))"
                     : "radial-gradient(circle at 70% 70%, rgba(236,72,153,0.9), rgba(249,115,22,0.6))",
@@ -343,7 +352,9 @@ export default function KoclukPage() {
             </div>
           </div>
 
-          <div className="text-center text-sm text-muted-foreground">{inhale ? "Nefes al" : "Nefes ver"}</div>
+          <div className="text-center text-sm text-muted-foreground">
+            {inhale ? "Nefes al" : "Nefes ver"}
+          </div>
         </section>
 
         {/* Coaching insights with visuals */}
@@ -418,26 +429,32 @@ export default function KoclukPage() {
               <TestCatalog />
 
               <div className="mt-3" />
-
             </div>
           </div>
         </section>
 
         {/* AI Coach + new coach features */}
         <div className="grid grid-cols-1 gap-3">
-
           <section className="grid grid-cols-1 gap-3">
             <div>
-              <SafeRender name="AdaptivePlan"><AdaptivePlan profile={profile} /></SafeRender>
+              <SafeRender name="AdaptivePlan">
+                <AdaptivePlan profile={profile} />
+              </SafeRender>
             </div>
             <div>
-              <SafeRender name="TasksManager"><TasksManager /></SafeRender>
+              <SafeRender name="TasksManager">
+                <TasksManager />
+              </SafeRender>
             </div>
             <div>
-              <SafeRender name="CoachCalendar"><CoachCalendar /></SafeRender>
+              <SafeRender name="CoachCalendar">
+                <CoachCalendar />
+              </SafeRender>
             </div>
             <div>
-              <SafeRender name="ProgressDetails"><ProgressDetails /></SafeRender>
+              <SafeRender name="ProgressDetails">
+                <ProgressDetails />
+              </SafeRender>
             </div>
           </section>
         </div>
@@ -511,7 +528,6 @@ function DailyGoals() {
   );
 }
 
-
 function TestCatalog() {
   const tests = [
     {
@@ -520,12 +536,17 @@ function TestCatalog() {
       emoji: "🧭",
       desc: "Myers-Briggs Type Indicator: 16 kişilik tipi sağlar.",
       long: "MBTI (Myers-Briggs), bireylerin bilgi alma, karar verme, enerji kaynakları ve dünya ile ilişki kurma biçimlerini ölçen dört ikili ölçekten oluşur. Bu ölçekler birleşerek 16 farklı kişilik tipine işaret eder. Sonuçlar iletişim, öğrenme tercihi ve takım rolleri hakkında uygulanabilir içgörüler verir.",
-      topics: ["Dışa dönüklük / İçe dönüklük", "Algılama / Sezgi", "Düşünce / Hissetme", "Yargılama / Algılama"],
+      topics: [
+        "Dışa dönüklük / İçe dönüklük",
+        "Algılama / Sezgi",
+        "Düşünce / Hissetme",
+        "Yargılama / Algılama",
+      ],
       how: [
         "Kısa uygulama: 10-30 dakika arası sürer.",
         "Sonuçlar tercihleri gösterir; profesyonel değerlendirme yerine rehberlik amaçlı kullanılmalıdır.",
-        "Öneriler: Dışadönükler grup çalışmasına, içedönükler bireysel çalışmaya daha iyi yanıt verebilir."
-      ]
+        "Öneriler: Dışadönükler grup çalışmasına, içedönükler bireysel çalışmaya daha iyi yanıt verebilir.",
+      ],
     },
     {
       id: "bigfive",
@@ -533,16 +554,51 @@ function TestCatalog() {
       emoji: "🌐",
       desc: "Beş faktör model: kişilik profillerini ölçer.",
       long: "Big Five modeli (Açıklık, Sorumluluk, Dışadönüklük, Uyumluluk, Duygusal Denge) bireysel eğilimlerinizi detaylandırır. Bu çerçeve öğrenme stratejileri ve stres yönetimi için pratik öneriler sunar.",
-      topics: ["Açıklık", "Sorumluluk", "Dışadönüklük", "Uyumluluk", "Duygusal Denge"],
+      topics: [
+        "Açıklık",
+        "Sorumluluk",
+        "Dışadönüklük",
+        "Uyumluluk",
+        "Duygusal Denge",
+      ],
       how: [
         "Değerlendirme: 10–15 dakika.",
         "Her boyuta göre günlük davranış örnekleriyle yorum yapılır.",
-        "Eğitim önerileri: düşük duygusal denge için stres azaltma teknikleri önerilir."
-      ]
+        "Eğitim önerileri: düşük duygusal denge için stres azaltma teknikleri önerilir.",
+      ],
     },
-    { id: "enneagram", title: "Enneagram", emoji: "🔷", desc: "Motivasyon temelli 9 tip modeli.", long: "Enneagram, temel motivasyonları ve savunma mekanizmalarını ortaya koyar; kişisel farkındalık ve takım rolleri için içgörüler verir.", topics: ["Temel motivasyonlar", "Savunma mekanizmaları", "Takım rolleri"], how: ["Kendi içgörünüzü yazılı örneklerle değerlendirin."] },
-    { id: "disc", title: "DISC Analizi", emoji: "🔶", desc: "Davranış profilleri ve iletişim eğilimleri.", long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.", topics: ["Dominance (D)", "Influence (I)", "Steadiness (S)", "Conscientiousness (C)"], how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."] },
-    { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "EQ-i, duygusal farkındalık, empati ve duyguları düzenleme becerilerini değerlendirir. Sonuçlar, iletişim ve stres yönetimi için pratik öneriler sağlar.", topics: ["Farkındalık", "Empati", "Duygu düzenleme", "Sosyal yetkinlik"], how: ["Refleksiyon soruları içerir; 10–20 dk sürebilir."] },
+    {
+      id: "enneagram",
+      title: "Enneagram",
+      emoji: "🔷",
+      desc: "Motivasyon temelli 9 tip modeli.",
+      long: "Enneagram, temel motivasyonları ve savunma mekanizmalarını ortaya koyar; kişisel farkındalık ve takım rolleri için içgörüler verir.",
+      topics: ["Temel motivasyonlar", "Savunma mekanizmaları", "Takım rolleri"],
+      how: ["Kendi içgörünüzü yazılı örneklerle değerlendirin."],
+    },
+    {
+      id: "disc",
+      title: "DISC Analizi",
+      emoji: "🔶",
+      desc: "Davranış profilleri ve iletişim eğilimleri.",
+      long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.",
+      topics: [
+        "Dominance (D)",
+        "Influence (I)",
+        "Steadiness (S)",
+        "Conscientiousness (C)",
+      ],
+      how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."],
+    },
+    {
+      id: "eqi",
+      title: "EQ-i",
+      emoji: "💖",
+      desc: "Duygusal zekâ envanteri.",
+      long: "EQ-i, duygusal farkındalık, empati ve duyguları düzenleme becerilerini değerlendirir. Sonuçlar, iletişim ve stres yönetimi için pratik öneriler sağlar.",
+      topics: ["Farkındalık", "Empati", "Duygu düzenleme", "Sosyal yetkinlik"],
+      how: ["Refleksiyon soruları içerir; 10–20 dk sürebilir."],
+    },
   ];
 
   function deriveLabel(key: string, payload: any) {
@@ -550,22 +606,34 @@ function TestCatalog() {
     switch (key) {
       case "mbti":
         return score >= 4
-          ? { name: "Analitik", comment: "Dışa dönük ve karar odaklı görünüyorsunuz." }
+          ? {
+              name: "Analitik",
+              comment: "Dışa dönük ve karar odaklı görünüyorsunuz.",
+            }
           : score === 3
-            ? { name: "Dengeli", comment: "Dengeli özellikler sergiliyorsunuz." }
+            ? {
+                name: "Dengeli",
+                comment: "Dengeli özellikler sergiliyorsunuz.",
+              }
             : { name: "İçe Dönük", comment: "İçe dönük tercihleriniz baskın." };
       case "bigfive":
         return score >= 4
           ? { name: "Yüksek Profil", comment: "Genel kişilik puanınız yüksek." }
           : score === 3
             ? { name: "Orta Profil", comment: "Orta düzey profil." }
-            : { name: "Düşük Profil", comment: "Bazı boyutlarda geliştirme fırsatları var." };
+            : {
+                name: "Düşük Profil",
+                comment: "Bazı boyutlarda geliştirme fırsatları var.",
+              };
       default:
         return score >= 4
           ? { name: "Güçlü", comment: "Bu alanda güçlü yönleriniz var." }
           : score === 3
             ? { name: "Orta", comment: "Orta düzeyde performans." }
-            : { name: "Geliştirilebilir", comment: "Bu alanda geliştirme yapılabilir." };
+            : {
+                name: "Geliştirilebilir",
+                comment: "Bu alanda geliştirme yapılabilir.",
+              };
     }
   }
 
@@ -596,13 +664,20 @@ function TestCatalog() {
               const p = saved[k];
               const label = deriveLabel(k, p);
               return (
-                <div key={k} className="p-3 rounded-xl border bg-card flex items-center justify-between">
+                <div
+                  key={k}
+                  className="p-3 rounded-xl border bg-card flex items-center justify-between"
+                >
                   <div>
                     <div className="font-medium">{p.name}</div>
-                    <div className="text-xs text-muted-foreground">{p.scoreText} • {label.name}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {p.scoreText} • {label.name}
+                    </div>
                     <div className="text-sm mt-1">{p.interpretation}</div>
                   </div>
-                  <div className="text-xs text-muted-foreground">{label.comment}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {label.comment}
+                  </div>
                 </div>
               );
             })}
@@ -614,15 +689,24 @@ function TestCatalog() {
         const isOpen = !!openMap[t.id];
         const maxH = isOpen ? `${heightsRef.current[t.id] || 400}px` : "0px";
         return (
-          <div key={t.id} className="p-3 rounded-xl border bg-background transition-shadow hover:shadow-md">
+          <div
+            key={t.id}
+            className="p-3 rounded-xl border bg-background transition-shadow hover:shadow-md"
+          >
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1">
-                <div className="font-medium">{t.emoji} {t.title}</div>
-                <div className="text-xs text-muted-foreground mt-1">{t.desc}</div>
+                <div className="font-medium">
+                  {t.emoji} {t.title}
+                </div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  {t.desc}
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setOpenMap((o) => ({ ...o, [t.id]: !o[t.id] }))}
+                  onClick={() =>
+                    setOpenMap((o) => ({ ...o, [t.id]: !o[t.id] }))
+                  }
                   className="px-3 py-1 rounded-md border text-sm"
                 >
                   Detay
@@ -630,13 +714,26 @@ function TestCatalog() {
               </div>
             </div>
 
-            <div ref={setDetailRef(t.id)} style={{ maxHeight: maxH, overflow: 'hidden', transition: 'max-height 320ms ease, opacity 240ms ease', opacity: isOpen ? 1 : 0 }} className="mt-3 w-full">
+            <div
+              ref={setDetailRef(t.id)}
+              style={{
+                maxHeight: maxH,
+                overflow: "hidden",
+                transition: "max-height 320ms ease, opacity 240ms ease",
+                opacity: isOpen ? 1 : 0,
+              }}
+              className="mt-3 w-full"
+            >
               <div className="w-full p-3 rounded-md bg-card border">
                 <div className="font-medium">{t.title} — Detaylar</div>
-                <div className="text-xs text-muted-foreground mt-1">{t.long ?? t.desc}</div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  {t.long ?? t.desc}
+                </div>
                 {t.topics && (
                   <div className="mt-2">
-                    <div className="text-sm font-medium mb-1">Konu Başlıkları</div>
+                    <div className="text-sm font-medium mb-1">
+                      Konu Başlıkları
+                    </div>
                     <ul className="list-disc pl-5 text-sm text-muted-foreground">
                       {t.topics.map((topic: string, idx: number) => (
                         <li key={idx}>{topic}</li>
@@ -646,7 +743,9 @@ function TestCatalog() {
                 )}
                 {t.how && (
                   <div className="mt-2">
-                    <div className="text-sm font-medium mb-1">Nasıl çalışır</div>
+                    <div className="text-sm font-medium mb-1">
+                      Nasıl çalışır
+                    </div>
                     <ul className="list-disc pl-5 text-sm text-muted-foreground">
                       {t.how.map((h: string, i: number) => (
                         <li key={i}>{h}</li>
@@ -656,7 +755,10 @@ function TestCatalog() {
                 )}
                 <div className="mt-3">
                   <div className="text-sm font-medium mb-1">İpuçları</div>
-                  <div className="text-xs text-muted-foreground">Bu test açıklamaları rehberlik amaçlıdır ve doğruluk garanti edilmez.</div>
+                  <div className="text-xs text-muted-foreground">
+                    Bu test açıklamaları rehberlik amaçlıdır ve doğruluk garanti
+                    edilmez.
+                  </div>
                 </div>
               </div>
             </div>

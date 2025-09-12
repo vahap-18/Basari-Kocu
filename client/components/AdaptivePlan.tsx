@@ -8,7 +8,7 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
 
   React.useEffect(() => {
     let mounted = true;
-    fetch('/api/ai-status')
+    fetch("/api/ai-status")
       .then((r) => r.json())
       .then((j) => {
         if (!mounted) return;
@@ -18,7 +18,9 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
         if (!mounted) return;
         setAiAvailable(false);
       });
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   async function generate() {
@@ -26,7 +28,10 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
     setLoading(true);
     setPlan(null);
     try {
-      const payload = { profile, goals: JSON.parse(localStorage.getItem("goals") || "[]") };
+      const payload = {
+        profile,
+        goals: JSON.parse(localStorage.getItem("goals") || "[]"),
+      };
       const res = await fetch("/api/ai-plan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -35,10 +40,18 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
       const text = await res.text();
       // try parse JSON
       let data: any = null;
-      try { data = JSON.parse(text); } catch { data = { plan: text }; }
+      try {
+        data = JSON.parse(text);
+      } catch {
+        data = { plan: text };
+      }
 
       if (!res.ok) {
-        const serverMsg = data?.error || data?.message || data?.detail || `Server responded ${res.status}`;
+        const serverMsg =
+          data?.error ||
+          data?.message ||
+          data?.detail ||
+          `Server responded ${res.status}`;
         setError(`Servis hatası: ${serverMsg}`);
         return;
       }
@@ -52,17 +65,31 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
             createdAt: new Date().toISOString(),
             scores: data.analysis.scores || {},
             dominant: data.analysis.dominant || "",
-            summary: data.plan ? (data.plan.split("\n").slice(0, 2).join(" ")) : "AI tarafından oluşturuldu",
-            recommendedPomodoro: data.analysis.recommendedPomodoro || { work: 25, short: 5, long: 15 },
+            summary: data.plan
+              ? data.plan.split("\n").slice(0, 2).join(" ")
+              : "AI tarafından oluşturuldu",
+            recommendedPomodoro: data.analysis.recommendedPomodoro || {
+              work: 25,
+              short: 5,
+              long: 15,
+            },
           };
           localStorage.setItem("personality-profile", JSON.stringify(profile));
           try {
-            window.dispatchEvent(new CustomEvent("personality-updated", { detail: profile }));
+            window.dispatchEvent(
+              new CustomEvent("personality-updated", { detail: profile }),
+            );
           } catch {}
         }
         // save plan history
-        const hist = JSON.parse(localStorage.getItem("ai-plan-history") || "[]");
-        hist.unshift({ createdAt: new Date().toISOString(), plan: data.plan, analysis: data.analysis || null });
+        const hist = JSON.parse(
+          localStorage.getItem("ai-plan-history") || "[]",
+        );
+        hist.unshift({
+          createdAt: new Date().toISOString(),
+          plan: data.plan,
+          analysis: data.analysis || null,
+        });
         localStorage.setItem("ai-plan-history", JSON.stringify(hist));
       } catch {}
     } catch (e: any) {
@@ -76,11 +103,16 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
     <div className="p-3 rounded-2xl border bg-card">
       <div className="flex items-center justify-between mb-2">
         <h4 className="font-semibold">Adaptif Çalışma Planı</h4>
-        <div className="text-xs text-muted-foreground">{aiAvailable === false ? "AI servis kapalı" : "OpenAI ile oluşturulur"}</div>
+        <div className="text-xs text-muted-foreground">
+          {aiAvailable === false
+            ? "AI servis kapalı"
+            : "OpenAI ile oluşturulur"}
+        </div>
       </div>
 
       <div className="mb-3 text-sm text-muted-foreground">
-        Profiliniz ve günlük hedefleriniz temel alınarak bir çalışma planı oluşturun.
+        Profiliniz ve günlük hedefleriniz temel alınarak bir çalışma planı
+        oluşturun.
       </div>
 
       <div className="flex gap-2 mb-3">
