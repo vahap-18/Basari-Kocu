@@ -14,6 +14,7 @@ import Kocluk from "./pages/Kocluk";
 import Teknikler from "./pages/Teknikler";
 import Ayarlar from "./pages/Ayarlar";
 import PersonalityExam from "./pages/PersonalityExam";
+import Profile from "./pages/Profile";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const queryClient = new QueryClient();
