@@ -145,8 +145,8 @@ export default function SettingsInsights({ profile }: { profile: any }) {
           </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden relative">
             <div
-              className="h-full bg-rose-400 absolute left-0 top-0"
-              style={{ width: `${animC}%`, transition: "width 1000ms cubic-bezier(.2,.9,.2,1)" }}
+              className="h-full absolute left-0 top-0"
+              style={{ width: `${animC}%`, transition: "width 1000ms cubic-bezier(.2,.9,.2,1)", background: "hsl(var(--secondary))" }}
             />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0) 100%)", backgroundSize: "200% 100%", animation: "shimmer 2.2s linear infinite", pointerEvents: "none" }} />
           </div>
