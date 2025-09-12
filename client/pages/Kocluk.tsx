@@ -385,7 +385,7 @@ export default function KoclukPage() {
               <h4 className="font-semibold mb-2">Kısa İpuçları</h4>
               <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                 <li>En zor konuları sabah saatlerine koyun.</li>
-                <li>Pomodoro sürelerini profilinize göre ayarlayın.</li>
+                <li>Pomodoro sürelerini profilinize g��re ayarlayın.</li>
                 <li>Günlük hedeflerinizi 2-3 maddede sınırlayın.</li>
                 <li>
                   Nefes egzersizleriyle dikkat toplama süresini %20
@@ -545,7 +545,7 @@ function TestCatalog() {
       ]
     },
     { id: "enneagram", title: "Enneagram", emoji: "🔷", desc: "Motivasyon temelli 9 tip modeli.", long: "Enneagram, temel motivasyonları ve savunma mekanizmalarını ortaya koyar; kişisel farkındalık ve takım rolleri için içgörüler verir.", topics: ["Temel motivasyonlar", "Savunma mekanizmaları", "Takım rolleri"], how: ["Kendi içgörünüzü yazılı örneklerle değerlendirin."] },
-    { id: "disc", title: "DISC Analizi", emoji: "��", desc: "Davranış profilleri ve iletişim eğilimleri.", long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.", topics: ["Dominance (D)", "Influence (I)", "Steadiness (S)", "Conscientiousness (C)"], how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."] },
+    { id: "disc", title: "DISC Analizi", emoji: "🔶", desc: "Davranış profilleri ve iletişim eğilimleri.", long: "DISC, iş ve takım içi rollerin belirlenmesinde yardımcı olur; güçlü ve zayıf iletişim stillerini gösterir.", topics: ["Dominance (D)", "Influence (I)", "Steadiness (S)", "Conscientiousness (C)"], how: ["Kısa anket; sonuçlar pratik önerilerle birlikte gelir."] },
     { id: "eqi", title: "EQ-i", emoji: "💖", desc: "Duygusal zekâ envanteri.", long: "EQ-i, duygusal farkındalık, empati ve duyguları düzenleme becerilerini değerlendirir. Sonuçlar, iletişim ve stres yönetimi için pratik öneriler sağlar.", topics: ["Farkındalık", "Empati", "Duygu düzenleme", "Sosyal yetkinlik"], how: ["Refleksiyon soruları içerir; 10–20 dk sürebilir."] },
   ];
 
