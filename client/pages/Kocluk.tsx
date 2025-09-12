@@ -385,7 +385,7 @@ export default function KoclukPage() {
               <h4 className="font-semibold mb-2">Kısa İpuçları</h4>
               <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                 <li>En zor konuları sabah saatlerine koyun.</li>
-                <li>Pomodoro sürelerini profilinize g��re ayarlayın.</li>
+                <li>Pomodoro sürelerini profilinize göre ayarlayın.</li>
                 <li>Günlük hedeflerinizi 2-3 maddede sınırlayın.</li>
                 <li>
                   Nefes egzersizleriyle dikkat toplama süresini %20
@@ -660,7 +660,7 @@ function TestCatalog() {
                 )}
                 <div className="mt-3">
                   <div className="text-sm font-medium mb-1">İpuçları</div>
-                  <div className="text-xs text-muted-foreground">Bu test açıklamaları rehberlik amaçlıdır ve do��ruluk garanti edilmez.</div>
+                  <div className="text-xs text-muted-foreground">Bu test açıklamaları rehberlik amaçlıdır ve doğruluk garanti edilmez.</div>
                 </div>
               </div>
             </div>
