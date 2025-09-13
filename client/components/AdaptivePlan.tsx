@@ -2,9 +2,44 @@ import React from "react";
 
 export default function AdaptivePlan({ profile }: { profile: any }) {
   const [loading, setLoading] = React.useState(false);
-  const [plan, setPlan] = React.useState<string | null>(null);
+  const [plan, setPlan] = React.useState<string[] | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [aiAvailable, setAiAvailable] = React.useState<boolean | null>(null);
+
+  function generateOfflinePlan(profile: any, goals: any) {
+    // Build a simple step-by-step plan based on profile and goals
+    const daily = goals?.daily || 3;
+    const weekly = goals?.weekly || 15;
+    const rec = profile?.recommendedPomodoro || { work: 25, short: 5, long: 15 };
+    const identity = (profile && profile.dominant) || "focus";
+
+    const base: string[] = [];
+    base.push(`1. Hedef: Günlük ${daily} oturum; Haftalık ${weekly} oturum.`);
+    base.push(`2. Pomodoro: ${rec.work}dk çalışma / ${rec.short}dk kısa mola.`);
+
+    if (identity === "resilience") {
+      base.push("3. Zorlu konulara haftada 3 blok ayır; her blokta küçük hedefler koy.");
+    } else if (identity === "procrastinate") {
+      base.push("3. Erteleme için 25dk Pomodoro başlat, ardından 5dk ödül.");
+    } else if (identity === "social") {
+      base.push("3. Haftada 2 kez çalışma grubuna katıl; konuları başkalarına anlat.");
+    } else if (identity === "structure") {
+      base.push("3. Günlük başlangıç ve bitiş rutini oluştur; görevleri sırala.");
+    } else if (identity === "curiosity") {
+      base.push("3. Her gün 30dk keşif zamanı ayır; not al ve özet çıkar.");
+    } else if (identity === "leadership") {
+      base.push("3. Haftada bir mini öğretme oturumu planla (arkadaşlara anlat).");
+    } else {
+      base.push("3. Günlük hedefleri küçük parçalara böl ve sırayla tamamla.");
+    }
+
+    base.push(`4. Günlük kontrol: Her gün sonunda 5dk geri bildirim yaz.`);
+    base.push(`5. Hafta değerlendirmesi: Haftalık toplam oturum ve zorlanan konuları belirle.`);
+    base.push(`6. Motivasyon: Haftada 1 başarı hikâyesi oku veya kısa video izle.`);
+
+    // trim to sensible length based on goals
+    return base.slice(0, 8);
+  }
 
   React.useEffect(() => {
     let mounted = true;
@@ -118,7 +153,7 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
         <div className="text-xs text-muted-foreground">
           {aiAvailable === false
             ? "AI servis kapalı"
-            : "OpenAI ile oluşturulur"}
+            : "OpenAI ile olu��turulur"}
         </div>
       </div>
 
