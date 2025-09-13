@@ -1,21 +1,46 @@
-# Başarı Kulübü — Sınav Hazırlık Koçun
+<!-- Başlık ve görsel -->
 
-![Başarı Kulübü Logo](./public/placeholder.svg)
+<p align="center">
+  <img src="./public/placeholder.svg" alt="Başarı Kulübü" width="140" />
+  <h1 align="center">Başarı Kulübü — Sınav Hazırlık Koçun</h1>
+  <p align="center">Kişiselleştirilmiş, offline-öncelikli ve görsel açıdan zengin bir çalışma arkadaşı.</p>
+  <p align="center">
+    <a href="#h%C4%B1zl%C4%B1-ba%C5%9Flang%C4%B1%C3%A7"><img src="https://img.shields.io/badge/Status-Development-yellow" alt="status"/></a>
+    <img src="https://img.shields.io/badge/Platform-Web-blue" alt="platform"/>
+    <img src="https://img.shields.io/badge/License-MIT-lightgrey" alt="license"/>
+  </p>
+</p>
 
-Türkçe açıklama: Mobil odaklı, offline öncelikli sınav hazırlık uygulaması. Kişiselleştirilmiş giriş (13 soru), koçluk/plan oluşturma, profil & görsel analiz panosu, Pomodoro, takvim ve hedef takip özellikleri içerir. Uygulama tüm kullanıcı verilerini istemci üzerinde (localStorage) saklayarak sunucu gereksinimini en aza indirir.
+---
+
+## Kısa Tanıtım
+
+Başarı Kulübü, sınav hazırlık sürecini görselleştirip kişiselleştiren mobil-odaklı bir uygulamadır. Cihaz üzerinde verileri saklar ve internet olmasa bile akıllı fallback mekanizmaları ile çalışır. Animasyonlar, SVG bloblar ve "nefes alan" UI öğeleri ile uygulama canlı ve organik bir his verir.
+
+![Ekran Görüntüsü](./public/placeholder.svg)
+
+---
+
+## Öne Çıkan Özellikler
+
+- ✨ 13 soruluk giriş ekranı: isim, hitap şekli, kişilik tanımı ve çalışma tercihleri
+- 📦 Offline-first: Tüm kritik veriler localStorage'ta saklanır
+- 🧭 Profil sayfası: Gerçek zamanlı benzetimli grafikler, hedef takibi (günlük/haftalık/aylık)
+- 🤖 Adaptif Plan: AI servisi yoksa cihaz üzerinde liste halinde plan üretir
+- 🎨 Görsellik: SVG blob animasyonları, framer-motion geçişleri, nefes alan bileşenler
 
 ---
 
 ## Hızlı Başlangıç
 
-Geliştirme ortamını çalıştırmak için:
+Terminalde projeyi çalıştır:
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Üretim build:
+Üretim için:
 
 ```bash
 pnpm build
@@ -28,94 +53,56 @@ Testler:
 pnpm test
 ```
 
-> Not: Bu proje PNPM ile hazırlanmıştır; package.json içindeki scriptlere bakınız.
-
 ---
 
-## Öne çıkan özellikler
+## Kullanım Notları / LocalStorage Anahtarları
 
-- Kapsamlı Giriş Ekranı (13 soru): Ad, hitap tercihi ve kişilik tanımı ile kişiselleştirilmiş deneyim.
-- Offline-first veri yönetimi: localStorage kullanılarak `onboarding-data`, `personality-profile`, `user-goals`, `pomodoro-sessions`, `ai-plan-history` gibi anahtarlar üzerinden veri saklanır.
-- Profil sayfası: Zengin görsel grafikler (Recharts) ve gerçek zamanlı benzetimli akışlar.
-- Adaptif Plan Oluşturma: AI servisi yoksa (veya çevrimdışıyken) cihaz üzerinde basit, üretken bir plan oluşturma fallback'i vardır.
-- Animasyonlar & Organik UI: framer-motion, SVG bloblar ve "nefes alan" bileşen animasyonları.
-
----
-
-## LocalStorage anahtarları (geliştiriciler için)
+Uygulama yerel olarak şu anahtarları kullanır — geliştirirken bu anahtarları temizleyebilir veya test verileri koyabilirsiniz:
 
 - `onboarding-data` — Giriş ekranı cevapları
-- `personality-profile` — Hesaplanmış kişilik profili ve öneriler
-- `user-goals` / `goals` — Kullanıcının hedefleri
-- `pomodoro-sessions` — Toplam tamamlanan pomodoro oturum sayısı
-- `ai-plan-history` — Oluşturulmuş çalışma planlarının geçmişi
-- `personality-completed` — Kişilik testinin tamamlandığını gösterir
-
-Bu anahtarlar ile uygulamayı manuel test edebilir veya temizleyebilirsiniz.
+- `personality-profile` — Hesaplanmış profil ve öneriler
+- `user-goals` / `goals` — Kullanıcının hedef listesi
+- `pomodoro-sessions` — Tamamlanan pomodoro sayısı
+- `ai-plan-history` — Oluşturulan planların geçmişi
+- `personality-completed` — Test tamamlanma durumu
 
 ---
 
-## Nasıl çalışır — Plan Oluştur (Çevrimdışı)
+## Nasıl Çalışır — Plan Oluşturma (Offline davranış)
 
-1. Koçluk sayfasına gidin ("Koçluk").
-2. "Plan Oluştur" butonuna basın.
-3. Sunucuya erişilemiyorsa uygulama otomatik olarak offline fallback üretir ve liste halinde adım adım planı gösterir.
-
-Uygulama planları `ai-plan-history` anahtarında saklar.
-
----
-
-## Dosya yapısı (kısa)
-
-- `client/` — React frontend
-  - `pages/` — Route sayfaları (Index, Kocluk, Profil, Ayarlar, Pomodoro...)
-  - `components/` — Yeniden kullanılabilir UI bileşenleri (AdaptivePlan, PersonalityTest, ProfileCharts...)
-  - `global.css` — Temalar ve animasyonlar (nefes, blob, renk tokenları)
-- `server/` — Express backend (mininal; istenirse genişletilebilir)
+1. Koçluk → "Plan Oluştur" butonuna basın.
+2. Eğer AI servisine erişim varsa, sunucu çağrısı yapılır.
+3. Sunucuya erişilemiyorsa (veya hata alınırsa) uygulama cihaz üzerinde basit bir liste halinde plan üretir ve gösterir.
+4. Oluşturulan plan `ai-plan-history` anahtarına kaydedilir.
 
 ---
 
-## MCP (Önerilen entegrasyonlar)
+## Görseller & Ekranlar
 
-Bu proje çevrimdışı çalışacak şekilde tasarlanmıştır; yine de ileride gerçek zamanlı, yedekleme veya auth entegrasyonu isterseniz şu MCP/servisler faydalı olacaktır:
+README içinde demo görselleri için `./public/placeholder.svg` kullanıldı. Gerçek ekran görüntüleri eklemek isterseniz `public/` klasörüne `screenshot-1.png`, `screenshot-2.png` ekleyip bu dosya yollarını aşağıdaki gibi referanslayabilirsiniz:
 
-• Neon — serverless Postgres (veri depolama, migration)
-• Netlify — Host & CI/CD
-• Zapier — İş akış otomasyonları
-• Figma — Tasarımdan koda geçiş (Builder.io Figma plugin önerilir)
-• Supabase — Auth & realtime DB (kolay entegrasyon)
-• Builder.io — İçerik yönetimi & CMS
-• Linear — Issue takibi
-• Notion — Dokümantasyon
-• Sentry — Hata takibi
-• Context7 — Kütüphane dokümantasyonları
-• Semgrep — Güvenlik taramaları
-• Prisma Postgres — ORM / DB yönetimi
-
-Bu MCP listesindeki tüm servisleri bağlamak için Builder.io MCP popover'ını kullanabilirsiniz.
+```md
+![Ana Sayfa](./public/screenshot-1.png)
+![Profil](./public/screenshot-2.png)
+```
 
 ---
 
-## Görsel materyaller
+## Katkıda Bulunma
 
-- Uygulama logo/placeholder: `./public/placeholder.svg`
-- Örnek ekran görüntüleri: `./public/` klasörüne ekleyerek README içinde görüntüleyebilirsiniz.
-
----
-
-## Katkıda bulunma
-
-1. Fork oluşturun
-2. Yeni bir branch açın: `git checkout -b feature/isim`
+1. Fork yapın
+2. `feature/...` branch'i açın
 3. Değişiklikleri commit edin
-4. PR açın
+4. PR gönderin
+
+Kod standardı: TypeScript + React + Vite + Tailwind
 
 ---
 
 ## Lisans
 
-Bu proje açık kaynaklıdır — uygun lisansı ekleyin (örn. MIT) veya kurumsal gereksiniminize göre güncelleyin.
+MIT — Lisansı projenize uygun şekilde güncelleyebilirsiniz.
 
 ---
 
-Herhangi bir bölümün içeriğini genişletmemi istersen (kurulum, CI, deploy, detaylı localStorage kullanım örnekleri veya README'ye ekran görüntüleri ekleme), söyle yeterli; ben ekleyeyim.
+Herhangi bir bölüm için daha fazla görsel, daha detaylı kurulum adımı veya deploy rehberi istersen README'yi genişleteyim.
