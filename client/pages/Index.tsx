@@ -127,7 +127,7 @@ export default function Index() {
                 href="/pomodoro"
                 className="flex-1 py-2 rounded-xl bg-primary text-primary-foreground text-center"
               >
-                Hemen Çalış
+                Hemen ��alış
               </a>
             </div>
           </div>
@@ -162,13 +162,6 @@ export default function Index() {
             <h3 className="text-lg font-semibold">⏳ Pomodoro</h3>
           </Link>
           <Link
-            to="/kocluk"
-            className="p-4 rounded-2xl border hover:border-primary transition-colors"
-          >
-            <p className="text-xs text-muted-foreground">Motivasyon</p>
-            <h3 className="text-lg font-semibold">💬 Koçluk</h3>
-          </Link>
-          <Link
             to="/teknikler"
             className="p-4 rounded-2xl border hover:border-primary transition-colors"
           >
@@ -189,6 +182,11 @@ export default function Index() {
             <p className="text-xs text-muted-foreground">Hesabım</p>
             <h3 className="text-lg font-semibold">👤 Profil</h3>
           </Link>
+        </section>
+
+        {/* Full-width Koçluk feature card */}
+        <section className="mt-3">
+          <MotionKoçluk />
         </section>
 
         <section>
