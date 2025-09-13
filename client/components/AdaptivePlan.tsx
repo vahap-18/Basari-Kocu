@@ -10,7 +10,11 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
     // Build a simple step-by-step plan based on profile and goals
     const daily = goals?.daily || 3;
     const weekly = goals?.weekly || 15;
-    const rec = profile?.recommendedPomodoro || { work: 25, short: 5, long: 15 };
+    const rec = profile?.recommendedPomodoro || {
+      work: 25,
+      short: 5,
+      long: 15,
+    };
     const identity = (profile && profile.dominant) || "focus";
 
     const base: string[] = [];
@@ -18,24 +22,36 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
     base.push(`2. Pomodoro: ${rec.work}dk çalışma / ${rec.short}dk kısa mola.`);
 
     if (identity === "resilience") {
-      base.push("3. Zorlu konulara haftada 3 blok ayır; her blokta küçük hedefler koy.");
+      base.push(
+        "3. Zorlu konulara haftada 3 blok ayır; her blokta küçük hedefler koy.",
+      );
     } else if (identity === "procrastinate") {
       base.push("3. Erteleme için 25dk Pomodoro başlat, ardından 5dk ödül.");
     } else if (identity === "social") {
-      base.push("3. Haftada 2 kez çalışma grubuna katıl; konuları başkalarına anlat.");
+      base.push(
+        "3. Haftada 2 kez çalışma grubuna katıl; konuları başkalarına anlat.",
+      );
     } else if (identity === "structure") {
-      base.push("3. Günlük başlangıç ve bitiş rutini oluştur; görevleri sırala.");
+      base.push(
+        "3. Günlük başlangıç ve bitiş rutini oluştur; görevleri sırala.",
+      );
     } else if (identity === "curiosity") {
       base.push("3. Her gün 30dk keşif zamanı ayır; not al ve özet çıkar.");
     } else if (identity === "leadership") {
-      base.push("3. Haftada bir mini öğretme oturumu planla (arkadaşlara anlat).");
+      base.push(
+        "3. Haftada bir mini öğretme oturumu planla (arkadaşlara anlat).",
+      );
     } else {
       base.push("3. Günlük hedefleri küçük parçalara böl ve sırayla tamamla.");
     }
 
     base.push(`4. Günlük kontrol: Her gün sonunda 5dk geri bildirim yaz.`);
-    base.push(`5. Hafta değerlendirmesi: Haftalık toplam oturum ve zorlanan konuları belirle.`);
-    base.push(`6. Motivasyon: Haftada 1 başarı hikâyesi oku veya kısa video izle.`);
+    base.push(
+      `5. Hafta değerlendirmesi: Haftalık toplam oturum ve zorlanan konuları belirle.`,
+    );
+    base.push(
+      `6. Motivasyon: Haftada 1 başarı hikâyesi oku veya kısa video izle.`,
+    );
 
     // trim to sensible length based on goals
     return base.slice(0, 8);
@@ -107,8 +123,13 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
 
       if (usedOffline) {
         // create offline plan
-        const goalsLocal = JSON.parse(localStorage.getItem("user-goals") || "{}");
-        const offlineSteps = generateOfflinePlan(profile, goalsLocal || payload.goals);
+        const goalsLocal = JSON.parse(
+          localStorage.getItem("user-goals") || "{}",
+        );
+        const offlineSteps = generateOfflinePlan(
+          profile,
+          goalsLocal || payload.goals,
+        );
         data = { plan: offlineSteps, analysis: null };
         setPlan(offlineSteps);
       } else {
@@ -127,7 +148,10 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
             scores: data.analysis.scores || {},
             dominant: data.analysis.dominant || "",
             summary: data.plan
-              ? (Array.isArray(data.plan) ? data.plan[0] : String(data.plan)).split("\n").slice(0, 2).join(" ")
+              ? (Array.isArray(data.plan) ? data.plan[0] : String(data.plan))
+                  .split("\n")
+                  .slice(0, 2)
+                  .join(" ")
               : "AI tarafından oluşturuldu",
             recommendedPomodoro: data.analysis.recommendedPomodoro || {
               work: 25,
@@ -135,7 +159,10 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
               long: 15,
             },
           };
-          localStorage.setItem("personality-profile", JSON.stringify(profileSaved));
+          localStorage.setItem(
+            "personality-profile",
+            JSON.stringify(profileSaved),
+          );
           try {
             window.dispatchEvent(
               new CustomEvent("personality-updated", { detail: profileSaved }),
@@ -143,7 +170,9 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
           } catch {}
         }
         // save plan history
-        const hist = JSON.parse(localStorage.getItem("ai-plan-history") || "[]");
+        const hist = JSON.parse(
+          localStorage.getItem("ai-plan-history") || "[]",
+        );
         hist.unshift({
           createdAt: new Date().toISOString(),
           plan: data?.plan ?? null,
@@ -180,7 +209,11 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
           onClick={generate}
           disabled={loading}
           className="px-3 py-2 rounded-xl bg-primary text-primary-foreground"
-          title={aiAvailable === false ? "AI servisine ulaşılamıyor — çevrimdışı plan oluşturulacak" : undefined}
+          title={
+            aiAvailable === false
+              ? "AI servisine ulaşılamıyor — çevrimdışı plan oluşturulacak"
+              : undefined
+          }
         >
           {loading ? "Oluşturuluyor..." : "Plan Oluştur"}
         </button>

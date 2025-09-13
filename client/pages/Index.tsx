@@ -52,7 +52,9 @@ function MotionKocluk() {
             </p>
           </div>
           <div className="text-right">
-            <button className="px-4 py-2 rounded-xl bg-primary text-primary-foreground">Başla</button>
+            <button className="px-4 py-2 rounded-xl bg-primary text-primary-foreground">
+              Başla
+            </button>
           </div>
         </div>
       </motion.div>

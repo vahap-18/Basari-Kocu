@@ -2,7 +2,17 @@ import React from "react";
 import { MobileLayout } from "@/components/MobileLayout";
 import { motion } from "framer-motion";
 import { useTheme } from "@/components/ThemeProvider";
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, CartesianGrid } from "recharts";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  BarChart,
+  Bar,
+  CartesianGrid,
+} from "recharts";
 import { User } from "lucide-react";
 
 function formatDate(d: Date) {
@@ -14,7 +24,10 @@ function generateSeries(points: number) {
   const arr = [] as any[];
   for (let i = points - 1; i >= 0; i--) {
     const ts = new Date(now - i * 3600 * 1000);
-    arr.push({ time: formatDate(ts), value: Math.round(40 + Math.random() * 60) });
+    arr.push({
+      time: formatDate(ts),
+      value: Math.round(40 + Math.random() * 60),
+    });
   }
   return arr;
 }
@@ -30,7 +43,10 @@ export default function Profile() {
     }
   });
 
-  const [onboarding, setOnboarding] = React.useState<Record<string, string> | null>(() => {
+  const [onboarding, setOnboarding] = React.useState<Record<
+    string,
+    string
+  > | null>(() => {
     try {
       const v = localStorage.getItem("onboarding-data");
       return v ? JSON.parse(v) : null;
@@ -39,7 +55,9 @@ export default function Profile() {
     }
   });
 
-  const [mode, setMode] = React.useState<"daily" | "weekly" | "monthly">("weekly");
+  const [mode, setMode] = React.useState<"daily" | "weekly" | "monthly">(
+    "weekly",
+  );
   const [series, setSeries] = React.useState(() => generateSeries(24));
   const [sessions, setSessions] = React.useState(() => {
     try {
@@ -53,7 +71,12 @@ export default function Profile() {
   React.useEffect(() => {
     const iv = setInterval(() => {
       setSeries((s) => {
-        const next = s.slice(1).concat({ time: formatDate(new Date()), value: Math.round(40 + Math.random() * 60) });
+        const next = s
+          .slice(1)
+          .concat({
+            time: formatDate(new Date()),
+            value: Math.round(40 + Math.random() * 60),
+          });
         return next;
       });
     }, 3000);
@@ -85,10 +108,18 @@ export default function Profile() {
   React.useEffect(() => {
     function onStorage(e: StorageEvent) {
       try {
-        if (e.key === "personality-profile") setProfile(e.newValue ? JSON.parse(e.newValue) : null);
-        if (e.key === "onboarding-data") setOnboarding(e.newValue ? JSON.parse(e.newValue) : null);
-        if (e.key === "user-goals") setGoals(e.newValue ? JSON.parse(e.newValue) : { daily: 3, weekly: 15, monthly: 60 });
-        if (e.key === "pomodoro-sessions") setSessions(Number(e.newValue || "0"));
+        if (e.key === "personality-profile")
+          setProfile(e.newValue ? JSON.parse(e.newValue) : null);
+        if (e.key === "onboarding-data")
+          setOnboarding(e.newValue ? JSON.parse(e.newValue) : null);
+        if (e.key === "user-goals")
+          setGoals(
+            e.newValue
+              ? JSON.parse(e.newValue)
+              : { daily: 3, weekly: 15, monthly: 60 },
+          );
+        if (e.key === "pomodoro-sessions")
+          setSessions(Number(e.newValue || "0"));
       } catch {}
     }
     const onCustom = (ev: any) => {
@@ -101,11 +132,17 @@ export default function Profile() {
     window.addEventListener("personality-updated", onCustom as EventListener);
     return () => {
       window.removeEventListener("storage", onStorage);
-      window.removeEventListener("personality-updated", onCustom as EventListener);
+      window.removeEventListener(
+        "personality-updated",
+        onCustom as EventListener,
+      );
     };
   }, []);
 
-  const total = React.useMemo(() => series.reduce((a, b) => a + (b.value || 0), 0), [series]);
+  const total = React.useMemo(
+    () => series.reduce((a, b) => a + (b.value || 0), 0),
+    [series],
+  );
 
   const goalsKey = "user-goals";
   const [goals, setGoals] = React.useState(() => {
@@ -127,19 +164,38 @@ export default function Profile() {
 
   const completion = React.useMemo(() => {
     // simplistic: sessions today modulo weekly target
-    const pct = Math.min(100, Math.round((sessions / (goals[mode === "daily" ? "daily" : mode === "weekly" ? "weekly" : "monthly"])) * 100));
+    const pct = Math.min(
+      100,
+      Math.round(
+        (sessions /
+          goals[
+            mode === "daily"
+              ? "daily"
+              : mode === "weekly"
+                ? "weekly"
+                : "monthly"
+          ]) *
+          100,
+      ),
+    );
     return isNaN(pct) ? 0 : pct;
   }, [sessions, goals, mode]);
 
   return (
     <MobileLayout>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="space-y-4"
+      >
         <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/10 to-card sticky top-4 z-20 breathing">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-3xl overflow-hidden">
                 {onboarding?.displayName ? (
-                  <div className="font-semibold">{onboarding.displayName.charAt(0).toUpperCase()}</div>
+                  <div className="font-semibold">
+                    {onboarding.displayName.charAt(0).toUpperCase()}
+                  </div>
                 ) : (
                   <User className="w-8 h-8" />
                 )}
@@ -148,9 +204,13 @@ export default function Profile() {
                 <div className="text-sm text-muted-foreground">Merhaba</div>
                 <div className="text-lg font-bold">
                   {onboarding?.displayName || "Sen"}{" "}
-                  <span className="text-sm text-muted-foreground">• {onboarding?.addressing || "Dostum"}</span>
+                  <span className="text-sm text-muted-foreground">
+                    • {onboarding?.addressing || "Dostum"}
+                  </span>
                 </div>
-                <div className="text-sm text-muted-foreground mt-1">{profile?.summary || "Kişisel analiziniz kullanılabilir."}</div>
+                <div className="text-sm text-muted-foreground mt-1">
+                  {profile?.summary || "Kişisel analiziniz kullanılabilir."}
+                </div>
               </div>
             </div>
             <div className="text-right">
@@ -162,12 +222,20 @@ export default function Profile() {
 
         <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <motion.div layout className="p-4 rounded-2xl border bg-card">
-            <h3 className="font-semibold mb-2">İlerlemenin Zaman İçindeki Görünümü</h3>
+            <h3 className="font-semibold mb-2">
+              İlerlemenin Zaman İçindeki Görünümü
+            </h3>
             <div style={{ height: 160 }}>
               <ResponsiveContainer>
                 <LineChart data={series}>
                   <defs>
-                    <linearGradient id="primaryGrad" x1="0" y1="0" x2="1" y2="0">
+                    <linearGradient
+                      id="primaryGrad"
+                      x1="0"
+                      y1="0"
+                      x2="1"
+                      y2="0"
+                    >
                       <stop offset="0%" stopColor="rgba(59,130,246,0.9)" />
                       <stop offset="100%" stopColor="rgba(99,102,241,0.9)" />
                     </linearGradient>
@@ -193,13 +261,45 @@ export default function Profile() {
             </div>
             <div className="mt-3 flex items-center justify-between">
               <div>
-                <div className="text-sm text-muted-foreground">Seçilen Periyot</div>
+                <div className="text-sm text-muted-foreground">
+                  Seçilen Periyot
+                </div>
                 <div className="font-semibold capitalize">{mode}</div>
               </div>
               <div className="flex gap-2">
-                <button onClick={() => setMode("daily")} className={"px-3 py-1 rounded-md border text-sm " + (mode === "daily" ? "bg-primary text-primary-foreground" : "")}>Günlük</button>
-                <button onClick={() => setMode("weekly")} className={"px-3 py-1 rounded-md border text-sm " + (mode === "weekly" ? "bg-primary text-primary-foreground" : "")}>Haftalık</button>
-                <button onClick={() => setMode("monthly")} className={"px-3 py-1 rounded-md border text-sm " + (mode === "monthly" ? "bg-primary text-primary-foreground" : "")}>Aylık</button>
+                <button
+                  onClick={() => setMode("daily")}
+                  className={
+                    "px-3 py-1 rounded-md border text-sm " +
+                    (mode === "daily"
+                      ? "bg-primary text-primary-foreground"
+                      : "")
+                  }
+                >
+                  Günlük
+                </button>
+                <button
+                  onClick={() => setMode("weekly")}
+                  className={
+                    "px-3 py-1 rounded-md border text-sm " +
+                    (mode === "weekly"
+                      ? "bg-primary text-primary-foreground"
+                      : "")
+                  }
+                >
+                  Haftalık
+                </button>
+                <button
+                  onClick={() => setMode("monthly")}
+                  className={
+                    "px-3 py-1 rounded-md border text-sm " +
+                    (mode === "monthly"
+                      ? "bg-primary text-primary-foreground"
+                      : "")
+                  }
+                >
+                  Aylık
+                </button>
               </div>
             </div>
           </motion.div>
@@ -208,28 +308,115 @@ export default function Profile() {
             <h3 className="font-semibold mb-2">Hedefler ve Tamamlama</h3>
             <div className="flex items-center gap-3">
               <div className="w-24 h-24 relative">
-                <svg viewBox="0 0 100 100" className="absolute inset-0 -rotate-90">
-                  <circle cx="50" cy="50" r="44" className="stroke-muted" strokeWidth="8" fill="none" />
-                  <circle cx="50" cy="50" r="44" className="stroke-primary" strokeWidth="8" fill="none" strokeDasharray={`${Math.PI * 2 * 44}`} strokeDashoffset={`${((100 - completion) / 100) * Math.PI * 2 * 44}`} strokeLinecap="round" />
+                <svg
+                  viewBox="0 0 100 100"
+                  className="absolute inset-0 -rotate-90"
+                >
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="44"
+                    className="stroke-muted"
+                    strokeWidth="8"
+                    fill="none"
+                  />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="44"
+                    className="stroke-primary"
+                    strokeWidth="8"
+                    fill="none"
+                    strokeDasharray={`${Math.PI * 2 * 44}`}
+                    strokeDashoffset={`${((100 - completion) / 100) * Math.PI * 2 * 44}`}
+                    strokeLinecap="round"
+                  />
                 </svg>
               </div>
               <div className="flex-1">
-                <div className="text-sm text-muted-foreground">{mode === "daily" ? "Günlük" : mode === "weekly" ? "Haftalık" : "Aylık"} hedef</div>
-                <div className="font-semibold text-lg">{goals[mode === "daily" ? "daily" : mode === "weekly" ? "weekly" : "monthly"]} oturum</div>
-                <div className="text-sm text-muted-foreground mt-2">Tamamlanma: {completion}%</div>
+                <div className="text-sm text-muted-foreground">
+                  {mode === "daily"
+                    ? "Günlük"
+                    : mode === "weekly"
+                      ? "Haftalık"
+                      : "Aylık"}{" "}
+                  hedef
+                </div>
+                <div className="font-semibold text-lg">
+                  {
+                    goals[
+                      mode === "daily"
+                        ? "daily"
+                        : mode === "weekly"
+                          ? "weekly"
+                          : "monthly"
+                    ]
+                  }{" "}
+                  oturum
+                </div>
+                <div className="text-sm text-muted-foreground mt-2">
+                  Tamamlanma: {completion}%
+                </div>
                 <div className="mt-3 flex gap-2">
-                  <button onClick={() => updateGoal(mode === "daily" ? "daily" : mode === "weekly" ? "weekly" : "monthly", Math.max(1, goals[mode === "daily" ? "daily" : mode === "weekly" ? "weekly" : "monthly"] - 1))} className="px-3 py-1 rounded-md border">-</button>
-                  <button onClick={() => updateGoal(mode === "daily" ? "daily" : mode === "weekly" ? "weekly" : "monthly", goals[mode === "daily" ? "daily" : mode === "weekly" ? "weekly" : "monthly"] + 1)} className="px-3 py-1 rounded-md border">+</button>
+                  <button
+                    onClick={() =>
+                      updateGoal(
+                        mode === "daily"
+                          ? "daily"
+                          : mode === "weekly"
+                            ? "weekly"
+                            : "monthly",
+                        Math.max(
+                          1,
+                          goals[
+                            mode === "daily"
+                              ? "daily"
+                              : mode === "weekly"
+                                ? "weekly"
+                                : "monthly"
+                          ] - 1,
+                        ),
+                      )
+                    }
+                    className="px-3 py-1 rounded-md border"
+                  >
+                    -
+                  </button>
+                  <button
+                    onClick={() =>
+                      updateGoal(
+                        mode === "daily"
+                          ? "daily"
+                          : mode === "weekly"
+                            ? "weekly"
+                            : "monthly",
+                        goals[
+                          mode === "daily"
+                            ? "daily"
+                            : mode === "weekly"
+                              ? "weekly"
+                              : "monthly"
+                        ] + 1,
+                      )
+                    }
+                    className="px-3 py-1 rounded-md border"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
             </div>
 
             <div className="mt-4">
-              <h4 className="text-sm text-muted-foreground mb-2">Hızlı İstatistikler</h4>
+              <h4 className="text-sm text-muted-foreground mb-2">
+                Hızlı İstatistikler
+              </h4>
               <div className="grid grid-cols-3 gap-2">
                 <div className="p-2 rounded-lg border text-center">
                   <div className="text-xs text-muted-foreground">Ortalama</div>
-                  <div className="font-semibold">{Math.round(total / series.length)}</div>
+                  <div className="font-semibold">
+                    {Math.round(total / series.length)}
+                  </div>
                 </div>
                 <div className="p-2 rounded-lg border text-center">
                   <div className="text-xs text-muted-foreground">Toplam</div>
@@ -259,7 +446,12 @@ export default function Profile() {
                 <XAxis dataKey="time" hide />
                 <YAxis hide />
                 <Tooltip />
-                <Bar dataKey="value" fill="url(#accentGrad)" isAnimationActive={true} animationDuration={900} />
+                <Bar
+                  dataKey="value"
+                  fill="url(#accentGrad)"
+                  isAnimationActive={true}
+                  animationDuration={900}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -270,17 +462,27 @@ export default function Profile() {
           <div className="grid grid-cols-1 gap-2">
             <div className="p-3 rounded-xl border bg-background">
               <div className="text-sm text-muted-foreground">Hitap Şekli</div>
-              <div className="font-medium">{onboarding?.addressing || "Dostum"}</div>
+              <div className="font-medium">
+                {onboarding?.addressing || "Dostum"}
+              </div>
             </div>
 
             <div className="p-3 rounded-xl border bg-background">
-              <div className="text-sm text-muted-foreground">Kendini Tanımlama</div>
-              <div className="font-medium">{onboarding?.identity || "Bilge"}</div>
+              <div className="text-sm text-muted-foreground">
+                Kendini Tanımlama
+              </div>
+              <div className="font-medium">
+                {onboarding?.identity || "Bilge"}
+              </div>
             </div>
 
             <div className="p-3 rounded-xl border bg-background">
-              <div className="text-sm text-muted-foreground">Hazırlandığın Sınav</div>
-              <div className="font-medium">{onboarding?.exam || "Belirtilmedi"}</div>
+              <div className="text-sm text-muted-foreground">
+                Hazırlandığın Sınav
+              </div>
+              <div className="font-medium">
+                {onboarding?.exam || "Belirtilmedi"}
+              </div>
             </div>
           </div>
         </section>
