@@ -81,6 +81,30 @@ export default function Profile() {
     if (mode === "monthly") setSeries(generateSeries(30));
   }, [mode]);
 
+  // listen for other tabs or components updating localStorage
+  React.useEffect(() => {
+    function onStorage(e: StorageEvent) {
+      try {
+        if (e.key === "personality-profile") setProfile(e.newValue ? JSON.parse(e.newValue) : null);
+        if (e.key === "onboarding-data") setOnboarding(e.newValue ? JSON.parse(e.newValue) : null);
+        if (e.key === "user-goals") setGoals(e.newValue ? JSON.parse(e.newValue) : { daily: 3, weekly: 15, monthly: 60 });
+        if (e.key === "pomodoro-sessions") setSessions(Number(e.newValue || "0"));
+      } catch {}
+    }
+    const onCustom = (ev: any) => {
+      const detail = ev?.detail;
+      if (detail) {
+        if (detail.type === "personality-updated") setProfile(detail);
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("personality-updated", onCustom as EventListener);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("personality-updated", onCustom as EventListener);
+    };
+  }, []);
+
   const total = React.useMemo(() => series.reduce((a, b) => a + (b.value || 0), 0), [series]);
 
   const goalsKey = "user-goals";
