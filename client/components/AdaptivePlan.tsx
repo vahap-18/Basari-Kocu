@@ -65,55 +65,69 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
     try {
       const payload = {
         profile,
-        goals: JSON.parse(localStorage.getItem("goals") || "[]"),
+        goals: JSON.parse(localStorage.getItem("goals") || "{}"),
       };
-      const res = await fetch("/api/ai-plan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
 
-      // read body safely using clone to avoid "body stream already read" issues
-      let text = "";
-      try {
-        text = await (res.clone().text());
-      } catch (e) {
-        try {
-          text = await res.text();
-        } catch (e2) {
-          text = "";
-        }
-      }
-
-      // try parse JSON
+      // attempt network plan generation, but fallback to offline if not available
+      let usedOffline = false;
       let data: any = null;
+
       try {
-        data = text ? JSON.parse(text) : null;
-      } catch {
-        data = { plan: text };
+        const res = await fetch("/api/ai-plan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        // read body safely using clone to avoid "body stream already read" issues
+        let text = "";
+        try {
+          text = await res.clone().text();
+        } catch (e) {
+          try {
+            text = await res.text();
+          } catch (e2) {
+            text = "";
+          }
+        }
+
+        try {
+          data = text ? JSON.parse(text) : null;
+        } catch {
+          data = { plan: text };
+        }
+
+        if (!res.ok) {
+          usedOffline = true;
+        }
+      } catch (e) {
+        // network failed -> fallback
+        usedOffline = true;
       }
 
-      if (!res.ok) {
-        const serverMsg =
-          data?.error ||
-          data?.message ||
-          data?.detail ||
-          `Server responded ${res.status}`;
-        setError(`Servis hatası: ${serverMsg}`);
-        return;
+      if (usedOffline) {
+        // create offline plan
+        const goalsLocal = JSON.parse(localStorage.getItem("user-goals") || "{}");
+        const offlineSteps = generateOfflinePlan(profile, goalsLocal || payload.goals);
+        data = { plan: offlineSteps, analysis: null };
+        setPlan(offlineSteps);
+      } else {
+        // server returned something
+        const planValue = data?.plan ?? data ?? [];
+        if (Array.isArray(planValue)) setPlan(planValue);
+        else if (typeof planValue === "string") setPlan([planValue]);
+        else setPlan([String(planValue)]);
       }
-
-      setPlan(data?.plan ?? String(data ?? text));
 
       // if the server returned structured analysis, persist as personality-profile and dispatch update
       try {
-        if (data.analysis) {
-          const profile = {
+        if (data?.analysis) {
+          const profileSaved = {
             createdAt: new Date().toISOString(),
             scores: data.analysis.scores || {},
             dominant: data.analysis.dominant || "",
             summary: data.plan
-              ? data.plan.split("\n").slice(0, 2).join(" ")
+              ? (Array.isArray(data.plan) ? data.plan[0] : String(data.plan)).split("\n").slice(0, 2).join(" ")
               : "AI tarafından oluşturuldu",
             recommendedPomodoro: data.analysis.recommendedPomodoro || {
               work: 25,
@@ -121,21 +135,20 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
               long: 15,
             },
           };
-          localStorage.setItem("personality-profile", JSON.stringify(profile));
+          localStorage.setItem("personality-profile", JSON.stringify(profileSaved));
           try {
             window.dispatchEvent(
-              new CustomEvent("personality-updated", { detail: profile }),
+              new CustomEvent("personality-updated", { detail: profileSaved }),
             );
           } catch {}
         }
         // save plan history
-        const hist = JSON.parse(
-          localStorage.getItem("ai-plan-history") || "[]",
-        );
+        const hist = JSON.parse(localStorage.getItem("ai-plan-history") || "[]");
         hist.unshift({
           createdAt: new Date().toISOString(),
-          plan: data.plan,
-          analysis: data.analysis || null,
+          plan: data?.plan ?? null,
+          analysis: data?.analysis || null,
+          offline: usedOffline,
         });
         localStorage.setItem("ai-plan-history", JSON.stringify(hist));
       } catch {}
@@ -153,7 +166,7 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
         <div className="text-xs text-muted-foreground">
           {aiAvailable === false
             ? "AI servis kapalı"
-            : "OpenAI ile olu��turulur"}
+            : "OpenAI ile oluşturulur"}
         </div>
       </div>
 
