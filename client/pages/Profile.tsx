@@ -249,11 +249,17 @@ export default function Profile() {
           <div style={{ height: 220 }}>
             <ResponsiveContainer>
               <BarChart data={series}>
+                <defs>
+                  <linearGradient id="accentGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="rgba(250,215,75,0.9)" />
+                    <stop offset="100%" stopColor="rgba(244,63,94,0.6)" />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="time" hide />
                 <YAxis hide />
                 <Tooltip />
-                <Bar dataKey="value" fill="hsl(var(--accent))" />
+                <Bar dataKey="value" fill="url(#accentGrad)" isAnimationActive={true} animationDuration={900} />
               </BarChart>
             </ResponsiveContainer>
           </div>
