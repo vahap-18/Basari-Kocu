@@ -196,9 +196,13 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
 
       {error && <div className="text-sm text-destructive">{error}</div>}
 
-      {plan ? (
+      {plan && plan.length ? (
         <div className="mt-2 p-3 rounded-xl bg-background">
-          <pre className="whitespace-pre-wrap text-sm">{plan}</pre>
+          <ol className="list-decimal list-inside space-y-2 text-sm">
+            {plan.map((p, i) => (
+              <li key={i}>{p}</li>
+            ))}
+          </ol>
         </div>
       ) : (
         <div className="text-sm text-muted-foreground">Henüz plan yok.</div>
