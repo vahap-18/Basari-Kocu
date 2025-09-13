@@ -95,7 +95,7 @@ export default function Index() {
               <div className="p-3 rounded-xl bg-gradient-to-r from-primary/20 to-accent/10 border flex items-center justify-between">
                 <div>
                   <div className="text-xs text-muted-foreground">
-                    {examName || "Planlanan sınav"}
+                    {examName || "Planlanan s��nav"}
                   </div>
                   <div className="text-2xl font-bold tabular-nums">
                     {remaining.days}g {String(remaining.hours).padStart(2, "0")}
@@ -181,6 +181,13 @@ export default function Index() {
           >
             <p className="text-xs text-muted-foreground">Kişiselleştir</p>
             <h3 className="text-lg font-semibold">⚙️ Ayarlar</h3>
+          </Link>
+          <Link
+            to="/profil"
+            className="p-4 rounded-2xl border hover:border-primary transition-colors"
+          >
+            <p className="text-xs text-muted-foreground">Hesabım</p>
+            <h3 className="text-lg font-semibold">👤 Profil</h3>
           </Link>
         </section>
 
