@@ -331,6 +331,30 @@
     box-sizing: border-box;
   }
 
+  /* breathing animation for components */
+  @keyframes breathe {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+  .breathing {
+    animation: breathe 6s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* SVG blob helper class (applies a subtle moving clip-path) */
+  @keyframes blobMove {
+    0% { transform: translate(0px, 0px) rotate(0deg); }
+    50% { transform: translate(6px, -6px) rotate(6deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
+  }
+  .svg-blob {
+    filter: blur(18px);
+    opacity: 0.6;
+    transform-origin: center;
+    animation: blobMove 9s ease-in-out infinite;
+  }
+
   img, svg {
     max-width: 100%;
     height: auto;
