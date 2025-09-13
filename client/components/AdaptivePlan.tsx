@@ -37,11 +37,23 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const text = await res.text();
+
+      // read body safely using clone to avoid "body stream already read" issues
+      let text = "";
+      try {
+        text = await (res.clone().text());
+      } catch (e) {
+        try {
+          text = await res.text();
+        } catch (e2) {
+          text = "";
+        }
+      }
+
       // try parse JSON
       let data: any = null;
       try {
-        data = JSON.parse(text);
+        data = text ? JSON.parse(text) : null;
       } catch {
         data = { plan: text };
       }
@@ -56,7 +68,7 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
         return;
       }
 
-      setPlan(data.plan ?? String(data));
+      setPlan(data?.plan ?? String(data ?? text));
 
       // if the server returned structured analysis, persist as personality-profile and dispatch update
       try {
