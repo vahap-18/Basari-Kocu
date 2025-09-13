@@ -11,6 +11,54 @@ import {
 import SmallCalendarCard from "@/components/SmallCalendarCard";
 import TaskReminderCard from "@/components/TaskReminderCard";
 import CoachCalendar from "@/components/CoachCalendar";
+import { motion } from "framer-motion";
+
+const MotionLink = motion(Link);
+
+function MotionKocluk() {
+  return (
+    <MotionLink to="/kocluk" className="block w-full">
+      <motion.div
+        initial={{ scale: 1, opacity: 0.98 }}
+        animate={{ scale: [1, 1.01, 1], opacity: [1, 0.95, 1] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="relative overflow-hidden rounded-3xl border p-6 bg-gradient-to-br from-primary/10 to-accent/10"
+      >
+        <motion.div
+          className="absolute -left-10 -top-10 w-64 h-64 rounded-full filter blur-3xl opacity-70"
+          style={{
+            background:
+              "radial-gradient(circle at 30% 30%, rgba(99,102,241,0.28), transparent 40%), radial-gradient(circle at 70% 70%, rgba(14,165,233,0.22), transparent 40%)",
+          }}
+          animate={{ scale: [1, 1.08, 1], rotate: [0, 8, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        <motion.div
+          className="absolute -right-16 -bottom-16 w-56 h-56 rounded-full filter blur-2xl opacity-60"
+          style={{
+            background:
+              "radial-gradient(circle at 20% 20%, rgba(236,72,153,0.18), transparent 30%), radial-gradient(circle at 80% 80%, rgba(245,158,11,0.12), transparent 40%)",
+          }}
+          animate={{ scale: [1, 1.06, 1], rotate: [0, -6, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        <div className="relative z-10 flex items-center justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-bold">💬 Koçluk</h3>
+            <p className="text-sm text-muted-foreground mt-1">
+              Günlük motivasyon, hızlı koçluk ve hedef odaklı tavsiyeler
+            </p>
+          </div>
+          <div className="text-right">
+            <button className="px-4 py-2 rounded-xl bg-primary text-primary-foreground">Başla</button>
+          </div>
+        </div>
+      </motion.div>
+    </MotionLink>
+  );
+}
 
 export default function Index() {
   const today = useMemo(
@@ -127,7 +175,7 @@ export default function Index() {
                 href="/pomodoro"
                 className="flex-1 py-2 rounded-xl bg-primary text-primary-foreground text-center"
               >
-                Hemen ��alış
+                Hemen Çalış
               </a>
             </div>
           </div>
