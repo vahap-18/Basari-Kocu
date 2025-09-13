@@ -31,6 +31,31 @@ export const MobileLayout: React.FC<{ children: React.ReactNode }> = ({
         }}
       />
 
+      {/* svg blob overlays for organic feel */}
+      <svg className="absolute -z-20 pointer-events-none left-[-10%] top-[-10%] w-[60%] h-[60%] svg-blob" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+        <defs>
+          <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgba(99,102,241,0.12)" />
+            <stop offset="100%" stopColor="rgba(14,165,233,0.08)" />
+          </linearGradient>
+        </defs>
+        <g transform="translate(300,300)">
+          <path d="M120,-160C160,-120,188,-80,198,-36C208,8,201,56,176,92C151,128,109,152,64,170C19,188,-29,200,-72,184C-115,168,-153,124,-178,74C-203,24,-214,-30,-196,-74C-178,-118,-130,-152,-81,-179C-33,-206,15,-226,60,-210C105,-194,78,-200,120,-160Z" fill="url(#g1)" />
+        </g>
+      </svg>
+
+      <svg className="absolute -z-20 pointer-events-none right-[-8%] bottom-[-8%] w-[50%] h-[50%] svg-blob" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+        <defs>
+          <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgba(245,158,11,0.12)" />
+            <stop offset="100%" stopColor="rgba(236,72,153,0.08)" />
+          </linearGradient>
+        </defs>
+        <g transform="translate(300,300)">
+          <path d="M130,-150C170,-120,200,-80,202,-40C204,0,178,40,154,76C130,112,108,144,72,166C36,188,-6,200,-48,192C-90,184,-131,156,-162,118C-193,80,-214,32,-204,-10C-194,-52,-153,-84,-116,-110C-79,-136,-45,-156,-8,-150C29,-144,58,-112,90,-90C122,-68,90,-180,130,-150Z" fill="url(#g2)" />
+        </g>
+      </svg>
+
       <Header />
 
       <motion.main
