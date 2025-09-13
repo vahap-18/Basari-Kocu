@@ -221,7 +221,7 @@ export default function KoclukPage() {
         )}
 
         {/* Top hero */}
-        <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/6 to-card shadow-md">
+        <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/6 to-card shadow-md breathing">
           <div className="flex items-start gap-3">
             <div className="flex-1">
               <div className="flex items-center justify-between">
@@ -590,7 +590,7 @@ function TestCatalog() {
       title: "EQ-i",
       emoji: "💖",
       desc: "Duygusal zekâ envanteri.",
-      long: "EQ-i, duygusal farkındalık, empati ve duyguları düzenleme becerilerini değerlendirir. Sonuçlar, iletişim ve stres y��netimi için pratik öneriler sağlar.",
+      long: "EQ-i, duygusal farkındalık, empati ve duyguları düzenleme becerilerini değerlendirir. Sonuçlar, iletişim ve stres yönetimi için pratik öneriler sağlar.",
       topics: ["Farkındalık", "Empati", "Duygu düzenleme", "Sosyal yetkinlik"],
       how: ["Refleksiyon soruları içerir; 10–20 dk sürebilir."],
     },
