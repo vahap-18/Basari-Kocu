@@ -166,10 +166,28 @@ export default function Profile() {
             <div style={{ height: 160 }}>
               <ResponsiveContainer>
                 <LineChart data={series}>
+                  <defs>
+                    <linearGradient id="primaryGrad" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="rgba(59,130,246,0.9)" />
+                      <stop offset="100%" stopColor="rgba(99,102,241,0.9)" />
+                    </linearGradient>
+                    <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="rgba(59,130,246,0.12)" />
+                      <stop offset="100%" stopColor="rgba(99,102,241,0.02)" />
+                    </linearGradient>
+                  </defs>
                   <XAxis dataKey="time" hide />
                   <YAxis hide />
                   <Tooltip />
-                  <Line type="monotone" dataKey="value" stroke="hsl(var(--primary))" strokeWidth={3} dot={false} />
+                  <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke="url(#primaryGrad)"
+                    strokeWidth={3}
+                    dot={false}
+                    isAnimationActive={true}
+                    animationDuration={800}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>
