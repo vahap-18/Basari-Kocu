@@ -234,7 +234,7 @@ export default function Index() {
 
         {/* Full-width Koçluk feature card */}
         <section className="mt-3">
-          <MotionKoçluk />
+          <MotionKocluk />
         </section>
 
         <section>
