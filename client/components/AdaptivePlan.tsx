@@ -178,8 +178,9 @@ export default function AdaptivePlan({ profile }: { profile: any }) {
       <div className="flex gap-2 mb-3">
         <button
           onClick={generate}
-          disabled={loading || aiAvailable === false}
+          disabled={loading}
           className="px-3 py-2 rounded-xl bg-primary text-primary-foreground"
+          title={aiAvailable === false ? "AI servisine ulaşılamıyor — çevrimdışı plan oluşturulacak" : undefined}
         >
           {loading ? "Oluşturuluyor..." : "Plan Oluştur"}
         </button>
