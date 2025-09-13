@@ -230,12 +230,7 @@ export default function KoclukPage() {
                   <p className="text-sm text-muted-foreground">{quote}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={triggerAdvice}
-                    className="px-3 py-2 rounded-xl bg-primary text-primary-foreground"
-                  >
-                    Yeni Tavsiye
-                  </button>
+                  {/* Yeni Tavsiye button removed as requested */}
                 </div>
               </div>
 
@@ -595,7 +590,7 @@ function TestCatalog() {
       title: "EQ-i",
       emoji: "💖",
       desc: "Duygusal zekâ envanteri.",
-      long: "EQ-i, duygusal farkındalık, empati ve duyguları düzenleme becerilerini değerlendirir. Sonuçlar, iletişim ve stres yönetimi için pratik öneriler sağlar.",
+      long: "EQ-i, duygusal farkındalık, empati ve duyguları düzenleme becerilerini değerlendirir. Sonuçlar, iletişim ve stres y��netimi için pratik öneriler sağlar.",
       topics: ["Farkındalık", "Empati", "Duygu düzenleme", "Sosyal yetkinlik"],
       how: ["Refleksiyon soruları içerir; 10–20 dk sürebilir."],
     },
