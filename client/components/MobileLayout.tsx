@@ -16,8 +16,21 @@ export const MobileLayout: React.FC<{ children: React.ReactNode }> = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.28, ease: "easeOut" }}
-      className="min-h-screen max-w-md mx-auto bg-background text-foreground h-screen flex flex-col"
+      className="relative min-h-screen max-w-md mx-auto bg-background text-foreground h-screen flex flex-col overflow-hidden"
     >
+      {/* animated ambient background */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0.35, 0.2, 0.35] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          background:
+            "radial-gradient(800px 400px at 10% 20%, rgba(99,102,241,0.06), transparent 12%), radial-gradient(600px 300px at 90% 80%, rgba(14,165,233,0.04), transparent 12%)",
+        }}
+      />
+
       <Header />
 
       <motion.main
