@@ -134,7 +134,7 @@ export default function Profile() {
   return (
     <MobileLayout>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-        <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/10 to-card">
+        <section className="p-4 rounded-2xl border bg-gradient-to-br from-primary/10 to-card sticky top-4 z-20 breathing">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-3xl overflow-hidden">
